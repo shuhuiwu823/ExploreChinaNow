@@ -1,0 +1,22 @@
+.navigation-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.navigation-button {
+    border: 0;
+
+    padding: 0.5rem;
+
+    background: none;
+    
+    text-decoration: underline;
+}
+
+.navigation-button-icon {
+    height: 3rem;
+}
+
+.header-left{
+    display: flex;
+}
