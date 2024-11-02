@@ -2,6 +2,9 @@ import { useState } from 'react';
 import './App.css';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx'
+import Tips from './components/Tips.jsx';
+import Plan from './components/Plan.jsx';
+import Blogs from './components/Blogs.jsx';
 
 function App() {
   const [page, setPage] = useState("tips");
@@ -12,8 +15,8 @@ function App() {
         return 'This is travel tips page';
       case 'plan':
         return 'This is travel plan page';
-        case 'blog':
-          return 'This is blog posts page';
+      case 'blog':
+        return 'This is blog posts page';
       case 'login':
         return <Login></Login>;
       case 'register':
