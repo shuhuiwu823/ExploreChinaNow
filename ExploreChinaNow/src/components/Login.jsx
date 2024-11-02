@@ -5,9 +5,9 @@ function Login() {
             <form className="login-form" onClick={(e)=>{
                 e.preventDefault();
             }}>
-                <label className="login-username">
-                    <span>Username</span>
-                    <input type="text" className="enter-username"></input>
+                <label className="login-email">
+                    <span>Email</span>
+                    <input type="text" className="enter-email"></input>
                 </label>
                 <label className="login-password">
                     <span>Password</span>
