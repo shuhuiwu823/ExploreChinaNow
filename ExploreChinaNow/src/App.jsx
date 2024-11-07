@@ -14,7 +14,7 @@ function App() {
       case 'tips':
         return 'This is travel tips page';
       case 'plan':
-        return 'This is travel plan page';
+        return <Plan></Plan>;
       case 'blog':
         return 'This is blog posts page';
       case 'login':
