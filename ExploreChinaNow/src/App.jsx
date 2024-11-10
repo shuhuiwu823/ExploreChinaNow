@@ -1,88 +1,43 @@
-// import { useState } from "react";
-import "./App.css";
-// import Login from "./components/Login.jsx";
-// import Register from "./components/Register.jsx";
-// import Tips from "./components/Tips.jsx";
-// import Plan from "./components/Plan.jsx";
-// import Blogs from "./components/Blogs.jsx";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Videos from "./components/Videos";
-
-// function App() {
-//   const [page, setPage] = useState("tips");
-
-//   const renderPage = () => {
-//     switch(page) {
-//       case 'tips':
-//         return 'This is travel tips page';
-//       case 'plan':
-//         return 'This is travel plan page';
-//       case 'blog':
-//         return 'This is blog posts page';
-//       case 'login':
-//         return <Login></Login>;
-//       case 'register':
-//         return <Register></Register>
-//     }
-//   }
-//   return (
-//     <>
-//       <header className="header">
-//         <div className='header-left'>
-//           <h1>Explore China Now</h1>
-//           <div className='navigation-buttons'>
-//             <button className='home-button navigation-button' onClick={(e) => {
-//               e.preventDefault();
-//               setPage('tips');
-//             }}>
-//               Travel Tips
-//             </button>
-//             <button className='plan-button navigation-button'onClick={(e) => {
-//               e.preventDefault();
-//               setPage('plan');
-//             }}>
-//               Travel Plan
-//             </button>
-//             <button className='blog-button navigation-button'onClick={(e) => {
-//               e.preventDefault();
-//               setPage('blog');
-//             }}>
-//               Blog Posts
-//             </button>
-//           </div>
-//         </div>
-
-//         <div className='header-right'>
-//           <button className="register-btn" onClick={(e) => {
-//             e.preventDefault();
-//             setPage('register');
-//           }}>Join Us</button>
-//           <button className="login-btn" onClick={(e) => {
-//             e.preventDefault();
-//             setPage('login');
-//           }}>Login</button>
-//         </div>
-//       </header>
-
-//       <main className="main">
-//         {renderPage()}
-//       </main>
-
-//       <footer className='footer'>
-//       </footer>
-//     </>
-//     );
-// }
+import './App.css';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Login from './components/Login.jsx';
+import Register from './components/Register.jsx';
+import Tips from './components/Tips.jsx';
+import Plan from './components/Plan.jsx';
+import Blogs from './components/Blogs.jsx';
 
 function App() {
-	return (
-		<Router>
-			<Routes>
-				{/* <Route path="/" element={<Home />} /> */}
-				<Route path="/videos" element={<Videos />} />
-			</Routes>
-		</Router>
-	);
+  return (
+    <Router>
+      <header className="header">
+        <div className="header-left">
+          <h1>Explore China Now</h1>
+          <div className="navigation-buttons">
+            <Link to="/tips" className="home-button navigation-button">Travel Tips</Link>
+            <Link to="/plan" className="plan-button navigation-button">Travel Plan</Link>
+            <Link to="/blogs" className="blog-button navigation-button">Blog Posts</Link>
+          </div>
+        </div>
+
+        <div className="header-right">
+          <Link to="/register" className="register-btn">Join Us</Link>
+          <Link to="/login" className="login-btn">Login</Link>
+        </div>
+      </header>
+
+      <main className="main">
+        <Routes>
+          <Route path="/tips" element={<Tips />} />
+          <Route path="/plan" element={<Plan />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </main>
+
+      <footer className="footer"></footer>
+    </Router>
+  );
 }
 
 export default App;
