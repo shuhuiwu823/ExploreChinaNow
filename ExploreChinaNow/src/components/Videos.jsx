@@ -233,19 +233,6 @@ const VideosPage = () => {
 					</div>
 				</div>
 			)}
-
-			{/* Footer Section */}
-			{/* <footer style={{ padding: "20px", backgroundColor: "#333", color: "white", textAlign: "center" }}>
-				<p>&copy; 2024 Explore China. All rights reserved.</p>
-				<div>
-					<a href="/privacy-policy" style={{ color: "white", marginRight: "10px" }}>
-						Privacy Policy
-					</a>
-					<a href="/terms" style={{ color: "white" }}>
-						Terms of Use
-					</a>
-				</div>
-			</footer> */}
 		</div>
 	);
 };
