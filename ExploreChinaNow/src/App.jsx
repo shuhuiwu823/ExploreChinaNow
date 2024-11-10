@@ -3,6 +3,7 @@ import Footer from "./components/Footer.jsx";
 import Header from "./components/Header.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Videos from "./components/Videos";
+import Plan from "./components/Plan";
 
 function App() {
 	return (
@@ -12,6 +13,7 @@ function App() {
 				<main className="main-content">
 					<Routes>
 						<Route path="/videos" element={<Videos />} />
+						<Route path="/tour-plan" element={<Plan />} />
 					</Routes>
 				</main>
 				<Footer />
