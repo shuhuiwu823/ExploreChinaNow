@@ -1,43 +1,23 @@
-import './App.css';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Login from './components/Login.jsx';
-import Register from './components/Register.jsx';
-import Tips from './components/Tips.jsx';
-import Plan from './components/Plan.jsx';
-import Blogs from './components/Blogs.jsx';
+import "./App.css";
+import Footer from "./components/Footer.jsx";
+import Header from "./components/Header.jsx";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Videos from "./components/Videos";
 
 function App() {
-  return (
-    <Router>
-      <header className="header">
-        <div className="header-left">
-          <h1>Explore China Now</h1>
-          <div className="navigation-buttons">
-            <Link to="/tips" className="home-button navigation-button">Travel Tips</Link>
-            <Link to="/plan" className="plan-button navigation-button">Travel Plan</Link>
-            <Link to="/blogs" className="blog-button navigation-button">Blog Posts</Link>
-          </div>
-        </div>
-
-        <div className="header-right">
-          <Link to="/register" className="register-btn">Join Us</Link>
-          <Link to="/login" className="login-btn">Login</Link>
-        </div>
-      </header>
-
-      <main className="main">
-        <Routes>
-          <Route path="/tips" element={<Tips />} />
-          <Route path="/plan" element={<Plan />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </main>
-
-      <footer className="footer"></footer>
-    </Router>
-  );
+	return (
+		<Router>
+			<div className="app-content">
+				<Header />
+				<main className="main-content">
+					<Routes>
+						<Route path="/videos" element={<Videos />} />
+					</Routes>
+				</main>
+				<Footer />
+			</div>
+		</Router>
+	);
 }
 
 export default App;
