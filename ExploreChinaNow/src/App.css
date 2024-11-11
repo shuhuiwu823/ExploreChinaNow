@@ -39,3 +39,40 @@ body {
 .app-content > .main-content {
 	flex: 1;
 }
+
+
+/**
+map
+**/
+.modal-content{
+	margin-top: 100px;
+}
+/* 设置 Modal 的最大宽度 */
+.custom-modal .modal-dialog {
+	max-width: 40%;
+	/* 可以根据需要调整 */
+}
+
+/* 设置 Modal 标题的字体 */
+.custom-modal .modal-title {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+/* 设置 Modal Body */
+.custom-modal .modal-body {
+	padding: 30px;
+	background-color: #f8f9fa;
+	/* 可以自定义背景颜色 */
+}
+
+/* 设置 Modal Footer */
+.custom-modal .modal-footer {
+	padding: 20px;
+	background-color: #f1f1f1;
+}
+
+/* 自定义按钮的大小 */
+.custom-modal .modal-footer button {
+	width: 100%;
+}
