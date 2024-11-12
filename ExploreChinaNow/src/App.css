@@ -1,22 +1,41 @@
 .navigation-buttons {
-    display: flex;
-    justify-content: space-around;
+	display: flex;
+	justify-content: space-around;
 }
 
 .navigation-button {
-    border: 0;
+	border: 0;
 
-    padding: 0.5rem;
+	padding: 0.5rem;
 
-    background: none;
-    
-    text-decoration: underline;
+	background: none;
+
+	text-decoration: underline;
 }
 
 .navigation-button-icon {
-    height: 3rem;
+	height: 3rem;
 }
 
-.header-left{
-    display: flex;
+.header-left {
+	display: flex;
+}
+html,
+body {
+	height: 100%;
+	margin: 0;
+}
+
+.app-content {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.app-content > * {
+	flex-shrink: 0;
+}
+
+.app-content > .main-content {
+	flex: 1;
 }
