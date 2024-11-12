@@ -34,11 +34,11 @@ function App() {
 					<Routes>
 						<Route path="/videos" element={<Videos />} />
 						<Route path="/tour-plan" element={<Plan />} />
-            <Route path="/tips" element={<Tips />} />
-            <Route path="/blog" element={<Blogs />} />
-            <Route path="/sign-in" element={<Login />} />
-            <Route path="/sign-up" element={<Register />} />
-            <Route path="/" element={<div />} />
+            			<Route path="/tips" element={<Tips />} />
+            			<Route path="/blog" element={<Blogs />} />
+            			<Route path="/sign-in" element={<Login />} />
+            			<Route path="/sign-up" element={<Register />} />
+            			<Route path="/" element={<div />} />
 					</Routes>
 				</main>
 				<Footer />
