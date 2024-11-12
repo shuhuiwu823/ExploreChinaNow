@@ -11,7 +11,8 @@ dotenv.config();
 const apiKey = process.env.OPENAI_API_KEY;
 
 app.use(cookieParser());
-app.use(express.static('./dist'));
+
+app.use(express.static('dist'));
 app.use(express.json());
 
 app.post('/api/chat', async (req, res) => {
