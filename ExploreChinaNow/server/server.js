@@ -9,7 +9,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const apiKey = process.env.OPENAI_API_KEY;
-
+// console.log("api key:",apiKey);
 app.use(cookieParser());
 
 app.use(express.static('dist'));

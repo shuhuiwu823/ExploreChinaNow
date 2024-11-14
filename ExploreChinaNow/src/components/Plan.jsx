@@ -6,8 +6,8 @@ import './Plan.css';
 function Plan() {
   const [userInput, setUserInput] = useState('');
   const [chatOutput, setChatOutput] = useState([]);
+  const [savedPlans, setSavedPlans] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-  const [savedResponse, setSavedResponse] = useState('');
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
@@ -23,7 +23,9 @@ function Plan() {
       });
 
       const data = await response.json();
-      const botMessage = { role: 'bot', content: data.choices[0].message.content };
+      const original_botMessage = { role: 'bot', content: data.choices[0].message.content };
+      console.log('bot-response',original_botMessage);
+      const botMessage = { role: 'bot', content: formatText(data.choices[0].message.content) };
 
       setChatOutput([...chatOutput, newMessage, botMessage]);
       setUserInput('');
@@ -32,17 +34,32 @@ function Plan() {
     }
   };
 
+  const formatText = (text) => {
+    return text
+      .split(/\n+/) 
+      .map((paragraph, index) => `<p key=${index}>${paragraph}</p>`)
+      .join('');
+  };
+
   const saveResponse = async (message) => {
     try {
-      await addDoc(collection(db, 'TravelPlan'), {
+      const docRef = await addDoc(collection(db, 'TravelPlan'), {
         content: message,
         timestamp: new Date(),
       });
-      setSavedResponse(message);
+
+      const title = message.slice(0, 20) + (message.length > 20 ? '...' : '');
+      setSavedPlans([...savedPlans, { id: docRef.id, title, content: message, expanded: false }]);
       setShowPopup(true);
     } catch (error) {
       console.error("Error saving response:", error);
     }
+  };
+
+  const toggleExpanded = (index) => {
+    setSavedPlans(savedPlans.map((plan, i) =>
+      i === index ? { ...plan, expanded: !plan.expanded } : plan
+    ));
   };
 
   const closePopup = () => {
@@ -50,27 +67,48 @@ function Plan() {
   };
 
   return (
-    <div id="chat-container">
-      <div id="chat-history">
-        {chatOutput.map((msg, index) => (
-          <div key={index} className={`message ${msg.role}`}>
-            {msg.content}
-            {msg.role === 'bot' && (
-              <button className="save-button" onClick={() => saveResponse(msg.content)}>
-                Save
+    <div className="main-content">
+      <div className="saved-plan-list">
+        <h2>Saved Plans</h2>
+        <ul>
+          {savedPlans.map((plan, index) => (
+            <li key={plan.id}>
+              <span>{plan.title}</span>
+              <button className="more-button" onClick={() => toggleExpanded(index)}>
+                {plan.expanded ? 'Less' : 'More'}
               </button>
-            )}
-          </div>
-        ))}
+              {plan.expanded && <p className="full-content">{plan.content}</p>}
+            </li>
+          ))}
+        </ul>
       </div>
-      <div id="input-section">
-        <textarea
-          id="user-input"
-          placeholder="Type your question..."
-          value={userInput}
-          onChange={(e) => setUserInput(e.target.value)}
-        ></textarea>
-        <button onClick={sendMessage}>Send</button>
+      <div id="chat-container">
+        <h2>Create Your Travel Plan</h2>
+        <div id="chat-history">
+          {chatOutput.map((msg, index) => (
+            <div key={index} className={`message ${msg.role}`}>
+              {msg.role === 'bot' ? (
+                <div dangerouslySetInnerHTML={{ __html: msg.content }} />
+              ) : (
+                msg.content
+              )}
+              {msg.role === 'bot' && (
+                <button className="save-button" onClick={() => saveResponse(msg.content)}>
+                  Save
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+        <div id="input-section">
+          <textarea
+            id="user-input"
+            placeholder="Type your question..."
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+          ></textarea>
+          <button onClick={sendMessage}>Send</button>
+        </div>
       </div>
 
       {showPopup && (
