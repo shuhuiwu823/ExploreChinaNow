@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { auth, db, storage } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
-import uploadFile from "../upload";
+import uploadFile from "../dbOperation";
 import { Button } from "react-bootstrap";
+import { AppContext } from "../Context";
 
 function Register() {
     const [avatar, setAvatar] = useState({
@@ -12,10 +13,8 @@ function Register() {
         url:"/avatar.png"
     });
 
-    const [errorMsg, setErrorMsg] = useState("");
+    const {userData, setUserData, errorMsg, setErrorMsg, loading, setLoading} = useContext(AppContext);
     
-    const [loading, setLoading] = useState(false);
-
     // When user change the avatar image, change the avatar state
     const handleAvatar = (e) => {
         if(e.target.files[0]){
@@ -39,18 +38,20 @@ function Register() {
             const imgURL = avatar.file ? await uploadFile(avatar.file) : avatar.url;
             console.log(imgURL);
 
-            await setDoc(doc(db, "users", res.user.uid), {
+            const userInfo = {
                 id: res.user.uid,
                 username: username,
                 email: email,
                 avatar: imgURL,
                 name: name,
-            });
+            }
+            await setDoc(doc(db, "users", res.user.uid), userInfo);
 
             await setDoc(doc(db, "blogs", res.user.uid), {
                 blogs: []
             });
 
+            setUserData(userInfo);
             setErrorMsg("Created a new account")
         }catch(err){
             console.log(err);

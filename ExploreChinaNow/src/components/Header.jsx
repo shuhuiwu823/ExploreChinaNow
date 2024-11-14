@@ -1,8 +1,21 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../Context";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
 
 function Header() {
 	const [isDropdownOpen, setDropdownOpen] = useState(false);
+	const { loading ,userData, setUserData} = useContext(AppContext);
+
+	const handleLogout = () => {
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            setUserData(null);
+          }).catch((error) => {
+            console.log(error)
+          });
+    }
 
 	const toggleDropdown = () => {
 		setDropdownOpen(!isDropdownOpen);
@@ -47,12 +60,16 @@ function Header() {
 				<Link to="/blogs" style={linkStyle}>
 					Blogs
 				</Link>
+				{userData ? <button className="logout-btn" onClick={handleLogout} disabled={loading}>{loading ? "Loading..." : "Logout"}</button>
+				:
+				<>
 				<Link to="/sign-in" style={linkStyle}>
 					Sign In
 				</Link>
                 <Link to="/sign-up" style={linkStyle}>
 					Sign Up
 				</Link>
+				</>}
 			</nav>
 		</header>
 	);
