@@ -23,9 +23,7 @@ function Plan() {
       });
 
       const data = await response.json();
-      const original_botMessage = { role: 'bot', content: data.choices[0].message.content };
-      console.log('bot-response',original_botMessage);
-      const botMessage = { role: 'bot', content: formatText(data.choices[0].message.content) };
+      const botMessage = { role: 'bot', content: formatText(data.choices[0].message.content),content_ori: data.choices[0].message.content};
 
       setChatOutput([...chatOutput, newMessage, botMessage]);
       setUserInput('');
@@ -91,9 +89,10 @@ function Plan() {
                 <div dangerouslySetInnerHTML={{ __html: msg.content }} />
               ) : (
                 msg.content
-              )}
+              )
+              }
               {msg.role === 'bot' && (
-                <button className="save-button" onClick={() => saveResponse(msg.content)}>
+                <button className="save-button" onClick={() => saveResponse(msg.content_ori)}>
                   Save
                 </button>
               )}
