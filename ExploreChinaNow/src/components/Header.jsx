@@ -50,6 +50,9 @@ function Header() {
 				<Link to="/sign-in" style={linkStyle}>
 					Sign In
 				</Link>
+                <Link to="/sign-up" style={linkStyle}>
+					Sign Up
+				</Link>
 			</nav>
 		</header>
 	);
