@@ -1,0 +1,45 @@
+.profile-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the avatar and other elements */
+    justify-content: center;
+    position: relative;
+    top: 40%;
+    transform: translate(0, -50%);
+    width: 20rem;
+    padding: 1rem;
+    margin: auto;
+    background-color: #fff;
+    border: 1px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 1000;
+}
+
+.profile-avatar {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.profile-username,
+.profile-email,
+.profile-name {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 0.6rem;
+    font-size: 1em;
+}
+
+.profile-username::before,
+.profile-email::before,
+.profile-name::before {
+    content: attr(data-label);
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    color: #333;
+}
