@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import { Modal, Button } from 'react-bootstrap'; // 导入 react-bootstrap 的 Modal 和 Button
+import { useNavigate } from 'react-router-dom';
+import { Button, Modal } from 'react-bootstrap';
 import {
   APIProvider,
   Map,
@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const locations = [
   { key: 'beijing', location: { lat: 39.9042, lng: 116.4074 } },
   { key: 'tianjin', location: { lat: 39.0851, lng: 117.1902 } },
-  { key: 'hebei', location: { lat: 38.0435, lng: 114.5149 } },
+    { key: 'hebei', location: { lat: 38.0435, lng: 114.5149 } },
   { key: 'shannxi', location: { lat: 37.8705, lng: 112.5480 } },
   { key: 'neimenggu', location: { lat: 40.8173, lng: 111.7652 } },
   { key: 'liaoning', location: { lat: 41.7954, lng: 123.4328 } },
@@ -40,22 +40,34 @@ const locations = [
   { key: 'ningxia', location: { lat: 38.4713, lng: 106.2782 } },
   { key: 'xinjiang', location: { lat: 43.7930, lng: 87.6177 } },
   { key: 'taipei', location: { lat: 25.032969, lng: 121.565418 } },
+  { key: 'xining', location: { lat: 35.7604, lng: 103.8324 } }
+];
+const popularCities = [
+  { key: 'beijing', name: 'Beijing', location: { lat: 39.9042, lng: 116.4074 } },
+  { key: 'shanghai', location: { lat: 31.2304, lng: 121.4737 } },
+  { key: 'guangdong', location: { lat: 23.1291, lng: 113.2644 } },
 ];
 
 const MapContainer = () => {
   const navigate = useNavigate();
-  const [modalOpen, setModalOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState('');
-  const [showMarkers, setShowMarkers] = useState(true); // 新增状态来控制标记显示
+  const [showMarkers, setShowMarkers] = useState('all');
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const handleCloseModal = () => setModalOpen(false);
-  const handleOpenModal = (cityName) => {
+  const handleOpenInfo = (cityName) => {
     setSelectedCity(cityName);
-    setModalOpen(true);
+    if (showMarkers === 'all') {
+      setModalOpen(true);
+    }
   };
 
-  const toggleMarkers = () => {
-    setShowMarkers(prev => !prev); // 切换标记的显示状态
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedCity('');
+  };
+
+  const toggleMarkers = (type) => {
+    setShowMarkers(prev => (prev === type ? 'none' : type));
   };
 
   return (
@@ -63,39 +75,85 @@ const MapContainer = () => {
       <APIProvider apiKey={'AIzaSyAgYOfrSVMN-4qquy9cI_ZSM6SjhvF_cW0'}>
         <Map
           style={{ width: '100vw', height: '100vh' }}
-          defaultCenter={{ lat: 39.9042, lng: 116.4074 }}
+          defaultCenter={{ lat: 35.7604, lng: 103.8324 }}
           mapId='57cb306711be27bb'
           defaultZoom={4}
           gestureHandling={'greedy'}
           disableDefaultUI={true}
         >
-          {/* 根据 showMarkers 状态来决定是否显示标记 */}
-          {showMarkers && <PoiMarkers pois={locations} onPoiClick={handleOpenModal} />}
+          {showMarkers === 'all' && <PoiMarkers pois={locations} onPoiClick={handleOpenInfo} />}
+          {showMarkers === 'popular' && <PoiMarkers pois={popularCities} onPoiClick={handleOpenInfo} />}
         </Map>
       </APIProvider>
 
-      {/* 控制标记显示/隐藏的按钮 */}
       <Button
-  variant="primary"
-  onClick={toggleMarkers}
-  style={{ position: 'absolute', bottom: '20px', left: '20px', zIndex: 1000 }}
->
-  {showMarkers ? 'Hide Markers' : 'Show Markers'}
-</Button>
-
-      {/* 使用 react-bootstrap 的 Modal 组件 */}
-      <Modal
-        show={modalOpen}
-        onHide={handleCloseModal}
-        className="custom-modal"
-        size="lg"
+        variant="primary"
+        onClick={() => toggleMarkers('all')}
+        style={{ position: 'absolute', bottom: '20px', right: '20px', zIndex: 1000 }}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>You selected: {selectedCity}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>You can choose to:</p>
-          <Button
+        {showMarkers === 'all' ? 'Hide Markers' : 'Show All Markers'}
+      </Button>
+
+      <Button
+        variant="primary"
+        onClick={() => toggleMarkers('popular')}
+        style={{ position: 'absolute', bottom: '60px', right: '20px', zIndex: 1000 }}
+      >
+        {showMarkers === 'popular' ? 'Hide Popular Cities' : 'Show Popular Cities'}
+      </Button>
+
+      {modalOpen && (
+        <Modal
+          show={modalOpen}
+          onHide={handleCloseModal}
+          className="custom-modal"
+          size="lg"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>City Information: {selectedCity}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Here are some details about {selectedCity}.</p>
+            <Button
+              variant="primary"
+              onClick={() => window.open(`https://www.youtube.com/results?search_query=${selectedCity} travel introduction`, '_blank')}
+              style={{ width: '100%', marginBottom: '10px' }}
+            >
+              Find Travel Video for {selectedCity}
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => window.open(`https://www.ai-generated-travel-guide.com/${selectedCity}`, '_blank')}
+              style={{ width: '100%' }}
+            >
+              Generate AI Travel Guide for {selectedCity}
+            </Button>
+          </Modal.Body>
+        </Modal>
+      )}
+
+      {showMarkers === 'popular' && selectedCity && (
+        <div className="info-sidebar">
+          <Button 
+          className="delete-btn"
+  variant="link" 
+  onClick={() => setSelectedCity('')} 
+  style={{ color: 'black', textDecoration: 'none' }}
+>
+  X
+</Button>
+          <img src="../assets/greatWall.svg" alt="Great Wall"></img>
+          <h5>Beijing</h5>
+              <p>Beijing, the capital city of China, is a cultural and historical hub known for its rich heritage, traditional architecture, and vibrant modern life. From ancient temples to the bustling cityscape, Beijing offers a unique blend of the past and present.</p>
+
+              <h5>Popular Attractions</h5>
+              <ul>
+                <li><strong>The Great Wall:</strong> One of the Seven Wonders of the World, this iconic landmark is a must-see.</li>
+                <li><strong>Forbidden City:</strong> A grand palace complex that served as the imperial palace for centuries.</li>
+                <li><strong>Temple of Heaven:</strong> A spiritual complex famous for its architecture and religious history.</li>
+                <li><strong>Summer Palace:</strong> A stunning garden and palace on the outskirts of Beijing.</li>
+              </ul>
+          {/* <Button
             variant="primary"
             onClick={() => window.open(`https://www.youtube.com/results?search_query=${selectedCity} travel introduction`, '_blank')}
             style={{ width: '100%', marginBottom: '10px' }}
@@ -108,9 +166,10 @@ const MapContainer = () => {
             style={{ width: '100%' }}
           >
             Generate AI Travel Guide for {selectedCity}
-          </Button>
-        </Modal.Body>
-      </Modal>
+          </Button> */}
+        </div>
+      )}
+
     </div>
   );
 };
@@ -119,8 +178,7 @@ const PoiMarkers = ({ pois, onPoiClick }) => {
   const handleClick = useCallback(
     (ev, cityName) => {
       if (!ev.latLng) return;
-      console.log('Marker clicked:', cityName);
-      onPoiClick(cityName); // 把城市名称传递给父组件
+      onPoiClick(cityName);
     },
     [onPoiClick]
   );

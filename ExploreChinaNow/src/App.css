@@ -76,3 +76,24 @@ map
 .custom-modal .modal-footer button {
 	width: 100%;
 }
+.info-sidebar {
+	position: absolute;
+	top: 180px;
+	left: 5%;
+	width: 400px;
+	height: 800px;
+	background-color: rgba(255, 255, 255, 1);
+	padding: 20px;
+	z-index: 0;
+	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
+	overflow: auto;
+}
+.delete-btn{
+	position: absolute;
+	/* 距离父容器顶部 10px */
+	top:2px;
+	right: 5px;
+	text-decoration: none;
+
+}
