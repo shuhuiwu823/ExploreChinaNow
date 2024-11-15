@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
-import { auth, db, storage } from "../firebase";
+import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
 import uploadFile from "../dbOperation";
 import { Button } from "react-bootstrap";
 import { AppContext } from "../Context";
+import "./Register.css";
 
 function Register() {
     const [avatar, setAvatar] = useState({
@@ -52,12 +52,12 @@ function Register() {
             });
 
             setUserData(userInfo);
-            setErrorMsg("Created a new account")
         }catch(err){
             console.log(err);
             setErrorMsg(err.message);
         }finally{
             setLoading(false);
+            navigate("/profile");
         }
     }
 
