@@ -1,14 +1,16 @@
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { auth, db } from "../firebase";
+import { auth } from "../firebase";
 import { useContext } from "react";
 import { Button } from "react-bootstrap";
-import { doc, getDoc } from "firebase/firestore";
 import { AppContext } from "../Context";
 import { getUserData } from "../dbOperation";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 function Login() {
 
     const {userData, setUserData, loading, setLoading, errorMsg, setErrorMsg} = useContext(AppContext);
+    const navigate = useNavigate();
     
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -20,7 +22,7 @@ function Login() {
         const {email, password} = Object.fromEntries(formData);
     
         try {
-            await signInWithEmailAndPassword(auth, email, password)
+            signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
@@ -36,12 +38,13 @@ function Login() {
             setErrorMsg(error);
         }finally{
             setLoading(false);
+            navigate("/profile")
         }
     }
     
     return(
         <dialog className="login-dialog" open>
-            <h2>Log In</h2>
+            <h2>Sign In</h2>
             <form className="login-form" onSubmit={handleLogin}>
                 <label className="login-email">
                     <span>Email</span>
@@ -54,14 +57,6 @@ function Login() {
                 <div className="error-message">{errorMsg}</div>
                 <button className="submit-login" disabled={loading}>{loading ? "Loading..." : "Login"}</button>
             </form>
-            {/* {userData ? 
-            <div>
-                <img src={userData.avatar} alt=""/><br/>
-                <span>Username: {userData.username}</span><br/>
-                <span>E-mail: {userData.email}</span><br/>
-                <span>Name: {userData.name}</span><br/>
-                <button className="logout-btn" onClick={handleLogout} disabled={loading}>{loading ? "Loading..." : "Logout"}</button>
-            </div>: ""} */}
         </dialog>
     );
 }
