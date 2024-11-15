@@ -1,0 +1,51 @@
+.login-dialog {
+    position: relative;
+    top: 40%;
+    transform: translate(0, -50%);
+    padding: 1rem;
+    background-color: #fff;
+    border: 1px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 1000; 
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.login-form label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    font-size: 1em; 
+}
+
+.login-form input {
+    width: 100%; 
+    max-width: 18.5rem; 
+    padding: 0.5rem;
+    box-sizing: border-box; 
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 0.5rem;
+}
+
+.submit-login {
+    padding: 0.6rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-login:disabled {
+    background-color: #ccc;
+}

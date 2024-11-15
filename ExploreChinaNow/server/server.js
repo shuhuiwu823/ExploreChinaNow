@@ -12,13 +12,13 @@ const apiKey = process.env.OPENAI_API_KEY;
 // console.log("api key:",apiKey);
 app.use(cookieParser());
 
-app.use(express.static('dist'));
+app.use(express.static('./dist'));
 app.use(express.json());
 
 app.post('/api/chat', async (req, res) => {
     try {
       const userMessage = req.body.message;
-  
+
       const response = await axios.post(
         'https://api.openai.com/v1/chat/completions',
         {
@@ -32,7 +32,7 @@ app.post('/api/chat', async (req, res) => {
           },
         }
       );
-  
+
       res.json(response.data);
     } catch (error) {
       res.status(500).json({ error: error.message });
