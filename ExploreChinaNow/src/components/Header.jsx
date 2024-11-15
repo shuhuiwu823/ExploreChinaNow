@@ -1,8 +1,23 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AppContext } from "../Context";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
+import "./Header.css"
 
 function Header() {
 	const [isDropdownOpen, setDropdownOpen] = useState(false);
+	const { loading ,userData, setUserData} = useContext(AppContext);
+	const navigate = useNavigate();
+
+	const handleLogout = () => {
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            setUserData(null);
+          }).catch((error) => {
+            console.log(error)
+          });
+    }
 
 	const toggleDropdown = () => {
 		setDropdownOpen(!isDropdownOpen);
@@ -38,7 +53,7 @@ function Header() {
 							<Link to="/visa-policy" style={dropdownLinkStyle}>
 								Visa Policy Info
 							</Link>
-							<Link to="/payment-setup" style={dropdownLinkStyle}>
+							<Link to="/payment-setup" style={dropdownLinkStyle}> 	
 								Payment Setup
 							</Link>
 						</div>
@@ -47,12 +62,20 @@ function Header() {
 				<Link to="/blogs" style={linkStyle}>
 					Blogs
 				</Link>
+				{userData ? 
+				<>
+				<Link to="/profile"><img className="avatar-img" src={userData.avatar} alt={userData.username}/></Link>
+				<button className="logout-btn" onClick={handleLogout} disabled={loading}>{loading ? "Loading..." : "Logout"}</button>
+				</>
+				:
+				<>
 				<Link to="/sign-in" style={linkStyle}>
 					Sign In
 				</Link>
                 <Link to="/sign-up" style={linkStyle}>
 					Sign Up
 				</Link>
+				</>}
 			</nav>
 		</header>
 	);
