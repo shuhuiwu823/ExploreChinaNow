@@ -10,6 +10,8 @@ import { Button } from 'react-bootstrap';
 import Videos from "./components/Videos.jsx"
 import Footer from "./components/Footer.jsx";
 import Header from "./components/Header.jsx";
+// import UserBlogs from './components/UserBlogs.jsx';
+// import AddPost from './components/AddPost.jsx';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase.js';
@@ -35,7 +37,7 @@ function App() {
 						<Route path="/videos" element={<Videos />} />
 						<Route path="/tour-plan" element={<Plan />} />
             <Route path="/tips" element={<Tips />} />
-            <Route path="/blog" element={<Blogs />} />
+            <Route path="/blogs" element={<Blogs />} />
             <Route path="/sign-in" element={<Login />} />
             <Route path="/sign-up" element={<Register />} />
             <Route path="/" element={<div />} />
