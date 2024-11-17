@@ -78,10 +78,10 @@ map
 }
 .info-sidebar {
 	position: absolute;
-	top: 180px;
+	top: 20%;
 	left: 5%;
-	width: 400px;
-	height: 800px;
+	width: 35%;
+	bottom: 0;
 	background-color: rgba(255, 255, 255, 1);
 	padding: 20px;
 	z-index: 0;
@@ -89,11 +89,49 @@ map
 	border-radius: 10px;
 	overflow: auto;
 }
-.delete-btn{
+
+.delete-btn {
 	position: absolute;
-	/* 距离父容器顶部 10px */
-	top:2px;
+	top: 2px;
 	right: 5px;
 	text-decoration: none;
+	font-size: 20px;
+	color: black;
+}
+.pic-loc {
+	padding: 10px
+}
+.sidebar-image {
+	width: 100%;
+	height: auto;
+	border-radius: 8px;
+	margin-bottom: 15px;
+}
 
+.info-sidebar h5 {
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.info-sidebar p {
+	font-size: 14px;
+	line-height: 1.6;
+	margin-bottom: 15px;
+}
+
+.info-sidebar ul {
+	padding-left: 20px;
+}
+
+.info-sidebar ul li {
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+.info-sidebar ul li strong {
+	font-weight: bold;
+}
+.show-button{
+	width: 170px;
 }
