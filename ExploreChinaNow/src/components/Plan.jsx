@@ -16,7 +16,7 @@ function Plan() {
     return savedPlansData ? JSON.parse(savedPlansData) : [];
   });
   const [showPopup, setShowPopup] = useState(false);
-  const [showSignInPopup, setShowSignInPopup] = useState(false); // Popup for not signed-in users
+  const [showSignInPopup, setShowSignInPopup] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -29,6 +29,13 @@ function Plan() {
   useEffect(() => {
     localStorage.setItem('savedPlans', JSON.stringify(savedPlans));
   }, [savedPlans]);
+  
+  useEffect(() => {
+    if (location.state?.selectedCity) {
+      const initialInput = `Please generate a travel plan for ${location.state.selectedCity}`;
+      setUserInput(initialInput);
+    }
+  }, [location.state]);
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;

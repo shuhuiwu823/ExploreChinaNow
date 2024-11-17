@@ -1,9 +1,9 @@
 
 .saved-plan-list {
   width: 33.33%;
-  margin-top: 5%;
+  margin-top: 4.2%;
   padding: 20px;
-  height: 80.9%;
+  height: 83.3%;
   background-color: #f0f0f0; 
   overflow-y: auto; 
   position: fixed;
@@ -28,6 +28,11 @@
 
 .more-button {
   margin-left: 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 5px;
 }
 
 .full-content {
@@ -37,9 +42,9 @@
 #chat-container {
   width: 66.67%; 
   margin-left: 33.33%; 
-  margin-top: 5%;
+  margin-top: 4.2%;
   padding: 20px;
-  height: 80.9%; 
+  height: 83.3%; 
   overflow-y: auto; 
   position: fixed;
   right: 0;
@@ -101,10 +106,10 @@ button {
   background-color: #28a745;
   color: white;
   border: none;
-  border-radius: 3px;
   margin-left: 10px;
   cursor: pointer;
   padding: 3px 6px;
+  border-radius: 5px;
 }
 
 .popup {
@@ -121,9 +126,9 @@ button {
 
 .popup-content {
   display: flex;
-  flex-direction: column; /* Stack title and buttons vertically */
-  align-items: center; /* Center-align title and buttons horizontally */
-  gap: 10px; /* Space between elements */
+  flex-direction: column; 
+  align-items: center;
+  gap: 10px;
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
@@ -137,7 +142,7 @@ button {
 
 .popup-buttons {
   display: flex;
-  gap: 10px; /* Add spacing between buttons */
+  gap: 10px; 
 }
 
 .popup-buttons button {
