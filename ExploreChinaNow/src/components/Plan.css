@@ -120,6 +120,10 @@ button {
 }
 
 .popup-content {
+  display: flex;
+  flex-direction: column; /* Stack title and buttons vertically */
+  align-items: center; /* Center-align title and buttons horizontally */
+  gap: 10px; /* Space between elements */
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
@@ -131,7 +135,12 @@ button {
   padding: 10px;
 }
 
-.popup-content button {
+.popup-buttons {
+  display: flex;
+  gap: 10px; /* Add spacing between buttons */
+}
+
+.popup-buttons button {
   margin-top: 10px;
   padding: 5px 10px;
   background-color: #007bff;
