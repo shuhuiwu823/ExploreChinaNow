@@ -43,8 +43,8 @@ function Header() {
 				<Link to="/map" style={linkStyle}>
 					Map
 				</Link>
-				<Link to="/tour-plan" style={linkStyle}>
-					Tour Plan (ChatGPT)
+				<Link to="/travel-plan" style={linkStyle}>
+					Travel Plan (ChatGPT)
 				</Link>
 				<div style={dropdownStyle} onMouseEnter={toggleDropdown} onMouseLeave={closeDropdown}>
 					<button style={dropdownButtonStyle}>Travel Tips</button>

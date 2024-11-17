@@ -48,7 +48,7 @@ function App() {
 				<main className="main-content">
 					<Routes>
 						<Route path="/videos" element={<Videos />} />
-						<Route path="/tour-plan" element={<Plan />} />
+						<Route path="/travel-plan" element={<Plan />} />
             			<Route path="/tips" element={<Tips />} />
             			<Route path="/blog" element={<Blogs />} />
             			<Route path="/sign-in" element={<Login />} />
