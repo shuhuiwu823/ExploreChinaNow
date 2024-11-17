@@ -9,6 +9,7 @@ import Profile from './components/Profile.jsx';
 import { Button } from 'react-bootstrap';
 import Footer from "./components/Footer.jsx";
 import Header from "./components/Header.jsx";
+
 import {
   BrowserRouter as Router,
   Route,
@@ -18,6 +19,7 @@ import {
 import Videos from "./components/Videos";
 import MapContainer from "./components/MapContainer";
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from './firebase.js';
 import { AppContext } from './Context.jsx';
@@ -63,6 +65,7 @@ function App() {
             			<Route path="/sign-up" element={<Register />} />
 						<Route path='/profile' element={userData ? <Profile /> : <Navigate to="/videos"/>} />
             			<Route path="/" element={<div />} />
+
 					</Routes>
 				</main>
 				<Footer />
