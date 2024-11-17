@@ -163,8 +163,10 @@ function Plan() {
         <div className="popup">
           <div className="popup-content">
             <p>You need to sign in to save your plan.</p>
-            <button onClick={closeSignInPopup}>Stay on Page</button>
-            <button onClick={handleSignIn}>Sign In</button>
+                <div class="popup-buttons">
+                    <button onClick={closeSignInPopup}>Stay on Page</button>
+                    <button onClick={handleSignIn}>Sign In</button>
+                </div>
           </div>
         </div>
       )}
