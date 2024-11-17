@@ -152,7 +152,7 @@ const MapContainer = () => {
             <Button
               variant="primary"
               onClick={() =>
-                navigate("/tour-plan", { state: { selectedCity } })
+                navigate("/travel-plan", { state: { selectedCity } })
               }
               style={{ width: "100%" }}
             >
