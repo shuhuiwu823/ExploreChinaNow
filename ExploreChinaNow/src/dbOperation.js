@@ -1,5 +1,6 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "./firebase";
+import { storage, db } from "./firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 const uploadFile = async (file) => {
     console.log(file.name);
@@ -42,6 +43,20 @@ const uploadFile = async (file) => {
         );
                       
     });
+}
+
+export const getUserData = async (uid) => {
+	const docRef = doc(db, "users", uid);
+	const docSnap = await getDoc(docRef);
+
+	if (docSnap.exists()) {
+		console.log("User data:", docSnap.data());
+		return docSnap.data();
+	} else {
+	// docSnap.data() will be undefined in this case
+		console.log("No such User!");
+        return null;
+	}
 }
 
 export default uploadFile;
