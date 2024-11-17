@@ -35,13 +35,13 @@ function Header() {
 							<Nav.Link>Home</Nav.Link>
 						</LinkContainer>
 						<LinkContainer to="/videos">
-							<Nav.Link>Video Recommendations</Nav.Link>
+							<Nav.Link>Videos</Nav.Link>
 						</LinkContainer>
 						<LinkContainer to="/map">
 							<Nav.Link>Map</Nav.Link>
 						</LinkContainer>
 						<LinkContainer to="/tour-plan">
-							<Nav.Link>Tour Plan (ChatGPT)</Nav.Link>
+							<Nav.Link>Tour Plan</Nav.Link>
 						</LinkContainer>
 						<NavDropdown title="Travel Tips" id="collasible-nav-dropdown">
 							<LinkContainer to="/visa-policy">
