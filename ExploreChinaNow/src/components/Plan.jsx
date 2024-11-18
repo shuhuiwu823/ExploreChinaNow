@@ -115,19 +115,31 @@ function Plan() {
   return (
     <div className="main-content">
       <div className="saved-plan-list">
-        <h2>Saved Plans</h2>
-        <ul>
-          {savedPlans.map((plan, index) => (
-            <li key={plan.id}>
-              <span>{plan.title}</span>
-              <button className="more-button" onClick={() => toggleExpanded(index)}>
-                {plan.expanded ? 'Less' : 'More'}
-              </button>
-              {plan.expanded && <p className="full-content">{plan.content}</p>}
-            </li>
-          ))}
-        </ul>
-      </div>
+  <h2>Saved Plans</h2>
+  <div className="plan-cards">
+  {savedPlans.map((plan, index) => (
+    <div key={plan.id} className={`plan-card ${plan.expanded ? 'expanded' : ''}`}>
+      {!plan.expanded && (
+        <div className="card-header">
+          <span>{plan.title}</span>
+          <button className = 'collapse-button' onClick={() => toggleExpanded(index)}>
+            {plan.expanded ? '▲' : '▼'}
+          </button>
+        </div>
+      )}
+      {plan.expanded && (
+        <div className="card-body">
+          <div dangerouslySetInnerHTML={{ __html: formatText(plan.content) }} />
+          <button className = 'collapse-button' onClick={() => toggleExpanded(index)}>
+            ▲ 
+          </button>
+        </div>
+      )}
+    </div>
+  ))}
+</div>
+
+</div>
       <div id="chat-container">
         <h2>Create Your Travel Plan</h2>
         <div id="chat-history">
@@ -161,7 +173,7 @@ function Plan() {
         <div className="popup">
           <div className="popup-content">
             <p>Response saved successfully!</p>
-            <button onClick={closePopup}>Close</button>
+            <button className="popup-button" onClick={closePopup}>Close</button>
           </div>
         </div>
       )}
@@ -171,8 +183,8 @@ function Plan() {
           <div className="popup-content">
             <p>You need to sign in to save your plan.</p>
                 <div class="popup-buttons">
-                    <button onClick={closeSignInPopup}>Stay on Page</button>
-                    <button onClick={handleSignIn}>Sign In</button>
+                    <button className="popup-button" onClick={closeSignInPopup}>Stay on Page</button>
+                    <button className="popup-button" onClick={handleSignIn}>Sign In</button>
                 </div>
           </div>
         </div>
