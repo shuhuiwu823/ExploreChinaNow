@@ -60,7 +60,7 @@ button:hover {
   background-color: #fff;
   border-radius: 8px; 
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-  overflow: visible; 
+  overflow-wrap: anywhere;
   max-width: 100%; 
 }
 
@@ -75,14 +75,14 @@ button:hover {
   color: #666; 
 }
 
-.blog-post-content { 
-  overflow-x: hidden; 
-  overflow-wrap: break-word; 
-  white-space: pre-wrap; /* Allow text to wrap naturally */
-  line-height: 1.6; /* Improve readability with adequate line spacing */
+.blog-post-content {
+  overflow-wrap: break-word; /* Ensure text breaks naturally */
+  word-break: break-word; /* Break long words when necessary */
+  white-space: normal; /* Allow normal wrapping */
+  line-height: 1.6; /* Improve readability with adequate spacing */
   padding-right: 8px; /* Add spacing for scrollbar if present */
-  word-break: normal; /* Avoid breaking words unless necessary */
 }
+
 
 .blog-post-content p {
   margin: 0;

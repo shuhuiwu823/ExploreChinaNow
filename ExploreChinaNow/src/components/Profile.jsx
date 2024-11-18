@@ -49,7 +49,7 @@ function Profile() {
   const handleToggleExpanded = (blogId) => {
     setExpandedBlogs((prevExpanded) => ({
       ...prevExpanded,
-      [blogId]: !prevExpanded[blogId], // Toggle the expanded state for this blog
+      [blogId]: !prevExpanded[blogId],
     }));
   };
 
@@ -63,30 +63,30 @@ function Profile() {
 
   return (
     <div className="profile-container">
-  <div className="blogs-section">
+    <div className="profile-blogs-section">
     <h3>My Blog Posts</h3>
     {loadingBlogs ? (
       <p>Loading blog posts...</p>
     ) : userBlogs.length > 0 ? (
       userBlogs.map((blog) => (
-        <div key={blog.id} className="blog-post">
+        <div key={blog.id} className="profile-blog-post">
           {blog.images && blog.images.length > 0 && isValidFirebaseUrl(blog.images[0]) ? (
-            <img src={blog.images[0]} alt="Blog cover" className="blog-image" />
+            <img src={blog.images[0]} alt="Blog cover" className="profile-blog-image" />
           ) : (
-            <div className="no-image">No image</div>
+            <div className="profile-no-image">No image</div>
           )}
           <h4>{blog.title}</h4>
           <p>
             {expandedBlogs[blog.id] ? blog.content : `${blog.content.slice(0, 100)}...`}
             <span
-              className="toggle-link"
+              className="profile-toggle-link"
               onClick={() => handleToggleExpanded(blog.id)}
             >
               {expandedBlogs[blog.id] ? "Collapse" : "Expand"}
             </span>
           </p>
           <button
-            className="blog-delete-btn"
+            className="profile-blog-delete-btn"
             onClick={() => handleDelete(blog.id)}
           >
             Delete
