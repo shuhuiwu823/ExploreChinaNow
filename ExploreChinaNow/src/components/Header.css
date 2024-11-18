@@ -1,15 +1,15 @@
-/* 限制头像大小并确保为圆形 */
+/* Restrict avatar size and ensure it's circular */
 .avatar-img {
-	width: 35px; /* 明确宽度 */
-	height: 35px; /* 明确高度 */
-	border-radius: 50%; /* 确保圆形 */
-	object-fit: cover; /* 修复图片比例问题 */
-	border: 2px solid #fff; /* 添加白色边框 */
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加轻微阴影效果 */
-	margin-left: 10px; /* 保持头像和其他元素的间距 */
+	width: 35px; /* Explicit width */
+	height: 35px; /* Explicit height */
+	border-radius: 50%; /* Ensure circular shape */
+	object-fit: cover; /* Fix aspect ratio issues */
+	border: 2px solid #fff; /* Add white border */
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+	margin-left: 10px; /* Maintain spacing between avatar and other elements */
 }
 
-/* 导航栏整体样式 */
+/* General navigation bar styles */
 .navbar {
 	padding: 10px;
 }
@@ -17,8 +17,8 @@
 .navbar-brand img {
 	width: 30px;
 	height: 30px;
-	margin-right: 8px; /* 图标和文字间距 */
-	vertical-align: middle; /* 对齐品牌文字 */
+	margin-right: 8px; /* Space between icon and text */
+	vertical-align: middle; /* Align with brand text */
 }
 
 .navbar-nav .nav-link {
@@ -28,14 +28,14 @@
 }
 
 .navbar-nav .nav-link:hover {
-	color: #ddd; /* 悬停效果 */
+	color: #ddd; /* Hover effect */
 }
 
 .navbar-dark .navbar-toggler {
-	border-color: rgba(255, 255, 255, 0.1); /* 折叠按钮的边框颜色 */
+	border-color: rgba(255, 255, 255, 0.1); /* Border color for the toggle button */
 }
 
-/* 登出按钮样式 */
+/* Logout button styles */
 .logout-btn {
 	font-size: 16px;
 	padding: 8px 12px;

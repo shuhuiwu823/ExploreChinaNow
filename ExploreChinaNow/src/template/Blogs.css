@@ -1,168 +1,157 @@
-/* 整体容器 */
+/* Blog container */
 .blogs-container {
   padding: 20px;
-  background-color: #f4f4f9;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
+  background-color: #f4f4f9; /* Light background for contrast */
+  min-height: 100vh; /* Ensure full viewport height */
+  font-family: Arial, sans-serif; /* Clean, modern font */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  max-width: 1200px; /* Limit maximum width for better readability */
+  margin: 0 auto; /* Center-align the container */
 }
 
-/* 搜索框容器 */
-.search-container {
-  margin-bottom: 20px;
+/* Search and add post section */
+.search-and-add-container {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-container {
+  display: flex;
+  gap: 10px; /* Space between input and buttons */
 }
 
 .search-container input {
   padding: 8px;
-  font-size: 14px;
-  border-radius: 4px;
   border: 1px solid #ddd;
-  width: 300px;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 300px; 
 }
 
-.search-container button {
-  padding: 8px 12px;
-  font-size: 14px;
-  background-color: #007bff;
-  color: white;
+.search-container button,
+.add-post-button {
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
   border: none;
   border-radius: 4px;
+  padding: 8px 12px;
   cursor: pointer;
 }
 
-.search-container button:hover {
-  background-color: #0056b3;
+.add-post-button {
+  background-color: #28a745; /* Green background for add post button */
 }
 
-/* 博客文章列表 */
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Blog posts */
 .blog-posts {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr; /* Single-column layout, constrained by the container width */
+  gap: 20px; /* Space between posts */
 }
 
 .blog-post {
   padding: 15px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-  text-align: left;
+  background-color: #fff; /* White background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+  overflow: visible; /* Allow content to overflow vertically */
+  max-width: 100%; /* Constrain width within container */
 }
 
-.blog-post:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+/* Title and author */
+.blog-post-header h3 {
+  font-size: 22px;
+  margin: 0;
+  word-wrap: break-word; /* Enable word wrapping */
 }
 
-/* 文章标题 */
-.blog-post h3 {
-  font-size: 20px;
-  color: #333;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-/* 作者样式 */
 .post-author {
   font-size: 14px;
-  color: #666; /* 较浅的颜色，区分主次 */
-  font-weight: bold;
-  margin-bottom: 5px;
-  text-align: left;
+  color: #666; /* Medium gray for less emphasis */
 }
 
-/* 内容样式 */
-.post-content {
-  font-size: 16px;
-  color: #444; /* 深色，主内容 */
-  line-height: 1.6;
-  margin: 5px 0;
-  text-align: left;
+/* Content styles */
+.blog-post-content { 
+  /* word-wrap: break-word;  */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  overflow-wrap: break-word; /* Break lines logically at word boundaries */
+  white-space: pre-wrap; /* Allow text to wrap naturally */
+  line-height: 1.6; /* Improve readability with adequate line spacing */
+  padding-right: 8px; /* Add spacing for scrollbar if present */
+  word-break: normal; /* Avoid breaking words unless necessary */
 }
 
-/* 图片九宫格 */
+
+
+
+.blog-post-content p {
+  margin: 0;
+}
+
+.toggle-link {
+  color: #007bff;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 14px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/* Image grid */
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 10px;
+  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  gap: 10px; /* Space between images */
+  margin-top: 15px;
 }
 
 .image-thumbnail {
   width: 100%;
-  height: auto;
-  border-radius: 5px;
-  object-fit: cover;
+  border-radius: 5px; /* Rounded corners for images */
+  overflow: hidden; /* Prevent image overflow */
+}
+
+.image-thumbnail img {
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+  object-fit: cover; /* Ensure images cover the thumbnail area */
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center; /* Center-align pagination buttons */
+  gap: 10px; /* Space between buttons */
+}
+
+.page-button {
+  padding: 8px 12px;
   border: 1px solid #ddd;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.image-thumbnail:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* 搜索无结果 */
-.blog-posts p {
-  text-align: center;
-  color: #999;
-  font-size: 14px;
-  margin-top: 20px;
-}
-
-/* 添加文章按钮 */
-.add-post-button {
-  padding: 10px 15px;
-  font-size: 16px;
-  background-color: #28a745;
-  color: white;
-  border: none;
   border-radius: 4px;
-  cursor: pointer;
-  margin-top: 20px;
-  display: inline-block;
 }
 
-.add-post-button:hover {
-  background-color: #218838;
+.page-button.active {
+  background-color: #007bff; /* Blue background for the active button */
+  color: white;
 }
 
-/* 响应式优化 */
+/* Responsive layouts */
 @media (max-width: 768px) {
-  .blogs-container {
-    padding: 15px;
-  }
-
-  .search-container input {
-    width: 100%;
-  }
-
-  .blog-post {
-    padding: 10px;
-  }
-
   .image-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* Switch to two columns */
   }
 }
 
 @media (max-width: 480px) {
   .image-grid {
-    grid-template-columns: repeat(1, 1fr);
-  }
-
-  .blog-post h3 {
-    font-size: 18px;
-  }
-
-  .post-content {
-    font-size: 14px;
-  }
-
-  .add-post-button {
-    width: 100%;
-    text-align: center;
+    grid-template-columns: 1fr; /* Switch to a single column */
   }
 }

@@ -1,59 +1,77 @@
-import React, { useState } from 'react';
-import { addBlogPostToFirestore } from '../services/firestoreService'; // 引入服务方法
-import '../template/AddPost.css';
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AppContext } from "../Context"; // Import Context
+import { addBlogPostToFirestore } from "../services/firestoreService";
+import "../template/AddPost.css";
 
-export default function AddPost({ onPostAdded }) { // 接收回调函数
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [content, setContent] = useState('');
+export default function AddPost({ onPostAdded }) {
+  const { userData } = useContext(AppContext); // Get user data from Context
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const [images, setImages] = useState([]); // 存储用户选择的图片文件
+  const [images, setImages] = useState([]); // Store user-selected image files
+  const maxContentLength = 1000; // Set a maximum content length
+  const navigate = useNavigate();
 
-  // 处理图片选择
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (images.length + files.length > 9) {
-      alert("最多上传 9 张图片");
-      return;
-    }
-    setImages(prev => [...prev, ...files]);
-  };
-
-  // 提交添加文章到 Firestore
+  // Submit and add the post to Firestore
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // 设置加载状态，防止重复提交
+
+    if (content.length > maxContentLength) {
+      alert(`Content length cannot exceed ${maxContentLength} characters`);
+      return;
+    }
+
+    setLoading(true); // Set loading state to prevent duplicate submissions
 
     const newPost = {
       title,
-      author,
+      author: userData?.username || "Anonymous", // Get username from Context
       content,
-      createdAt: new Date(), // 包含创建时间
+      createdAt: new Date(), // Include creation time
     };
 
     try {
-      await addBlogPostToFirestore(newPost, images); // 调用 Firestore 方法保存数据
-      alert('文章已添加！');
-      // 清空表单
-      setTitle('');
-      setAuthor('');
-      setContent('');
+      await addBlogPostToFirestore(newPost, images); // Call Firestore method to save data
+      alert("Post successfully added!");
+      // Clear the form
+      setTitle("");
+      setContent("");
       setImages([]);
-      if (onPostAdded) onPostAdded(); // 调用回调函数返回博客浏览页面
+      if (onPostAdded) {
+        onPostAdded(); // If a callback is provided, call it to refresh the parent component
+      } else {
+        navigate("/blogs"); // Navigate to /blogs if no callback is provided
+      }
     } catch (error) {
-      alert("添加文章失败，请稍后再试");
-      console.error("添加文章时发生错误：", error);
+      alert("Failed to add the post, please try again later");
+      console.error("Error occurred while adding the post:", error);
     } finally {
-      setLoading(false); // 重置加载状态
+      setLoading(false); // Reset loading state
     }
+  };
+
+  // Handle image selection
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (images.length + files.length > 9) {
+      alert("You can upload up to 9 images");
+      return;
+    }
+    setImages((prev) => [...prev, ...files]);
+  };
+
+  // Remove a selected image
+  const handleRemoveImage = (index) => {
+    setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
     <div className="add-post-container">
-      <h2>添加新文章</h2>
+      <h2>Add New Post</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>标题:</label>
+          <label>Title:</label>
           <input
             type="text"
             value={title}
@@ -62,43 +80,54 @@ export default function AddPost({ onPostAdded }) { // 接收回调函数
           />
         </div>
         <div className="form-group">
-          <label>作者:</label>
+          <label>Author:</label>
           <input
             type="text"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            required
+            value={userData?.username || "Anonymous"} // Get username from Context
+            readOnly // Set to read-only
           />
         </div>
         <div className="form-group">
-          <label>内容:</label>
+          <label>Content:</label>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            maxLength={maxContentLength} // Limit maximum characters
             required
           />
+          <div className="char-counter">
+            {content.length}/{maxContentLength} characters
+          </div>
         </div>
         <div className="form-group">
-          <label>上传图片 (最多 9 张):</label>
+          <label>Upload Images (up to 9):</label>
           <input
             type="file"
             accept="image/*"
-            multiple
+            multiplehandleSubmit
             onChange={handleImageChange}
           />
           <div className="image-preview">
             {images.map((image, index) => (
-              <img
-                key={index}
-                src={URL.createObjectURL(image)}
-                alt={`preview-${index}`}
-                className="image-thumbnail"
-              />
+              <div key={index} className="image-preview-item">
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt={`preview-${index}`}
+                  className="image-thumbnail"
+                />
+                <button
+                  type="button"
+                  className="remove-image-btn"
+                  onClick={() => handleRemoveImage(index)}
+                >
+                  ×
+                </button>
+              </div>
             ))}
           </div>
         </div>
         <button type="submit" className="submit-button" disabled={loading}>
-          {loading ? "提交中..." : "提交文章"}
+          {loading ? "Submitting..." : "Submit Post"}
         </button>
       </form>
     </div>
