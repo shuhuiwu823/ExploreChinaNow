@@ -5,6 +5,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { signOut } from "firebase/auth";
 import { AppContext } from "../Context";
 import { auth } from "../firebase";
+import "./Header.css"; // 确保样式被正确导入
 
 function Header() {
 	const { loading, userData, setUserData } = useContext(AppContext);
@@ -58,7 +59,11 @@ function Header() {
 							<>
 								<LinkContainer to="/profile">
 									<Nav.Link>
-										<img className="avatar-img" src={userData.avatar} alt={userData.username} />
+										<img
+											className="avatar-img"
+											src={userData.avatar}
+											alt={userData.username}
+										/>
 									</Nav.Link>
 								</LinkContainer>
 								<Nav.Link onClick={handleLogout} disabled={loading}>

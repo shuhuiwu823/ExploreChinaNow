@@ -1,14 +1,52 @@
+/* 限制头像大小并确保为圆形 */
 .avatar-img {
-    width: 30px; 
-    height: 30px; 
-    border-radius: 50%; 
-    object-fit: cover; 
+	width: 35px; /* 明确宽度 */
+	height: 35px; /* 明确高度 */
+	border-radius: 50%; /* 确保圆形 */
+	object-fit: cover; /* 修复图片比例问题 */
+	border: 2px solid #fff; /* 添加白色边框 */
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加轻微阴影效果 */
+	margin-left: 10px; /* 保持头像和其他元素的间距 */
 }
 
+/* 导航栏整体样式 */
+.navbar {
+	padding: 10px;
+}
+
+.navbar-brand img {
+	width: 30px;
+	height: 30px;
+	margin-right: 8px; /* 图标和文字间距 */
+	vertical-align: middle; /* 对齐品牌文字 */
+}
+
+.navbar-nav .nav-link {
+	color: #fff;
+	font-size: 16px;
+	margin-right: 10px;
+}
+
+.navbar-nav .nav-link:hover {
+	color: #ddd; /* 悬停效果 */
+}
+
+.navbar-dark .navbar-toggler {
+	border-color: rgba(255, 255, 255, 0.1); /* 折叠按钮的边框颜色 */
+}
+
+/* 登出按钮样式 */
 .logout-btn {
-    margin: 0;
-    font-size: 16px; 
-    padding: 8px 12px; 
-    border-radius: 4px;
-    background: none;
+	font-size: 16px;
+	padding: 8px 12px;
+	border-radius: 4px;
+	background: none;
+	color: #fff;
+	transition: background-color 0.3s ease, color 0.3s ease;
+	cursor: pointer;
+}
+
+.logout-btn:hover {
+	background-color: #fff;
+	color: #000;
 }

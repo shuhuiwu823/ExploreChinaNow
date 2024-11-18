@@ -60,7 +60,7 @@ function App() {
 						<Route path="/map" element={<MapContainer />} />
 						<Route path="/tour-plan" element={<Plan />} />
             			<Route path="/tips" element={<Tips />} />
-            			<Route path="/blog" element={<Blogs />} />
+            			<Route path="/blogs" element={<Blogs />} />
             			<Route path="/sign-in" element={<Login />} />
             			<Route path="/sign-up" element={<Register />} />
 						<Route path='/profile' element={userData ? <Profile /> : <Navigate to="/videos"/>} />

@@ -1,4 +1,3 @@
-// Blogs.jsx
 import React, { useState, useEffect } from 'react';
 import '../template/Blogs.css';
 import { getBlogPostsFromFirestore } from '../services/firestoreService'; // 使用 Firebase 获取数据
@@ -9,6 +8,21 @@ export default function Blogs() {
   const [blogPosts, setBlogPosts] = useState([]); // 存储所有博客文章
   const [searchQuery, setSearchQuery] = useState(''); // 存储搜索关键词
   const [filteredPosts, setFilteredPosts] = useState([]); // 存储筛选后的文章
+
+  // 从 Firestore 加载博客数据
+  const fetchPosts = async () => {
+    try {
+      const posts = await getBlogPostsFromFirestore(); // 从 Firestore 获取数据
+      setBlogPosts(posts);
+      setFilteredPosts(posts);
+    } catch (error) {
+      console.error("加载博客文章失败: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   // 控制页面渲染
   const renderPage = () => {
@@ -27,7 +41,6 @@ export default function Blogs() {
               <button onClick={handleSearch}>搜索</button>
               <button onClick={handleClear}>清除</button>
             </div>
-            {/* 显示博客内容 */}
             <div className="blog-posts">
               {filteredPosts.length === 0 ? (
                 <p>未找到匹配的博客文章。</p>
@@ -35,40 +48,42 @@ export default function Blogs() {
                 filteredPosts.map((post) => (
                   <div key={post.id} className="blog-post">
                     <h3>{post.title}</h3>
-                    <p><strong>作者：</strong> {post.author}</p>
-                    <p>{post.content}</p>
+                    <div className="post-author"><strong>作者：</strong> {post.author}</div>
+                    <div className="post-content">{post.content}</div>
+                    {post.images && post.images.length > 0 && (
+                      <div className="image-grid">
+                        {post.images.map((url, index) => (
+                          <img
+                            key={index}
+                            src={url}
+                            alt={`blog-${post.id}-${index}`}
+                            className="image-thumbnail"
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ))
               )}
             </div>
-
-            {/* 添加文章按钮 */}
             <button onClick={() => setPage('addPost')} className="add-post-button">
               添加文章
             </button>
           </div>
         );
       case 'addPost':
-        return <AddPost />; // 跳转到 AddPost 页面
+        return (
+          <AddPost
+            onPostAdded={() => {
+              setPage('blogs'); // 返回博客页面
+              fetchPosts(); // 刷新博客列表
+            }}
+          />
+        );
       default:
         return null;
     }
   };
-
-  // 从 Firestore 加载博客数据
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const posts = await getBlogPostsFromFirestore(); // 从 Firestore 获取数据
-        setBlogPosts(posts);
-        setFilteredPosts(posts);
-      } catch (error) {
-        console.error("加载博客文章失败: ", error);
-      }
-    };
-    
-    fetchPosts();
-  }, []);
 
   // 处理清除搜索
   const handleClear = () => {
@@ -89,7 +104,6 @@ export default function Blogs() {
   return (
     <div className="blogs-container">
       <h2>博客文章</h2>
-      {/* 渲染页面 */}
       {renderPage()}
     </div>
   );
