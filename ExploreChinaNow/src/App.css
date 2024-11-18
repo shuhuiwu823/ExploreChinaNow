@@ -3,14 +3,16 @@ html,
 body {
     height: 100%;
     margin: 0;
+    box-sizing: border-box;
 }
 
 /* Main application content */
 .app-content {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensure the content spans the full viewport height */
+    height: 100%; /* guarantee the layout fit the winodw */
 }
+
 
 .app-content > * {
     flex-shrink: 0; /* Prevent elements from shrinking */
@@ -18,7 +20,8 @@ body {
 
 .app-content > .main-content {
     flex: 1; /* Allow the main content to fill the remaining vertical space */
-    margin-top: 70px; /* Ensure content starts below the Header */
+    margin-top: 70px;
+    margin: 0; /* avoiding extra blank space */
 }
 
 /* Ensure the Header stays fixed at the top */
@@ -27,6 +30,8 @@ body {
     top: 0;
     width: 100%;
     z-index: 1000; /* Keep the Header on the topmost layer */
+    height: 70px; /* Fixed height */
+    line-height: 70px; /* Vertically Center Content */
 }
 
 /* Navigation buttons */
