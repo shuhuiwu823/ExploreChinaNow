@@ -1,151 +1,102 @@
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+import { signOut } from "firebase/auth";
 import { AppContext } from "../Context";
 import { auth } from "../firebase";
-import { signOut } from "firebase/auth";
-import "./Header.css"
+import "./Header.css";
 
 function Header() {
-	const [isDropdownOpen, setDropdownOpen] = useState(false);
-	const { loading ,userData, setUserData} = useContext(AppContext);
+	const { loading, userData, setUserData } = useContext(AppContext);
 	const navigate = useNavigate();
+	const location = useLocation(); // Get the current path
 
 	const handleLogout = () => {
-        signOut(auth).then(() => {
-            // Sign-out successful.
-            setUserData(null);
-          }).catch((error) => {
-            console.log(error)
-          });
-    }
-
-	const toggleDropdown = () => {
-		setDropdownOpen(!isDropdownOpen);
+		signOut(auth)
+			.then(() => {
+				setUserData(null); // Clear user data after logout
+				navigate("/"); // Navigate back to the home page
+			})
+			.catch((error) => {
+				console.error(error);
+			});
 	};
 
-	const closeDropdown = () => {
-		setDropdownOpen(false);
+	const handleNavigation = (path) => {
+		if (path === "/blogs") {
+			if (location.pathname === "/blogs") {
+				// Already on the /blogs page, refresh the page
+				window.location.reload();
+			} else {
+				// Navigate to the /blogs page
+				navigate(path);
+			}
+		} else {
+			// Normal navigation for other paths
+			navigate(path);
+		}
 	};
 
 	return (
-		<header style={headerStyle}>
-			<div style={logoStyle}>
-				<img src="/icon.png" alt="icon" style={iconStyle} />
-				<h1 style={titleStyle}>ExploreChinaNow</h1>
-			</div>
-			<nav style={navStyle}>
-				<Link to="/" style={linkStyle}>
-					Home
-				</Link>
-				<Link to="/videos" style={linkStyle}>
-					Video Recommendations
-				</Link>
-				<Link to="/map" style={linkStyle}>
-					Map
-				</Link>
-				<Link to="/tour-plan" style={linkStyle}>
-					Tour Plan (ChatGPT)
-				</Link>
-				<div style={dropdownStyle} onMouseEnter={toggleDropdown} onMouseLeave={closeDropdown}>
-					<button style={dropdownButtonStyle}>Travel Tips</button>
-					{isDropdownOpen && (
-						<div style={dropdownContentStyle}>
-							<Link to="/visa-policy" style={dropdownLinkStyle}>
+		<Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
+			<Container>
+				<LinkContainer to="/">
+					<Navbar.Brand>
+						<img
+							src="/icon.png"
+							width="30"
+							height="30"
+							className="d-inline-block align-top"
+							alt="icon"
+						/>{" "}
+						ExploreChinaNow
+					</Navbar.Brand>
+				</LinkContainer>
+				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+				<Navbar.Collapse id="responsive-navbar-nav">
+					<Nav className="ml-auto">
+						<Nav.Link onClick={() => handleNavigation("/")}>Home</Nav.Link>
+						<Nav.Link onClick={() => handleNavigation("/videos")}>Videos</Nav.Link>
+						<Nav.Link onClick={() => handleNavigation("/map")}>Map</Nav.Link>
+						<Nav.Link onClick={() => handleNavigation("/tour-plan")}>Tour Plan</Nav.Link>
+						<NavDropdown title="Travel Tips" id="collasible-nav-dropdown">
+							<NavDropdown.Item onClick={() => handleNavigation("/visa-policy")}>
 								Visa Policy Info
-							</Link>
-							<Link to="/payment-setup" style={dropdownLinkStyle}> 	
+							</NavDropdown.Item>
+							<NavDropdown.Item onClick={() => handleNavigation("/payment-setup")}>
 								Payment Setup
-							</Link>
-						</div>
-					)}
-				</div>
-				<Link to="/blogs" style={linkStyle}>
-					Blogs
-				</Link>
-				{userData ? 
-				<>
-				<Link to="/profile"><img className="avatar-img" src={userData.avatar} alt={userData.username}/></Link>
-				<button className="logout-btn" onClick={handleLogout} disabled={loading}>{loading ? "Loading..." : "Logout"}</button>
-				</>
-				:
-				<>
-				<Link to="/sign-in" style={linkStyle}>
-					Sign In
-				</Link>
-                <Link to="/sign-up" style={linkStyle}>
-					Sign Up
-				</Link>
-				</>}
-			</nav>
-		</header>
+							</NavDropdown.Item>
+						</NavDropdown>
+						<Nav.Link onClick={() => handleNavigation("/blogs")}>Blogs</Nav.Link>
+						{userData ? (
+							<>
+								<Nav.Link onClick={() => handleNavigation("/profile")}>
+									<img
+										className="avatar-img"
+										src={userData.avatar}
+										alt={userData.username}
+									/>
+								</Nav.Link>
+								<Nav.Link onClick={handleLogout} disabled={loading}>
+									{loading ? "Loading..." : "Logout"}
+								</Nav.Link>
+							</>
+						) : (
+							<>
+								<Nav.Link onClick={() => handleNavigation("/sign-in")}>
+									Sign In
+								</Nav.Link>
+								<Nav.Link onClick={() => handleNavigation("/sign-up")}>
+									Sign Up
+								</Nav.Link>
+							</>
+						)}
+					</Nav>
+				</Navbar.Collapse>
+			</Container>
+		</Navbar>
 	);
 }
-
-const headerStyle = {
-	display: "flex",
-	justifyContent: "space-between",
-	alignItems: "center",
-	padding: "10px 20px",
-	backgroundColor: "#333",
-	color: "#fff",
-};
-
-const logoStyle = {
-	display: "flex",
-	alignItems: "center",
-};
-
-const iconStyle = {
-	width: "30px",
-	height: "30px",
-	marginRight: "10px",
-};
-
-const titleStyle = {
-	fontSize: "24px",
-	fontWeight: "bold",
-};
-
-const navStyle = {
-	display: "flex",
-	gap: "15px",
-};
-
-const linkStyle = {
-	color: "#fff",
-	textDecoration: "none",
-	padding: "8px 12px",
-	borderRadius: "4px",
-};
-
-const dropdownStyle = {
-	position: "relative",
-	display: "inline-block",
-};
-
-const dropdownButtonStyle = {
-	backgroundColor: "#333",
-	color: "#fff",
-	border: "none",
-	cursor: "pointer",
-	padding: "8px 12px",
-	borderRadius: "4px",
-};
-
-const dropdownContentStyle = {
-	position: "absolute",
-	backgroundColor: "#444",
-	minWidth: "160px",
-	boxShadow: "0px 8px 16px 0px rgba(0,0,0,0.2)",
-	zIndex: 1,
-	borderRadius: "4px",
-};
-
-const dropdownLinkStyle = {
-	color: "#fff",
-	textDecoration: "none",
-	display: "block",
-	padding: "10px",
-};
 
 export default Header;

@@ -1,14 +1,52 @@
+/* Restrict avatar size and ensure it's circular */
 .avatar-img {
-    width: 30px; 
-    height: 30px; 
-    border-radius: 50%; 
-    object-fit: cover; 
+	width: 35px; /* Explicit width */
+	height: 35px; /* Explicit height */
+	border-radius: 50%; /* Ensure circular shape */
+	object-fit: cover; /* Fix aspect ratio issues */
+	border: 2px solid #fff; /* Add white border */
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+	margin-left: 10px; /* Maintain spacing between avatar and other elements */
 }
 
+/* General navigation bar styles */
+.navbar {
+	padding: 10px;
+}
+
+.navbar-brand img {
+	width: 30px;
+	height: 30px;
+	margin-right: 8px; /* Space between icon and text */
+	vertical-align: middle; /* Align with brand text */
+}
+
+.navbar-nav .nav-link {
+	color: #fff;
+	font-size: 16px;
+	margin-right: 10px;
+}
+
+.navbar-nav .nav-link:hover {
+	color: #ddd; /* Hover effect */
+}
+
+.navbar-dark .navbar-toggler {
+	border-color: rgba(255, 255, 255, 0.1); /* Border color for the toggle button */
+}
+
+/* Logout button styles */
 .logout-btn {
-    margin: 0;
-    font-size: 16px; 
-    padding: 8px 12px; 
-    border-radius: 4px;
-    background: none;
+	font-size: 16px;
+	padding: 8px 12px;
+	border-radius: 4px;
+	background: none;
+	color: #fff;
+	transition: background-color 0.3s ease, color 0.3s ease;
+	cursor: pointer;
+}
+
+.logout-btn:hover {
+	background-color: #fff;
+	color: #000;
 }
