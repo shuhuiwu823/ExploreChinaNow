@@ -5,12 +5,12 @@ const VideosPage = () => {
 	const [videos, setVideos] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [selectedVideoId, setSelectedVideoId] = useState(null);
-	const [isModalOpen, setIsModalOpen] = useState(false); // Track modal visibility
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	// YouTube API key (replace with your own key)
 	const API_KEY = "AIzaSyAiO6QfiiAJDRzM0YhqdwEYHBJeyO_7crQ";
 
-	// Initial video IDs and titles (for default videos)
+	// Updated initial videos to show 9 default videos
 	const initialVideos = [
 		{ id: "Uuwdv2FZOwU", title: "Exploring China: Amazing Travel Destinations" },
 		{ id: "tpk2mF9AEZo", title: "Top 10 Must-Visit Places in China" },
@@ -18,19 +18,24 @@ const VideosPage = () => {
 		{ id: "33bZIOLX4do", title: "Hidden Gems of China: Travel Guide" },
 		{ id: "b5FtjD2I8es", title: "China Adventure: Exploring the Great Wall" },
 		{ id: "1aYcFjsEULM", title: "Amazing Chinese Culture and Travel Spots" },
+		{
+			id: "g7gzq9j8f3E",
+			title: "48h in China's Silicon Valley 🇨🇳 China Is Living in the Future! (Shenzhen or California?)",
+		},
+		{ id: "OqwOdurjbdY", title: "What I Love and Hate About China | Travel Vlog" },
+		{ id: "gQysLy32dFg", title: "FIRST TIME in HONG KONG 🇭🇰 (not what we expected)" },
 	];
 
-	// Handle search on button click
-	const handleSearch = async () => {
-		if (!searchQuery) return;
-
+	// Function to handle search directly with city name
+	const handleCitySearch = async (city) => {
+		setSearchQuery(`${city} travel vlog`);
 		setLoading(true);
 		try {
 			const response = await fetch(
-				`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${searchQuery}&maxResults=6&key=${API_KEY}`
+				`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${city} travel vlog&maxResults=9&key=${API_KEY}`
 			);
 			const data = await response.json();
-			setVideos(data.items); // Set the video results to state
+			setVideos(data.items);
 		} catch (error) {
 			console.error("Error fetching YouTube data:", error);
 		} finally {
@@ -38,20 +43,34 @@ const VideosPage = () => {
 		}
 	};
 
-	// Handle search on "Enter" key press
+	const handleSearch = async () => {
+		if (!searchQuery) return;
+
+		setLoading(true);
+		try {
+			const response = await fetch(
+				`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${searchQuery}&maxResults=9&key=${API_KEY}`
+			);
+			const data = await response.json();
+			setVideos(data.items);
+		} catch (error) {
+			console.error("Error fetching YouTube data:", error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter") {
 			handleSearch();
 		}
 	};
 
-	// Handle video click to open modal
 	const openModal = (videoId) => {
 		setSelectedVideoId(videoId);
 		setIsModalOpen(true);
 	};
 
-	// Handle modal close
 	const closeModal = () => {
 		setIsModalOpen(false);
 		setSelectedVideoId(null);
@@ -59,20 +78,20 @@ const VideosPage = () => {
 
 	return (
 		<div style={{ textAlign: "center" }}>
-			{/* <h2>China Travel Vlogs</h2> */}
+			<br />
 			<h1>Explore China: The Best Travel Videos</h1>
 			<p>Your next adventure starts here</p>
-			{/* Search Bar */}
+
 			<div>
 				<input
 					type="text"
 					value={searchQuery}
 					onChange={(e) => setSearchQuery(e.target.value)}
-					onKeyDown={handleKeyDown} // Trigger search on 'Enter' key press
+					onKeyDown={handleKeyDown}
 					placeholder="Enter keywords..."
 					style={{
 						padding: "10px",
-						width: "300px",
+						width: "400px",
 						marginRight: "10px",
 						borderRadius: "4px",
 						border: "1px solid #ccc",
@@ -83,7 +102,8 @@ const VideosPage = () => {
 					style={{
 						padding: "10px 20px",
 						borderRadius: "4px",
-						backgroundColor: "#4CAF50",
+						backgroundColor: "gray",
+						// backgroundColor: "#4CAF50",
 						color: "white",
 						border: "none",
 						cursor: "pointer",
@@ -91,26 +111,46 @@ const VideosPage = () => {
 					Search
 				</button>
 			</div>
+			<div style={{ margin: "20px" }}>
+				<span>Popular Search: </span>
+				{["Beijing", "Shanghai", "Guangzhou", "Shenzhen"].map((city) => (
+					<a
+						key={city}
+						href="#"
+						onClick={(e) => {
+							e.preventDefault();
+							handleCitySearch(city);
+						}}
+						style={{
+							padding: "10px 10px",
+							// marginLeft: "2px",
+							color: "#007bff", // Bootstrap default link color
+							textDecoration: "underline",
+							cursor: "pointer",
+						}}>
+						{city}
+					</a>
+				))}
+			</div>
+
 			<br />
-			{/* Loading Indicator */}
+
 			{loading && <p>Loading...</p>}
 
-			{/* Display Videos */}
 			<div
 				style={{
 					display: "grid",
-					gridTemplateColumns: "repeat(3, 1fr)", // 3 videos per row
+					gridTemplateColumns: "repeat(3, 1fr)",
 					gap: "20px",
 					maxWidth: "960px",
 					margin: "0 auto",
 				}}>
 				{videos.length === 0 &&
 					!loading &&
-					// Default 6 videos when no search is performed
 					initialVideos.map((video) => (
 						<div
 							key={video.id}
-							onClick={() => openModal(video.id)} // Open modal on click
+							onClick={() => openModal(video.id)}
 							style={{
 								cursor: "pointer",
 								maxWidth: "300px",
@@ -123,7 +163,7 @@ const VideosPage = () => {
 								style={{
 									position: "relative",
 									width: "100%",
-									height: "200px", // Fixed height for uniformity
+									height: "200px",
 								}}>
 								<img
 									src={`https://img.youtube.com/vi/${video.id}/0.jpg`}
@@ -131,7 +171,7 @@ const VideosPage = () => {
 									style={{
 										width: "100%",
 										height: "100%",
-										objectFit: "cover", // Ensures the image covers the entire space without distortion
+										objectFit: "cover",
 										borderRadius: "8px",
 										transition: "transform 0.3s",
 									}}
@@ -143,13 +183,12 @@ const VideosPage = () => {
 						</div>
 					))}
 
-				{/* Display search results */}
 				{!loading &&
 					videos.length > 0 &&
 					videos.map((video) => (
 						<div
 							key={video.id.videoId}
-							onClick={() => openModal(video.id.videoId)} // Open modal on click
+							onClick={() => openModal(video.id.videoId)}
 							style={{
 								cursor: "pointer",
 								maxWidth: "300px",
@@ -162,7 +201,7 @@ const VideosPage = () => {
 								style={{
 									position: "relative",
 									width: "100%",
-									height: "200px", // Fixed height for uniformity
+									height: "200px",
 								}}>
 								<img
 									src={video.snippet.thumbnails.medium.url}
@@ -170,7 +209,7 @@ const VideosPage = () => {
 									style={{
 										width: "100%",
 										height: "100%",
-										objectFit: "cover", // Ensures the image covers the entire space without distortion
+										objectFit: "cover",
 										borderRadius: "8px",
 										transition: "transform 0.3s",
 									}}
@@ -182,8 +221,8 @@ const VideosPage = () => {
 						</div>
 					))}
 			</div>
+			<br />
 
-			{/* Modal to show the selected video */}
 			{isModalOpen && (
 				<div
 					style={{
@@ -202,7 +241,6 @@ const VideosPage = () => {
 						style={{
 							position: "relative",
 							backgroundColor: "black",
-							// padding: "5px",
 							borderRadius: "8px",
 							width: "80%",
 							maxWidth: "800px",
