@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { signOut } from "firebase/auth";
-import { AppContext } from "../Context";
+import { AppContext } from "../context";
 import { auth } from "../firebase";
 
 function Header() {
