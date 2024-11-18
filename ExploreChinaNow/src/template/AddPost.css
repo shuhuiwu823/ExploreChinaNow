@@ -1,69 +1,123 @@
-/* AddPost.css */
-
-/* 整体容器 */
+/* Overall container */
 .add-post-container {
-    padding: 20px;
-    background-color: #f4f4f9;
-    min-height: 100vh;
-  }
-  
-  /* 表单标题 */
-  .add-post-container h2 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  /* 表单 */
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  /* 表单项 */
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .form-group label {
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .form-group input,
-  .form-group textarea {
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    width: 100%;
-  }
-  
-  .form-group textarea {
-    min-height: 150px;
-    resize: vertical; /* 允许垂直调整大小 */
-  }
-  
-  /* 提交按钮 */
-  .submit-button {
-    padding: 10px 15px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .submit-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .submit-button:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
-  }
-  
+  padding: 20px;
+  background-color: #f4f4f9;
+  min-height: 100vh; /* Ensure the container spans the full height of the viewport */
+}
+
+/* Form title */
+.add-post-container h2 {
+  font-size: 24px;
+  color: #333; /* Dark gray for contrast */
+  margin-bottom: 20px;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  flex-direction: column; /* Arrange form elements vertically */
+  gap: 20px; /* Space between form elements */
+}
+
+/* Form fields */
+.form-group {
+  display: flex;
+  flex-direction: column; /* Arrange label and input vertically */
+  gap: 8px; /* Space between label and input */
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #555; /* Medium gray for labels */
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ddd; /* Light gray border */
+  width: 100%; /* Full width input fields */
+}
+
+.form-group textarea {
+  min-height: 150px; /* Minimum height for the text area */
+  resize: vertical; /* Allow resizing vertically */
+  white-space: pre-wrap; /* Preserve line breaks and white spaces */
+  word-wrap: break-word; /* Break long words to prevent overflow */
+  overflow-wrap: break-word; /* Ensure compatibility for breaking long words */
+  font-family: "Arial", sans-serif; /* Use a clear font for better readability */
+}
+
+/* Submit button */
+.submit-button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.submit-button:disabled {
+  background-color: #ddd; /* Gray background when disabled */
+  cursor: not-allowed; /* Change cursor to indicate disabled state */
+}
+
+/* Character counter for content length */
+.char-counter {
+  font-size: 14px;
+  color: #666; /* Medium gray */
+  margin-top: 5px;
+  text-align: right; /* Align to the right */
+}
+
+/* Image preview container */
+.image-preview {
+  display: flex;
+  flex-wrap: wrap; /* Allow images to wrap to the next row */
+  gap: 10px; /* Space between images */
+}
+
+/* Individual image preview item */
+.image-preview-item {
+  position: relative; /* Enable positioning for the remove button */
+  display: inline-block;
+}
+
+/* Image thumbnail */
+.image-thumbnail {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px; /* Rounded corners */
+  object-fit: cover; /* Maintain aspect ratio and cover the area */
+  border: 1px solid #ddd; /* Light gray border */
+}
+
+/* Remove button for images */
+.remove-image-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px; /* Position the button in the top-right corner */
+  background-color: #e74c3c; /* Red background */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 50%; /* Make the button circular */
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the "×" symbol */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.remove-image-btn:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}

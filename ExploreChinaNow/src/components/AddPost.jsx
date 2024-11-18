@@ -1,42 +1,77 @@
-// AddPost.jsx
-import React, { useState } from 'react';
-import { addBlogPostToFirestore } from '../services/firestoreService'; // 引入新的 Firebase 方法
-import '../template/AddPost.css';
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AppContext } from "../Context"; // Import Context
+import { addBlogPostToFirestore } from "../services/firestoreService";
+import "../template/AddPost.css";
 
-export default function AddPost() {
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [content, setContent] = useState('');
+export default function AddPost({ onPostAdded }) {
+  const { userData } = useContext(AppContext); // Get user data from Context
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [images, setImages] = useState([]); // Store user-selected image files
+  const maxContentLength = 1000; // Set a maximum content length
+  const navigate = useNavigate();
 
-  // 提交添加文章到 Firestore
+  // Submit and add the post to Firestore
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // 设置加载状态，防止重复提交
 
-    const newPost = { title, author, content, createdAt: new Date() }; // 包含创建时间
+    if (content.length > maxContentLength) {
+      alert(`Content length cannot exceed ${maxContentLength} characters`);
+      return;
+    }
+
+    setLoading(true); // Set loading state to prevent duplicate submissions
+
+    const newPost = {
+      title,
+      author: userData?.username || "Anonymous", // Get username from Context
+      content,
+      createdAt: new Date(), // Include creation time
+    };
 
     try {
-      await addBlogPostToFirestore(newPost); // 调用 Firestore 方法保存数据
-      alert('文章已添加！');
-      // 清空表单
-      setTitle('');
-      setAuthor('');
-      setContent('');
+      await addBlogPostToFirestore(newPost, images); // Call Firestore method to save data
+      alert("Post successfully added!");
+      // Clear the form
+      setTitle("");
+      setContent("");
+      setImages([]);
+      if (onPostAdded) {
+        onPostAdded(); // If a callback is provided, call it to refresh the parent component
+      } else {
+        navigate("/blogs"); // Navigate to /blogs if no callback is provided
+      }
     } catch (error) {
-      alert("添加文章失败，请稍后再试");
-      console.error("Error adding post: ", error);
+      alert("Failed to add the post, please try again later");
+      console.error("Error occurred while adding the post:", error);
     } finally {
-      setLoading(false); // 重置加载状态
+      setLoading(false); // Reset loading state
     }
+  };
+
+  // Handle image selection
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (images.length + files.length > 9) {
+      alert("You can upload up to 9 images");
+      return;
+    }
+    setImages((prev) => [...prev, ...files]);
+  };
+
+  // Remove a selected image
+  const handleRemoveImage = (index) => {
+    setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
     <div className="add-post-container">
-      <h2>添加新文章</h2>
+      <h2>Add New Post</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>标题:</label>
+          <label>Title:</label>
           <input
             type="text"
             value={title}
@@ -45,24 +80,54 @@ export default function AddPost() {
           />
         </div>
         <div className="form-group">
-          <label>作者:</label>
+          <label>Author:</label>
           <input
             type="text"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            required
+            value={userData?.username || "Anonymous"} // Get username from Context
+            readOnly // Set to read-only
           />
         </div>
         <div className="form-group">
-          <label>内容:</label>
+          <label>Content:</label>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            maxLength={maxContentLength} // Limit maximum characters
             required
           />
+          <div className="char-counter">
+            {content.length}/{maxContentLength} characters
+          </div>
+        </div>
+        <div className="form-group">
+          <label>Upload Images (up to 9):</label>
+          <input
+            type="file"
+            accept="image/*"
+            multiplehandleSubmit
+            onChange={handleImageChange}
+          />
+          <div className="image-preview">
+            {images.map((image, index) => (
+              <div key={index} className="image-preview-item">
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt={`preview-${index}`}
+                  className="image-thumbnail"
+                />
+                <button
+                  type="button"
+                  className="remove-image-btn"
+                  onClick={() => handleRemoveImage(index)}
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
         <button type="submit" className="submit-button" disabled={loading}>
-          {loading ? "提交中..." : "提交文章"}
+          {loading ? "Submitting..." : "Submit Post"}
         </button>
       </form>
     </div>
