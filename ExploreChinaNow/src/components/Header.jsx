@@ -40,7 +40,7 @@ function Header() {
 						<LinkContainer to="/map">
 							<Nav.Link>Map</Nav.Link>
 						</LinkContainer>
-						<LinkContainer to="/travel-plan">
+						<LinkContainer to="/tour-plan">
 							<Nav.Link>Tour Plan</Nav.Link>
 						</LinkContainer>
 						<NavDropdown title="Travel Tips" id="collasible-nav-dropdown">
