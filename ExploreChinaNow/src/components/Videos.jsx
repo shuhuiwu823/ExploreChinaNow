@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const VideosPage = () => {
 	const [searchQuery, setSearchQuery] = useState("");
@@ -6,6 +7,16 @@ const VideosPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [selectedVideoId, setSelectedVideoId] = useState(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const location = useLocation();
+
+	// Extract selectedCity from location state if available
+	useEffect(() => {
+		if (location.state && location.state.selectedCity) {
+			const cityQuery = `${location.state.selectedCity}`;
+			setSearchQuery(cityQuery);
+			handleCitySearch(cityQuery); // Automatically trigger search when city is selected
+		}
+	}, [location.state]); // Depend on location.state to re-run this effect when it changes
 
 	// YouTube API key (replace with your own key)
 	const API_KEY = "AIzaSyAiO6QfiiAJDRzM0YhqdwEYHBJeyO_7crQ";
