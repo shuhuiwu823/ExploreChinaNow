@@ -39,13 +39,47 @@
 
 .submit-login {
     padding: 0.6rem;
+    margin: 0;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+
+    line-height: 1rem;
 }
 
 .submit-login:disabled {
     background-color: #ccc;
+}
+
+.signup-prompt {
+    text-align: left;
+
+    margin: 0.5rem 0 0.5rem 0;
+}
+
+.google-login-btn {
+    display: flex;          
+    align-items: center;  
+    justify-content: center;   
+    gap: 0.5rem; 
+    padding: 0.6rem;
+    margin: 0;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    line-height: 1rem;
+    width: 100%;
+}
+
+.google-login-btn:disabled {
+    background-color: #ccc;
+}
+
+.google-icon {
+    width: 1rem;
 }

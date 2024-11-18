@@ -6,6 +6,7 @@ import uploadFile from "../dbOperation";
 import { Button } from "react-bootstrap";
 import { AppContext } from "../Context";
 import "./Register.css";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
     const [avatar, setAvatar] = useState({
@@ -13,8 +14,10 @@ function Register() {
         url:"/avatar.png"
     });
 
-    const {userData, setUserData, errorMsg, setErrorMsg, loading, setLoading} = useContext(AppContext);
-    
+    const {userData, setUserData, loading, setLoading} = useContext(AppContext);
+    const [errorMsg, setErrorMsg] = useState("");
+    const navigate = useNavigate();
+
     // When user change the avatar image, change the avatar state
     const handleAvatar = (e) => {
         if(e.target.files[0]){
@@ -27,6 +30,7 @@ function Register() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        setErrorMsg("");
         setLoading(true);
         
         const formData = new FormData(e.target);
@@ -52,12 +56,12 @@ function Register() {
             });
 
             setUserData(userInfo);
+            navigate("/profile");
         }catch(err){
             console.log(err);
-            setErrorMsg(err.message);
+            setErrorMsg(err);
         }finally{
             setLoading(false);
-            navigate("/profile");
         }
     }
 

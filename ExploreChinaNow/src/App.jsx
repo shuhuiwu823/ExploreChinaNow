@@ -23,12 +23,12 @@ function App() {
 
   	useEffect(() => {
     	const unSub = onAuthStateChanged(auth, async (user) => {
-	  	if(user){
-			const data = await getUserData(user.uid); 
-			setUserData(data);
-	  	}
-      	console.log(user);
-	  	setLoading(false);
+	  		if(user){
+				const data = await getUserData(user.uid); 
+				setUserData(data);
+	  		}
+      		console.log(user);
+	  		setLoading(false);
     	});
 
     	return () => {
