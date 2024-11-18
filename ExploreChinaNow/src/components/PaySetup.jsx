@@ -1,6 +1,5 @@
 
 import { Container, Row, Col, Card, Accordion } from "react-bootstrap";
-import pay from "../assets/pay.png";
 
 const PaySetup = () => {
   return (
@@ -16,7 +15,12 @@ const PaySetup = () => {
       <Row className="mb-4">
         <Col>
           <Card>
-            <Card.Header className="bg-primary text-white">Alipay</Card.Header>
+            <Card.Header
+              className="bg-primary text-white"
+              style={{ marginLeft: "unset" }}
+            >
+              Alipay
+            </Card.Header>
             <Card.Body>
               <p>
                 Alipay, created by Alibaba, allows users to connect their bank
