@@ -1,48 +1,45 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
-import {
-  APIProvider,
-  Map,
-  AdvancedMarker,
-  Pin,
-} from "@vis.gl/react-google-maps";
+import { APIProvider, Map, AdvancedMarker, Pin } from "@vis.gl/react-google-maps";
 import "bootstrap/dist/css/bootstrap.min.css";
 import greatWall from "../assets/greatWall.jpeg";
 import shanghaiPic from "../assets/shanghai.jpeg";
 import guangzhouPic from "../assets/guangzhou.jpeg";
+import chongqingImage from "../assets/chongqing.jpeg";
+import harbinImage from "../assets/haerbin.jpeg";
 const locations = [
-  { key: "beijing", location: { lat: 39.9042, lng: 116.4074 } },
-  { key: "tianjin", location: { lat: 39.0851, lng: 117.1902 } },
-  { key: "hebei", location: { lat: 38.0435, lng: 114.5149 } },
-  { key: "shannxi", location: { lat: 37.8705, lng: 112.548 } },
-  { key: "neimenggu", location: { lat: 40.8173, lng: 111.7652 } },
-  { key: "liaoning", location: { lat: 41.7954, lng: 123.4328 } },
-  { key: "jilin", location: { lat: 43.8868, lng: 125.3245 } },
-  { key: "heilongjiang", location: { lat: 45.7489, lng: 126.6424 } },
-  { key: "shanghai", location: { lat: 31.2304, lng: 121.4737 } },
-  { key: "jiangsu", location: { lat: 32.0603, lng: 118.7969 } },
-  { key: "zhejiang", location: { lat: 30.2741, lng: 120.1551 } },
-  { key: "anhui", location: { lat: 31.8206, lng: 117.2272 } },
-  { key: "fujian", location: { lat: 26.0745, lng: 119.2965 } },
-  { key: "jiangxi", location: { lat: 28.6747, lng: 115.8262 } },
-  { key: "shandong", location: { lat: 36.6758, lng: 117.0009 } },
-  { key: "henan", location: { lat: 34.7466, lng: 113.6254 } },
-  { key: "hubei", location: { lat: 30.5844, lng: 114.2986 } },
-  { key: "hunan", location: { lat: 28.2282, lng: 112.9388 } },
-  { key: "guangdong", location: { lat: 23.1291, lng: 113.2644 } },
-  { key: "guangxi", location: { lat: 22.8155, lng: 108.3275 } },
-  { key: "hainan", location: { lat: 20.0317, lng: 110.3312 } },
-  { key: "chongqing", location: { lat: 29.563, lng: 106.5516 } },
-  { key: "sichuan", location: { lat: 30.657, lng: 104.0657 } },
-  { key: "guizhou", location: { lat: 26.5982, lng: 106.7135 } },
-  { key: "yunnan", location: { lat: 25.0389, lng: 102.7186 } },
-  { key: "xizang", location: { lat: 29.652, lng: 91.1721 } },
-  { key: "shaanxi", location: { lat: 37.8705, lng: 112.548 } },
-  { key: "ningxia", location: { lat: 38.4713, lng: 106.2782 } },
-  { key: "xinjiang", location: { lat: 43.793, lng: 87.6177 } },
-  { key: "taipei", location: { lat: 25.032969, lng: 121.565418 } },
-  { key: "xining", location: { lat: 35.7604, lng: 103.8324 } },
+	{ key: "beijing", location: { lat: 39.9042, lng: 116.4074 } },
+	{ key: "tianjin", location: { lat: 39.0851, lng: 117.1902 } },
+	{ key: "hebei", location: { lat: 38.0435, lng: 114.5149 } },
+	{ key: "shannxi", location: { lat: 37.8705, lng: 112.548 } },
+	{ key: "neimenggu", location: { lat: 40.8173, lng: 111.7652 } },
+	{ key: "liaoning", location: { lat: 41.7954, lng: 123.4328 } },
+	{ key: "jilin", location: { lat: 43.8868, lng: 125.3245 } },
+	{ key: "heilongjiang", location: { lat: 45.7489, lng: 126.6424 } },
+	{ key: "shanghai", location: { lat: 31.2304, lng: 121.4737 } },
+	{ key: "jiangsu", location: { lat: 32.0603, lng: 118.7969 } },
+	{ key: "zhejiang", location: { lat: 30.2741, lng: 120.1551 } },
+	{ key: "anhui", location: { lat: 31.8206, lng: 117.2272 } },
+	{ key: "fujian", location: { lat: 26.0745, lng: 119.2965 } },
+	{ key: "jiangxi", location: { lat: 28.6747, lng: 115.8262 } },
+	{ key: "shandong", location: { lat: 36.6758, lng: 117.0009 } },
+	{ key: "henan", location: { lat: 34.7466, lng: 113.6254 } },
+	{ key: "hubei", location: { lat: 30.5844, lng: 114.2986 } },
+	{ key: "hunan", location: { lat: 28.2282, lng: 112.9388 } },
+	{ key: "guangdong", location: { lat: 23.1291, lng: 113.2644 } },
+	{ key: "guangxi", location: { lat: 22.8155, lng: 108.3275 } },
+	{ key: "hainan", location: { lat: 20.0317, lng: 110.3312 } },
+	{ key: "chongqing", location: { lat: 29.563, lng: 106.5516 } },
+	{ key: "sichuan", location: { lat: 30.657, lng: 104.0657 } },
+	{ key: "guizhou", location: { lat: 26.5982, lng: 106.7135 } },
+	{ key: "yunnan", location: { lat: 25.0389, lng: 102.7186 } },
+	{ key: "xizang", location: { lat: 29.652, lng: 91.1721 } },
+	{ key: "shaanxi", location: { lat: 37.8705, lng: 112.548 } },
+	{ key: "ningxia", location: { lat: 38.4713, lng: 106.2782 } },
+	{ key: "xinjiang", location: { lat: 43.793, lng: 87.6177 } },
+	{ key: "taipei", location: { lat: 25.032969, lng: 121.565418 } },
+	{ key: "xining", location: { lat: 35.7604, lng: 103.8324 } },
 ];
 const popularCities = [
   {
@@ -52,31 +49,33 @@ const popularCities = [
   },
   { key: "shanghai", location: { lat: 31.2304, lng: 121.4737 } },
   { key: "guangdong", location: { lat: 23.1291, lng: 113.2644 } },
+  { key: "chongqing", location: { lat: 29.563, lng: 106.5516 } },
+  { key: "heilongjiang", location: { lat: 45.7489, lng: 126.6424 } },
 ];
 
 const MapContainer = () => {
-  const navigate = useNavigate();
-  const [selectedCity, setSelectedCity] = useState("");
-  const [showMarkers, setShowMarkers] = useState("all");
-  const [modalOpen, setModalOpen] = useState(false);
+	const navigate = useNavigate();
+	const [selectedCity, setSelectedCity] = useState("");
+	const [showMarkers, setShowMarkers] = useState("all");
+	const [modalOpen, setModalOpen] = useState(false);
 
-  const handleOpenInfo = (cityName) => {
-    setSelectedCity(cityName);
-    if (showMarkers === "all") {
-      setModalOpen(true);
-    }
-  };
+	const handleOpenInfo = (cityName) => {
+		setSelectedCity(cityName);
+		if (showMarkers === "all") {
+			setModalOpen(true);
+		}
+	};
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
-    setSelectedCity("");
-  };
+	const handleCloseModal = () => {
+		setModalOpen(false);
+		setSelectedCity("");
+	};
 
-  const toggleMarkers = (type) => {
-    setShowMarkers((prev) => (prev === type ? "none" : type));
-  };
+	const toggleMarkers = (type) => {
+		setShowMarkers((prev) => (prev === type ? "none" : type));
+	};
 
-  return (
+	return (
     <div className="map-container">
       <APIProvider apiKey={"AIzaSyAgYOfrSVMN-4qquy9cI_ZSM6SjhvF_cW0"}>
         <Map
@@ -161,6 +160,152 @@ const MapContainer = () => {
           </Modal.Body>
         </Modal>
       )}
+      {showMarkers === "popular" && selectedCity === "chongqing" && (
+        <div className="info-sidebar">
+          <Button
+            className="delete-btn"
+            variant="link"
+            onClick={() => setSelectedCity("")}
+            style={{ color: "black", textDecoration: "none" }}
+          >
+            X
+          </Button>
+          <div className="pic-loc">
+            <img src={chongqingImage} className="sidebar-image" />
+          </div>
+          <h5>Chongqing (重庆市)</h5>
+          <p>
+            <strong>Chongqing</strong>, a major city in southwest China, is
+            known for its mountainous landscape, spicy cuisine, and vibrant
+            culture. With its modern skyline, historical landmarks, and the
+            famous Yangtze River, Chongqing offers a unique experience blending
+            tradition and innovation.
+          </p>
+
+          <h5>Basic Information</h5>
+          <ul>
+            <li>
+              <strong>Chinese Name:</strong> 重庆市
+            </li>
+            <li>
+              <strong>Foreign Name:</strong> Chongqing
+            </li>
+            <li>
+              <strong>Other Names:</strong> 渝州, 巴渝, 山城
+            </li>
+            <li>
+              <strong>Location:</strong> Southwest China, surrounded by
+              mountains and intersected by rivers
+            </li>
+            <li>
+              <strong>Area Code:</strong> 023
+            </li>
+            <li>
+              <strong>Population:</strong> 32.12 million
+            </li>
+            <li>
+              <strong>Airports:</strong> Chongqing Jiangbei International
+              Airport
+            </li>
+            <li>
+              <strong>License Plate Codes:</strong> 渝A—渝Z
+            </li>
+          </ul>
+
+          <h5>Popular Attractions</h5>
+          <ul>
+            <li>
+              <strong>Hongya Cave:</strong> A unique cliffside complex
+              showcasing traditional architecture and vibrant nightlife.
+            </li>
+            <li>
+              <strong>Ciqikou Ancient Town:</strong> A historical town known for
+              its preserved streets and local snacks.
+            </li>
+            <li>
+              <strong>Wulong Karst:</strong> A UNESCO World Heritage site
+              featuring stunning natural limestone formations.
+            </li>
+            <li>
+              <strong>Three Gorges:</strong> A breathtaking area along the
+              Yangtze River with incredible scenery.
+            </li>
+          </ul>
+        </div>
+      )}
+      {showMarkers === "popular" && selectedCity === "heilongjiang" && (
+        <div className="info-sidebar">
+          <Button
+            className="delete-btn"
+            variant="link"
+            onClick={() => setSelectedCity("")}
+            style={{ color: "black", textDecoration: "none" }}
+          >
+            X
+          </Button>
+          <div className="pic-loc" >
+            <img src={harbinImage} className="sidebar-image" />
+          </div>
+          <h5>Harbin (哈尔滨)</h5>
+          <p>
+            <strong>Harbin</strong> is the capital city of Heilongjiang Province
+            in northeastern China, known for its winter charm and unique blend
+            of Russian and Chinese culture. Famous for its Ice and Snow
+            Festival, stunning architecture, and vibrant winter activities,
+            Harbin is a must-visit destination for anyone seeking a magical
+            winter experience.
+          </p>
+
+          <h5>Basic Information</h5>
+          <ul>
+            <li>
+              <strong>Chinese Name:</strong> 哈尔滨
+            </li>
+            <li>
+              <strong>Foreign Name:</strong> Harbin
+            </li>
+            <li>
+              <strong>Location:</strong> Northeast China, Heilongjiang Province,
+              near the Russian border
+            </li>
+            <li>
+              <strong>Area Code:</strong> 0451
+            </li>
+            <li>
+              <strong>Population:</strong> Approximately 10 million
+            </li>
+            <li>
+              <strong>Airports:</strong> Harbin Taiping International Airport
+            </li>
+            <li>
+              <strong>License Plate Codes:</strong> 黑A—黑Z
+            </li>
+          </ul>
+
+          <h5>Popular Attractions</h5>
+          <ul>
+            <li>
+              <strong>Harbin Ice and Snow Festival:</strong> The world-renowned
+              winter festival featuring spectacular ice and snow sculptures,
+              held annually from January to February.
+            </li>
+            <li>
+              <strong>Saint Sophia Cathedral:</strong> A Russian Orthodox
+              cathedral with stunning architecture, located in the heart of the
+              city.
+            </li>
+            <li>
+              <strong>Zhaolin Park:</strong> A famous park known for its
+              elaborate ice lanterns, especially during the winter festival.
+            </li>
+            <li>
+              <strong>Siberian Tiger Park:</strong> A large wildlife park
+              dedicated to the conservation of Siberian tigers and other
+              endangered species.
+            </li>
+          </ul>
+        </div>
+      )}
 
       {showMarkers === "popular" && selectedCity === "beijing" && (
         <div className="info-sidebar">
@@ -233,20 +378,6 @@ const MapContainer = () => {
               the outskirts of Beijing.
             </li>
           </ul>
-          {/* <Button
-            variant="primary"
-            onClick={() => window.open(`https://www.youtube.com/results?search_query=${selectedCity} travel introduction`, '_blank')}
-            style={{ width: '100%', marginBottom: '10px' }}
-          >
-            Find Travel Video for {selectedCity}
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => window.open(`https://www.ai-generated-travel-guide.com/${selectedCity}`, '_blank')}
-            style={{ width: '100%' }}
-          >
-            Generate AI Travel Guide for {selectedCity}
-          </Button> */}
         </div>
       )}
       {showMarkers === "popular" && selectedCity === "shanghai" && (
@@ -320,20 +451,6 @@ const MapContainer = () => {
               Chinese art, calligraphy, and artifacts.
             </li>
           </ul>
-          {/* <Button
-            variant="primary"
-            onClick={() => window.open(`https://www.youtube.com/results?search_query=${selectedCity} travel introduction`, '_blank')}
-            style={{ width: '100%', marginBottom: '10px' }}
-          >
-            Find Travel Video for {selectedCity}
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => window.open(`https://www.ai-generated-travel-guide.com/${selectedCity}`, '_blank')}
-            style={{ width: '100%' }}
-          >
-            Generate AI Travel Guide for {selectedCity}
-          </Button> */}
         </div>
       )}
       {showMarkers === "popular" && selectedCity === "guangdong" && (
@@ -355,7 +472,7 @@ const MapContainer = () => {
             <strong>Guangzhou</strong>, also known as Canton, is a major port
             city and the capital of Guangdong Province. It is famous for its
             thriving economy, rich history, and delicious Cantonese cuisine. The
-            city's modern infrastructure is complemented by historic landmarks
+            city‘s modern infrastructure is complemented by historic landmarks
             and lush parks.
           </p>
 
@@ -427,27 +544,23 @@ const MapContainer = () => {
 };
 
 const PoiMarkers = ({ pois, onPoiClick }) => {
-  const handleClick = useCallback(
-    (ev, cityName) => {
-      if (!ev.latLng) return;
-      onPoiClick(cityName);
-    },
-    [onPoiClick]
-  );
+	const handleClick = useCallback(
+		(ev, cityName) => {
+			if (!ev.latLng) return;
+			onPoiClick(cityName);
+		},
+		[onPoiClick]
+	);
 
-  return (
-    <>
-      {pois.map((poi) => (
-        <AdvancedMarker
-          key={poi.key}
-          position={poi.location}
-          onClick={(ev) => handleClick(ev, poi.key)}
-        >
-          <Pin background="#FBBC04" glyphColor="#000" borderColor="#000" />
-        </AdvancedMarker>
-      ))}
-    </>
-  );
+	return (
+		<>
+			{pois.map((poi) => (
+				<AdvancedMarker key={poi.key} position={poi.location} onClick={(ev) => handleClick(ev, poi.key)}>
+					<Pin background="#FBBC04" glyphColor="#000" borderColor="#000" />
+				</AdvancedMarker>
+			))}
+		</>
+	);
 };
 
 export default MapContainer;

@@ -2,32 +2,34 @@ import { useContext, useEffect, useState } from "react";
 import "./App.css";
 import Login from "./components/Login.jsx";
 import Register from "./components/Register.jsx";
+
+import Home from "./components/Home.jsx";
+
 import Tips from "./components/Tips.jsx";
 import Plan from "./components/Plan.jsx";
 import Blogs from "./components/Blogs.jsx";
 import Profile from "./components/Profile.jsx";
-import Footer from "./components/Footer.jsx";
-import Header from "./components/Header.jsx";
-import AddPost from "./components/AddPost";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom"; // React Router for routing
+// import { Button } from "react-bootstrap";
+import Footer from "./components/Footer.jsx";
+import AddPost from "./components/AddPost";
+import Header from "./components/Header.jsx";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Videos from "./components/Videos";
 import MapContainer from "./components/MapContainer";
-import "bootstrap/dist/css/bootstrap.min.css"; // Bootstrap for styling
+import VisaPolicyInfo from "./components/VisaPolicyInfo";
+import PaySetup from "./components/PaySetup";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import { onAuthStateChanged } from "firebase/auth"; // Firebase Authentication
-import { auth } from "./firebase.js"; // Firebase configuration
-import { AppContext } from "./Context.jsx"; // Global app context
-import { getUserData } from "./dbOperation.js"; // Fetch user-specific data from Firebase
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase.js";
+import { AppContext } from "./context.jsx";
+// import { doc, getDoc } from "firebase/firestore";
+import { getUserData } from "./dbOperation.js";
 
 function App() {
-  const { userData, setUserData } = useContext(AppContext); // Access global context values
-  const [loading, setLoading] = useState(true); // State to track loading status
+  const { userData, setUserData } = useContext(AppContext);
+	const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Firebase Auth listener
@@ -50,25 +52,19 @@ function App() {
     return <div>Loading...</div>; // Prevent route transitions until loading is complete
   }
 
-  return (
+	return (
     <Router>
       <div className="app-content">
-        {/* Global Header */}
         <Header />
         <main className="main-content">
           <Routes>
-            {/* Videos Page */}
+            <Route path="/" element={<Home />} />
+            <Route path="/visa-policy" element={<VisaPolicyInfo />} />
+            <Route path="/payment-setup" element={<PaySetup />} />
             <Route path="/videos" element={<Videos />} />
-            
-            {/* Map Page */}
             <Route path="/map" element={<MapContainer />} />
-            
-            {/* Travel Plan Page */}
             <Route path="/tour-plan" element={<Plan />} />
-            
-            {/* Travel Tips Page */}
             <Route path="/tips" element={<Tips />} />
-            
             {/* Blogs with nested AddPost route */}
             <Route
               path="/blogs/*"
@@ -87,26 +83,15 @@ function App() {
                 </Routes>
               }
             />
-            
-            {/* Login Page */}
             <Route path="/sign-in" element={<Login />} />
-            
-            {/* Registration Page */}
             <Route path="/sign-up" element={<Register />} />
-            
-            {/* Profile Page (only accessible if logged in) */}
             <Route
               path="/profile"
-              element={
-                userData ? <Profile /> : <Navigate to="/sign-in" />
-              }
+              element={userData ? <Profile /> : <Navigate to="/videos" />}
             />
-            
-            {/* Default route */}
             <Route path="/" element={<div />} />
           </Routes>
         </main>
-        {/* Global Footer */}
         <Footer />
       </div>
     </Router>

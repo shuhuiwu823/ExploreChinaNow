@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const VideosPage = () => {
 	const [searchQuery, setSearchQuery] = useState("");
@@ -6,6 +7,16 @@ const VideosPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [selectedVideoId, setSelectedVideoId] = useState(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const location = useLocation();
+
+	// Extract selectedCity from location state if available
+	useEffect(() => {
+		if (location.state && location.state.selectedCity) {
+			const cityQuery = `${location.state.selectedCity}`;
+			setSearchQuery(cityQuery);
+			handleCitySearch(cityQuery); // Automatically trigger search when city is selected
+		}
+	}, [location.state]); // Depend on location.state to re-run this effect when it changes
 
 	// YouTube API key (replace with your own key)
 	const API_KEY = "AIzaSyAiO6QfiiAJDRzM0YhqdwEYHBJeyO_7crQ";
@@ -25,6 +36,23 @@ const VideosPage = () => {
 		{ id: "OqwOdurjbdY", title: "What I Love and Hate About China | Travel Vlog" },
 		{ id: "gQysLy32dFg", title: "FIRST TIME in HONG KONG 🇭🇰 (not what we expected)" },
 	];
+
+	// Function to handle search directly with city name
+	const handleCitySearch = async (city) => {
+		setSearchQuery(`${city} travel vlog`);
+		setLoading(true);
+		try {
+			const response = await fetch(
+				`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${city} travel vlog&maxResults=9&key=${API_KEY}`
+			);
+			const data = await response.json();
+			setVideos(data.items);
+		} catch (error) {
+			console.error("Error fetching YouTube data:", error);
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	const handleSearch = async () => {
 		if (!searchQuery) return;
@@ -61,6 +89,7 @@ const VideosPage = () => {
 
 	return (
 		<div style={{ textAlign: "center" }}>
+			<br />
 			<h1>Explore China: The Best Travel Videos</h1>
 			<p>Your next adventure starts here</p>
 
@@ -73,7 +102,7 @@ const VideosPage = () => {
 					placeholder="Enter keywords..."
 					style={{
 						padding: "10px",
-						width: "300px",
+						width: "400px",
 						marginRight: "10px",
 						borderRadius: "4px",
 						border: "1px solid #ccc",
@@ -93,6 +122,28 @@ const VideosPage = () => {
 					Search
 				</button>
 			</div>
+			<div style={{ margin: "20px" }}>
+				<span>Popular Search: </span>
+				{["Beijing", "Shanghai", "Guangzhou", "Shenzhen"].map((city) => (
+					<a
+						key={city}
+						href="#"
+						onClick={(e) => {
+							e.preventDefault();
+							handleCitySearch(city);
+						}}
+						style={{
+							padding: "10px 10px",
+							// marginLeft: "2px",
+							color: "#007bff", // Bootstrap default link color
+							textDecoration: "underline",
+							cursor: "pointer",
+						}}>
+						{city}
+					</a>
+				))}
+			</div>
+
 			<br />
 
 			{loading && <p>Loading...</p>}
@@ -181,6 +232,7 @@ const VideosPage = () => {
 						</div>
 					))}
 			</div>
+			<br />
 
 			{isModalOpen && (
 				<div
