@@ -4,29 +4,29 @@ import AddPost from './AddPost';
 import '../template/Blogs.css';
 
 function UserBlogs() {
-  const [page, setPage] = useState('blogs'); // 页面状态: 'blogs', 'edit', 'addPost'
-  const [blogPosts, setBlogPosts] = useState([]); // 所有博客文章
-  const [filteredPosts, setFilteredPosts] = useState([]); // 筛选后的文章
-  const [searchQuery, setSearchQuery] = useState(''); // 搜索关键词
-  const [selectedPost, setSelectedPost] = useState(null); // 选中的文章
-  const author = '111'; // 当前用户
+  const [page, setPage] = useState('blogs'); // Page state: 'blogs', 'edit', 'addPost'
+  const [blogPosts, setBlogPosts] = useState([]); // All blog posts
+  const [filteredPosts, setFilteredPosts] = useState([]); // Filtered posts
+  const [searchQuery, setSearchQuery] = useState(''); // Search keyword
+  const [selectedPost, setSelectedPost] = useState(null); // Selected post
+  const author = '111'; // Current user
 
-  // 从 Firestore 加载特定用户的博客文章
+  // Load blog posts for the specific user from Firestore
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const posts = await getBlogPostsFromFirestore();
-        const userPosts = posts.filter((post) => post.author === author); // 仅筛选当前用户的文章
+        const userPosts = posts.filter((post) => post.author === author); // Filter posts by the current user
         setBlogPosts(userPosts);
         setFilteredPosts(userPosts);
       } catch (error) {
-        console.error("加载博客文章失败: ", error);
+        console.error("Failed to load blog posts: ", error);
       }
     };
     fetchPosts();
   }, []);
 
-  // 保存编辑后的文章
+  // Save the edited post
   const handleSave = async () => {
     try {
       await updateBlogPostInFirestore(selectedPost.id, {
@@ -41,11 +41,11 @@ function UserBlogs() {
       setSelectedPost(null);
       setPage('blogs');
     } catch (error) {
-      console.error("保存博客文章失败: ", error);
+      console.error("Failed to save blog post: ", error);
     }
   };
 
-  // 删除文章
+  // Delete a post
   const handleDelete = async (postId) => {
     try {
       await deleteBlogPostFromFirestore(postId);
@@ -55,11 +55,11 @@ function UserBlogs() {
       setSelectedPost(null);
       setPage('blogs');
     } catch (error) {
-      console.error("删除博客文章失败: ", error);
+      console.error("Failed to delete blog post: ", error);
     }
   };
 
-  // 搜索功能
+  // Search functionality
   const handleSearch = () => {
     const filtered = blogPosts.filter((post) =>
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -73,13 +73,13 @@ function UserBlogs() {
     setFilteredPosts(blogPosts);
   };
 
-  // 渲染编辑表单
+  // Render the edit form
   const renderEditForm = () => (
     <div className="edit-post-container">
-      <h2>编辑文章</h2>
+      <h2>Edit Post</h2>
       <form onSubmit={(e) => { e.preventDefault(); handleSave(); }}>
         <div>
-          <label>标题:</label>
+          <label>Title:</label>
           <input
             type="text"
             value={selectedPost.title}
@@ -88,20 +88,20 @@ function UserBlogs() {
           />
         </div>
         <div>
-          <label>内容:</label>
+          <label>Content:</label>
           <textarea
             value={selectedPost.content}
             onChange={(e) => setSelectedPost({ ...selectedPost, content: e.target.value })}
             required
           />
         </div>
-        <button type="submit">保存</button>
-        <button type="button" onClick={() => setPage('blogs')}>取消</button>
+        <button type="submit">Save</button>
+        <button type="button" onClick={() => setPage('blogs')}>Cancel</button>
       </form>
     </div>
   );
 
-  // 页面渲染控制
+  // Page rendering control
   const renderPage = () => {
     switch (page) {
       case 'blogs':
@@ -110,30 +110,30 @@ function UserBlogs() {
             <div className="search-container">
               <input
                 type="text"
-                placeholder="搜索标题或内容"
+                placeholder="Search by title or content"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
               />
-              <button onClick={handleSearch}>搜索</button>
-              <button onClick={handleClear}>清除</button>
+              <button onClick={handleSearch}>Search</button>
+              <button onClick={handleClear}>Clear</button>
             </div>
             <div className="blog-posts">
               {filteredPosts.length === 0 ? (
-                <p>未找到匹配的文章。</p>
+                <p>No matching posts found.</p>
               ) : (
                 filteredPosts.map((post) => (
                   <div key={post.id} className="blog-post">
                     <h3 onClick={() => { setSelectedPost(post); setPage('edit'); }}>{post.title}</h3>
-                    <p><strong>作者:</strong> {post.author}</p>
+                    <p><strong>Author:</strong> {post.author}</p>
                     <p>{post.content}</p>
-                    <button onClick={() => { setSelectedPost(post); setPage('edit'); }}>编辑</button>
-                    <button onClick={() => handleDelete(post.id)}>删除</button>
+                    <button onClick={() => { setSelectedPost(post); setPage('edit'); }}>Edit</button>
+                    <button onClick={() => handleDelete(post.id)}>Delete</button>
                   </div>
                 ))
               )}
             </div>
-            <button onClick={() => setPage('addPost')} className="add-post-button">添加文章</button>
+            <button onClick={() => setPage('addPost')} className="add-post-button">Add Post</button>
           </div>
         );
       case 'edit':
@@ -154,7 +154,7 @@ function UserBlogs() {
 
   return (
     <div className="user-blogs-container">
-      <h2>{author} 的博客文章</h2>
+      <h2>Blog Posts by {author}</h2>
       {renderPage()}
     </div>
   );

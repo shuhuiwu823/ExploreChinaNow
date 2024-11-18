@@ -1,92 +1,69 @@
 import { db } from '../firebase';
 import { 
-  collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, where, orderBy, limit, startAfter 
+  collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, where, orderBy, limit, startAfter, serverTimestamp 
 } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
 
-// 初始化 Firebase Storage
+const BLOGS_COLLECTION = "blogPosts";
+
+// Initialize Firebase Storage
 const storage = getStorage();
 
-// 通用错误日志
+// General error logging
 function logFirestoreError(action, error) {
-  console.error(`${action} 失败: `, error);
+  console.error(`${action} failed: `, error);
   throw error;
 }
 
-// **获取所有博客文章**
+// **Retrieve all blog posts**
 export async function getBlogPostsFromFirestore() {
   try {
-    const querySnapshot = await getDocs(collection(db, 'blogPosts'));
+    const querySnapshot = await getDocs(collection(db, BLOGS_COLLECTION));
     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
-    logFirestoreError("获取博客文章", error);
+    logFirestoreError("Fetching blog posts", error);
   }
 }
 
-// **获取指定作者的博客文章**
+// **Retrieve blog posts by a specific author**
 export async function getUserBlogPostsFromFirestore(authorName) {
   try {
-    const q = query(collection(db, 'blogPosts'), where('author', '==', authorName));
+    const q = query(collection(db, BLOGS_COLLECTION), where('author', '==', authorName));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
-    logFirestoreError("获取指定作者的博客文章", error);
+    logFirestoreError("Fetching blog posts by author", error);
   }
 }
 
-// // **添加博客文章**
-// export async function addBlogPostToFirestore(post, imageFiles = null) {
-//   try {
-//     if (!post.title || !post.author || !post.content) {
-//       throw new Error('标题、作者和内容是必填字段');
-//     }
-
-//     // 如果提供了图片文件，则上传图片
-//     if (imageFiles && imageFiles.length > 0) {
-//       const imageUrls = await Promise.all(
-//         imageFiles.map(file => uploadImageToStorage(file))
-//       );
-//       post.images = imageUrls; // 将图片 URL 添加到文章数据
-//     } else {
-//       post.images = []; // 如果没有图片，设置为空数组
-//     }
-
-//     // 保存文章到 Firestore
-//     await addDoc(collection(db, 'blogPosts'), post);
-//     console.log("文章已成功添加到数据库");
-//   } catch (error) {
-//     logFirestoreError("添加文章", error);
-//   }
-// }
-
-// **更新博客文章**
+// **Update a blog post**
 export async function updateBlogPostInFirestore(postId, updatedData) {
   try {
-    if (!postId) throw new Error("需要提供有效的文章 ID");
-    const postRef = doc(db, 'blogPosts', postId);
+    if (!postId) throw new Error("A valid post ID is required");
+    const postRef = doc(db, BLOGS_COLLECTION, postId);
     await updateDoc(postRef, updatedData);
-    console.log("文章已更新");
+    console.log("Post updated successfully");
   } catch (error) {
-    logFirestoreError("更新博客文章", error);
+    logFirestoreError("Updating blog post", error);
   }
 }
 
-// **删除博客文章**
-export async function deleteBlogPostFromFirestore(postId) {
+// **Delete a specific blog**
+export const deleteBlogPostFromFirestore = async (blogId) => {
   try {
-    if (!postId) throw new Error("需要提供有效的文章 ID");
-    const postRef = doc(db, 'blogPosts', postId);
-    await deleteDoc(postRef);
-    console.log("文章已删除");
+    const blogDoc = doc(db, BLOGS_COLLECTION, blogId);
+    await deleteDoc(blogDoc);
+    console.log(`Blog ${blogId} deleted successfully`);
   } catch (error) {
-    logFirestoreError("删除博客文章", error);
+    logFirestoreError("Deleting blog post", error);
   }
-}
+};
 
-// **分页加载博客文章**
+// **Paginate blog posts**
 export async function getPaginatedBlogPosts(lastVisibleDoc = null, pageSize = 10) {
   try {
-    let q = query(collection(db, 'blogPosts'), orderBy('createdAt', 'desc'), limit(pageSize));
+    let q = query(collection(db, BLOGS_COLLECTION), orderBy('createdAt', 'desc'), limit(pageSize));
     if (lastVisibleDoc) {
       q = query(q, startAfter(lastVisibleDoc));
     }
@@ -95,38 +72,42 @@ export async function getPaginatedBlogPosts(lastVisibleDoc = null, pageSize = 10
     const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
     return { posts, lastVisible };
   } catch (error) {
-    logFirestoreError("获取分页博客文章", error);
+    logFirestoreError("Fetching paginated blog posts", error);
   }
 }
 
-
-// 上传图片到 Firebase Storage 并获取 URL
+// **Upload image to Firebase Storage and retrieve the URL**
 export async function uploadImageToStorage(file) {
   try {
-    const storageRef = ref(storage, `blog-images/${file.name}`);
+    const uniqueFileName = `${uuidv4()}_${file.name}`; // Ensure a unique file name
+    const storageRef = ref(storage, `blog-images/${uniqueFileName}`);
     const snapshot = await uploadBytes(storageRef, file);
-    return await getDownloadURL(snapshot.ref); // 返回图片的下载 URL
+    return await getDownloadURL(snapshot.ref); // Return the download URL for the image
   } catch (error) {
-    console.error("上传图片失败：", error);
+    console.error("Image upload failed: ", error);
     throw error;
   }
 }
 
-// 添加博客文章到 Firestore，支持图片
+// Add a new blog post to Firestore
 export async function addBlogPostToFirestore(post, imageFiles = []) {
   try {
-    // 上传图片并获取 URL
+    // Upload images and get URLs
     const imageUrls = await Promise.all(
       imageFiles.map(file => uploadImageToStorage(file))
     );
-    post.images = imageUrls; // 将图片 URL 添加到文章数据
+    post.images = imageUrls;
 
-    // 保存文章到 Firestore
-    await addDoc(collection(db, 'blogPosts'), post);
-    console.log("文章已成功添加到数据库，包含图片");
+    // Preserve spaces and line breaks
+    post.content = post.content.replace(/ /g, '\u00A0'); // Non-breaking space
+
+    // Add timestamp
+    post.createdAt = serverTimestamp();
+
+    // Save to Firestore
+    await addDoc(collection(db, BLOGS_COLLECTION), post);
+    console.log("Post successfully added!");
   } catch (error) {
-    console.error("添加文章失败：", error);
-    throw error;
+    logFirestoreError("Adding blog post", error);
   }
 }
-
