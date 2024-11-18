@@ -1,20 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { db } from '../firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Plan.css';
 import { AppContext } from '../context';
 
 function Plan() {
   const [userInput, setUserInput] = useState('');
-  const [chatOutput, setChatOutput] = useState(() => {
-    const savedChat = localStorage.getItem('chatOutput');
-    return savedChat ? JSON.parse(savedChat) : [];
-  });
-  const [savedPlans, setSavedPlans] = useState(() => {
-    const savedPlansData = localStorage.getItem('savedPlans');
-    return savedPlansData ? JSON.parse(savedPlansData) : [];
-  });
+  const [chatOutput, setChatOutput] = useState([]);
+  const [savedPlans, setSavedPlans] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [showSignInPopup, setShowSignInPopup] = useState(false);
   const location = useLocation();
@@ -23,19 +17,44 @@ function Plan() {
   const { userData } = useContext(AppContext);
 
   useEffect(() => {
-    localStorage.setItem('chatOutput', JSON.stringify(chatOutput));
-  }, [chatOutput]);
+    if (userData) {
+      const savedChat = localStorage.getItem(`chatOutput_${userData.id}`);
+      setChatOutput(savedChat ? JSON.parse(savedChat) : []);
+      fetchSavedPlans();
+    } else {
+      setChatOutput([]);
+    }
+  }, [userData]);
 
   useEffect(() => {
-    localStorage.setItem('savedPlans', JSON.stringify(savedPlans));
-  }, [savedPlans]);
-  
+    if (userData) {
+      localStorage.setItem(`chatOutput_${userData.id}`, JSON.stringify(chatOutput));
+    }
+  }, [chatOutput, userData]);
+
   useEffect(() => {
     if (location.state?.selectedCity) {
       const initialInput = `Please generate a travel plan for ${location.state.selectedCity}`;
       setUserInput(initialInput);
     }
   }, [location.state]);
+
+  const fetchSavedPlans = async () => {
+    if (!userData) return;
+
+    try {
+      const q = query(collection(db, 'TravelPlan'), where('userId', '==', userData.id));
+      const querySnapshot = await getDocs(q);
+      const plans = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        expanded: false,
+      }));
+      setSavedPlans(plans);
+    } catch (error) {
+      console.error('Error fetching saved plans:', error);
+    }
+  };
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
@@ -82,6 +101,7 @@ function Plan() {
         content: message,
         timestamp: new Date(),
         userId: userData.id,
+        title: message.slice(0, 20) + (message.length > 20 ? '...' : ''),
       });
 
       const title = message.slice(0, 20) + (message.length > 20 ? '...' : '');
@@ -89,6 +109,15 @@ function Plan() {
       setShowPopup(true);
     } catch (error) {
       console.error('Error saving response:', error);
+    }
+  };
+
+  const deletePlan = async (planId) => {
+    try {
+      await deleteDoc(doc(db, 'TravelPlan', planId));
+      setSavedPlans(savedPlans.filter((plan) => plan.id !== planId));
+    } catch (error) {
+      console.error('Error deleting plan:', error);
     }
   };
 
@@ -115,33 +144,46 @@ function Plan() {
   return (
     <div className="main-content">
       <div className="saved-plan-list">
-  <h2>Saved Plans</h2>
-  <div className="plan-cards">
-  {savedPlans.map((plan, index) => (
-    <div key={plan.id} className={`plan-card ${plan.expanded ? 'expanded' : ''}`}>
-      {!plan.expanded && (
-        <div className="card-header">
-          <span>{plan.title}</span>
-          <button className = 'collapse-button' onClick={() => toggleExpanded(index)}>
-            {plan.expanded ? '▲' : '▼'}
-          </button>
+        <h3>Saved Plans</h3>
+        <div className="plan-cards">
+          {savedPlans.map((plan, index) => (
+            <div key={plan.id} className={`plan-card ${plan.expanded ? 'expanded' : ''}`}>
+              {!plan.expanded && (
+                <div className="card-header">
+                  <p>{plan.title}</p>
+                  <button
+                    className="collapse-button"
+                    onClick={() => toggleExpanded(index)}
+                  >
+                    {plan.expanded ? '▲' : '▼'}
+                  </button>
+                </div>
+              )}
+              {plan.expanded && (
+                <div className="card-body">
+                  <div dangerouslySetInnerHTML={{ __html: formatText(plan.content) }} />
+                  <div className="list-buttons">
+                  <button
+                    className="collapse-button"
+                    onClick={() => toggleExpanded(index)}
+                  >
+                    ▲
+                  </button>
+                  <button
+                    className="delete-button"
+                    onClick={() => deletePlan(plan.id)}
+                  >
+                    Delete
+                  </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
-      )}
-      {plan.expanded && (
-        <div className="card-body">
-          <div dangerouslySetInnerHTML={{ __html: formatText(plan.content) }} />
-          <button className = 'collapse-button' onClick={() => toggleExpanded(index)}>
-            ▲ 
-          </button>
-        </div>
-      )}
-    </div>
-  ))}
-</div>
-
-</div>
+      </div>
       <div id="chat-container">
-        <h2>Create Your Travel Plan</h2>
+        <h3>Create Your Travel Plan</h3>
         <div id="chat-history">
           {chatOutput.map((msg, index) => (
             <div key={index} className={`message ${msg.role}`}>
@@ -151,7 +193,10 @@ function Plan() {
                 msg.content
               )}
               {msg.role === 'bot' && (
-                <button className="save-button" onClick={() => saveResponse(msg.content_ori)}>
+                <button
+                  className="save-button"
+                  onClick={() => saveResponse(msg.content_ori)}
+                >
                   Save
                 </button>
               )}
@@ -173,7 +218,9 @@ function Plan() {
         <div className="popup">
           <div className="popup-content">
             <p>Response saved successfully!</p>
-            <button className="popup-button" onClick={closePopup}>Close</button>
+            <button className="popup-button" onClick={closePopup}>
+              Close
+            </button>
           </div>
         </div>
       )}
@@ -182,10 +229,14 @@ function Plan() {
         <div className="popup">
           <div className="popup-content">
             <p>You need to sign in to save your plan.</p>
-                <div class="popup-buttons">
-                    <button className="popup-button" onClick={closeSignInPopup}>Stay on Page</button>
-                    <button className="popup-button" onClick={handleSignIn}>Sign In</button>
-                </div>
+            <div className="popup-buttons">
+              <button className="popup-button" onClick={closeSignInPopup}>
+                Stay on Page
+              </button>
+              <button className="popup-button" onClick={handleSignIn}>
+                Sign In
+              </button>
+            </div>
           </div>
         </div>
       )}

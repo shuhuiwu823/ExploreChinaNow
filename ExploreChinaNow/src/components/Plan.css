@@ -102,7 +102,15 @@ button {
   padding: 3px 6px;
   border-radius: 5px;
 }
-
+.delete-button{
+background-color: #007bff;
+color: white;
+border: none;
+margin-left: 10px;
+cursor: pointer;
+padding: 3px 6px;
+border-radius: 5px;
+}
 .popup {
   position: fixed;
   top: 0;
@@ -141,6 +149,7 @@ button {
   border-radius: 5px;
   cursor: pointer;
 }
+
 .plan-cards {
   display: flex;
   flex-direction: column;
@@ -161,7 +170,8 @@ button {
 
 .card-header {
   display: flex;
-  justify-content: space-between; 
+  margin-left: auto;
+  margin-top: auto;
 }
 
 .card-body {
@@ -172,11 +182,16 @@ button {
 .collapse-button {
   display: block;
   margin-left: auto;
+  margin-top: auto;
   background-color: #007bff;
   color: #fff;
   border: none;
   cursor: pointer;
-  padding: 3px 6px;
   border-radius: 5px;
 }
 
+.list-buttons{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
