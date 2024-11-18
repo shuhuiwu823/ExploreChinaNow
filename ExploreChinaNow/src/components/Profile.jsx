@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import "./Profile.css"
-import { AppContext } from "../Context";
+import { AppContext } from "../context";
 
 function Profile() {
     const {userData} = useContext(AppContext);
