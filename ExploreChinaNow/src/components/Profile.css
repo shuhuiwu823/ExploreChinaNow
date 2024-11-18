@@ -1,4 +1,4 @@
-/* Profile.css */
+
 .profile-container {
     display: flex;
     gap: 2rem;
@@ -86,7 +86,6 @@
     background-color: #e60000;
   }
   
-  /* User Information Section */
   .context-container {
     flex: 1;
     display: flex;

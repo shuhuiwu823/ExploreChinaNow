@@ -142,7 +142,7 @@ function Plan() {
   };
 
   return (
-    <div className="main-content">
+    <div className="tour-content">
       <div className="saved-plan-list">
         <h3>Saved Plans</h3>
         <div className="plan-cards">
