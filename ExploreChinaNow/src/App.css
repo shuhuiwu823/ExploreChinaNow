@@ -1,137 +1,141 @@
-.navigation-buttons {
-	display: flex;
-	justify-content: space-around;
-}
-
-.navigation-button {
-	border: 0;
-
-	padding: 0.5rem;
-
-	background: none;
-
-	text-decoration: underline;
-}
-
-.navigation-button-icon {
-	height: 3rem;
-}
-
-.header-left {
-	display: flex;
-}
 html,
 body {
-	height: 100%;
-	margin: 0;
+    height: 100%;
+    margin: 0;
 }
 
 .app-content {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .app-content > * {
-	flex-shrink: 0;
+    flex-shrink: 0;
 }
 
 .app-content > .main-content {
-	flex: 1;
+    flex: 1;
+    margin-top: 70px; /* 确保内容在 Header 下方 */
 }
 
-
-/**
-map
-**/
-.modal-content{
-	margin-top: 100px;
+/* 确保 Header 在最上层 */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
-/* 设置 Modal 的最大宽度 */
+
+/* 其他样式 */
+.navigation-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.navigation-button {
+    border: 0;
+    padding: 0.5rem;
+    background: none;
+    text-decoration: underline;
+}
+
+.navigation-button-icon {
+    height: 3rem;
+}
+
+.header-left {
+    display: flex;
+}
+
+/* Modal 样式 */
+.modal-content {
+    margin-top: 100px;
+}
+
 .custom-modal .modal-dialog {
-	max-width: 40%;
-	/* 可以根据需要调整 */
+    max-width: 40%;
 }
 
-/* 设置 Modal 标题的字体 */
 .custom-modal .modal-title {
-	font-size: 24px;
-	font-weight: bold;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-/* 设置 Modal Body */
 .custom-modal .modal-body {
-	padding: 30px;
-	background-color: #f8f9fa;
-	/* 可以自定义背景颜色 */
+    padding: 30px;
+    background-color: #f8f9fa;
 }
 
-/* 设置 Modal Footer */
 .custom-modal .modal-footer {
-	padding: 20px;
-	background-color: #f1f1f1;
+    padding: 20px;
+    background-color: #f1f1f1;
 }
 
-/* 自定义按钮的大小 */
 .custom-modal .modal-footer button {
-	width: 100%;
+    width: 100%;
 }
+
+/* Sidebar 样式 */
 .info-sidebar {
-	position: absolute;
-	top: 20%;
-	left: 5%;
-	width: 35%;
-	bottom: 0;
-	background-color: rgba(255, 255, 255, 1);
-	padding: 20px;
-	z-index: 0;
-	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
-	border-radius: 10px;
-	overflow: auto;
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    width: 35%;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 20px;
+    z-index: 0;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow: auto;
 }
 
 .delete-btn {
-	position: absolute;
-	top: 2px;
-	right: 5px;
-	text-decoration: none;
-	font-size: 20px;
-	color: black;
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
 }
+
 .pic-loc {
-	padding: 10px
+    padding: 10px;
 }
+
 .sidebar-image {
-	width: 100%;
-	height: auto;
-	border-radius: 8px;
-	margin-bottom: 15px;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
 }
 
 .info-sidebar h5 {
-	font-size: 18px;
-	font-weight: bold;
-	margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .info-sidebar p {
-	font-size: 14px;
-	line-height: 1.6;
-	margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
 }
 
 .info-sidebar ul {
-	padding-left: 20px;
+    padding-left: 20px;
 }
 
 .info-sidebar ul li {
-	font-size: 14px;
-	line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 .info-sidebar ul li strong {
-	font-weight: bold;
+    font-weight: bold;
 }
-.show-button{
-	width: 170px;
+
+.show-button {
+    width: 170px;
 }

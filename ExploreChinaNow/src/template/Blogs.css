@@ -1,82 +1,168 @@
-/* Blogs.css */
-
 /* 整体容器 */
 .blogs-container {
-    padding: 20px;
-    background-color: #f4f4f9;
-    min-height: 100vh;
-  }
-  
-  /* 搜索框容器 */
-  .search-container {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .search-container input {
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    width: 300px;
-  }
-  
-  .search-container button {
-    padding: 8px 12px;
-    font-size: 14px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .search-container button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* 博客文章列表 */
-  .blog-posts {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .blog-post {
+  padding: 20px;
+  background-color: #f4f4f9;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* 搜索框容器 */
+.search-container {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-container input {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 300px;
+}
+
+.search-container button {
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background-color: #0056b3;
+}
+
+/* 博客文章列表 */
+.blog-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.blog-post {
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  text-align: left;
+}
+
+.blog-post:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* 文章标题 */
+.blog-post h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* 作者样式 */
+.post-author {
+  font-size: 14px;
+  color: #666; /* 较浅的颜色，区分主次 */
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+/* 内容样式 */
+.post-content {
+  font-size: 16px;
+  color: #444; /* 深色，主内容 */
+  line-height: 1.6;
+  margin: 5px 0;
+  text-align: left;
+}
+
+/* 图片九宫格 */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.image-thumbnail {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-thumbnail:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* 搜索无结果 */
+.blog-posts p {
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+/* 添加文章按钮 */
+.add-post-button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+.add-post-button:hover {
+  background-color: #218838;
+}
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+  .blogs-container {
     padding: 15px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
-  
+
+  .search-container input {
+    width: 100%;
+  }
+
+  .blog-post {
+    padding: 10px;
+  }
+
+  .image-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .image-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
   .blog-post h3 {
-    font-size: 20px;
-    color: #333;
-    margin-bottom: 10px;
+    font-size: 18px;
   }
-  
-  .blog-post p {
+
+  .post-content {
     font-size: 14px;
-    color: #555;
-    margin-bottom: 10px;
   }
-  
-  /* 按钮样式 */
+
   .add-post-button {
-    padding: 10px 15px;
-    font-size: 16px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 20px;
-    display: inline-block;
+    width: 100%;
+    text-align: center;
   }
-  
-  .add-post-button:hover {
-    background-color: #218838;
-  }
-  
+}
