@@ -1,12 +1,12 @@
 /* Blog container */
 .blogs-container {
   padding: 20px;
-  background-color: #f4f4f9; /* Light background for contrast */
-  min-height: 100vh; /* Ensure full viewport height */
-  font-family: Arial, sans-serif; /* Clean, modern font */
-  overflow-x: hidden; /* Prevent horizontal overflow */
-  max-width: 1200px; /* Limit maximum width for better readability */
-  margin: 0 auto; /* Center-align the container */
+  background-color: #f4f4f9;
+  min-height: 100vh; 
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  max-width: 1200px; 
+  margin: 0 auto; 
 }
 
 /* Search and add post section */
@@ -19,7 +19,7 @@
 
 .search-container {
   display: flex;
-  gap: 10px; /* Space between input and buttons */
+  gap: 10px; 
 }
 
 .search-container input {
@@ -41,54 +41,48 @@
 }
 
 .add-post-button {
-  background-color: #28a745; /* Green background for add post button */
+  background-color: #28a745; 
 }
 
 button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #0056b3; 
 }
 
 /* Blog posts */
 .blog-posts {
   display: grid;
-  grid-template-columns: 1fr; /* Single-column layout, constrained by the container width */
-  gap: 20px; /* Space between posts */
+  grid-template-columns: 1fr; 
+  gap: 20px; 
 }
 
 .blog-post {
   padding: 15px;
-  background-color: #fff; /* White background */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
-  overflow: visible; /* Allow content to overflow vertically */
-  max-width: 100%; /* Constrain width within container */
+  background-color: #fff;
+  border-radius: 8px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  overflow: visible; 
+  max-width: 100%; 
 }
 
-/* Title and author */
 .blog-post-header h3 {
   font-size: 22px;
   margin: 0;
-  word-wrap: break-word; /* Enable word wrapping */
+  word-wrap: break-word; 
 }
 
 .post-author {
   font-size: 14px;
-  color: #666; /* Medium gray for less emphasis */
+  color: #666; 
 }
 
-/* Content styles */
 .blog-post-content { 
-  /* word-wrap: break-word;  */
-  overflow-x: hidden; /* Prevent horizontal overflow */
-  overflow-wrap: break-word; /* Break lines logically at word boundaries */
+  overflow-x: hidden; 
+  overflow-wrap: break-word; 
   white-space: pre-wrap; /* Allow text to wrap naturally */
   line-height: 1.6; /* Improve readability with adequate line spacing */
   padding-right: 8px; /* Add spacing for scrollbar if present */
   word-break: normal; /* Avoid breaking words unless necessary */
 }
-
-
-
 
 .blog-post-content p {
   margin: 0;

@@ -3,7 +3,7 @@ import { db } from '../firebase';
 import { collection, addDoc, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Plan.css';
-import { AppContext } from '../context';
+import { AppContext } from '../Context';
 
 function Plan() {
   const [userInput, setUserInput] = useState('');
