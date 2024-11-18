@@ -35,7 +35,10 @@ const PaySetup = () => {
         </Col>
         <Col>
           <Card>
-            <Card.Header className="bg-success text-white">
+            <Card.Header
+              className="bg-success text-white"
+              style={{ marginLeft: "unset" }}
+            >
               WeChat Pay
             </Card.Header>
             <Card.Body>
@@ -54,7 +57,9 @@ const PaySetup = () => {
       <Row className="mb-4">
         <Col md={6}>
           <Card>
-            <Card.Header>Other Payment Methods</Card.Header>
+            <Card.Header style={{ marginLeft: "unset" }}>
+              Other Payment Methods
+            </Card.Header>
             <Card.Body>
               <ul>
                 <li>
@@ -71,7 +76,9 @@ const PaySetup = () => {
         </Col>
         <Col md={6}>
           <Card>
-            <Card.Header>QR Code Payments</Card.Header>
+            <Card.Header style={{ marginLeft: "unset" }}>
+              QR Code Payments
+            </Card.Header>
             <Card.Body>
               <ul>
                 <li>
