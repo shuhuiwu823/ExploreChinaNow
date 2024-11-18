@@ -6,6 +6,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import greatWall from "../assets/greatWall.jpeg";
 import shanghaiPic from "../assets/shanghai.jpeg";
 import guangzhouPic from "../assets/guangzhou.jpeg";
+import chongqingImage from "../assets/chongqing.jpeg";
+import harbinImage from "../assets/haerbin.jpeg";
 const locations = [
 	{ key: "beijing", location: { lat: 39.9042, lng: 116.4074 } },
 	{ key: "tianjin", location: { lat: 39.0851, lng: 117.1902 } },
@@ -40,13 +42,15 @@ const locations = [
 	{ key: "xining", location: { lat: 35.7604, lng: 103.8324 } },
 ];
 const popularCities = [
-	{
-		key: "beijing",
-		name: "Beijing",
-		location: { lat: 39.9042, lng: 116.4074 },
-	},
-	{ key: "shanghai", location: { lat: 31.2304, lng: 121.4737 } },
-	{ key: "guangdong", location: { lat: 23.1291, lng: 113.2644 } },
+  {
+    key: "beijing",
+    name: "Beijing",
+    location: { lat: 39.9042, lng: 116.4074 },
+  },
+  { key: "shanghai", location: { lat: 31.2304, lng: 121.4737 } },
+  { key: "guangdong", location: { lat: 23.1291, lng: 113.2644 } },
+  { key: "chongqing", location: { lat: 29.563, lng: 106.5516 } },
+  { key: "heilongjiang", location: { lat: 45.7489, lng: 126.6424 } },
 ];
 
 const MapContainer = () => {
@@ -72,137 +76,454 @@ const MapContainer = () => {
 	};
 
 	return (
-		<div className="map-container">
-			<APIProvider apiKey={"AIzaSyAgYOfrSVMN-4qquy9cI_ZSM6SjhvF_cW0"}>
-				<Map
-					style={{ width: "100vw", height: "100vh" }}
-					defaultCenter={{ lat: 35.7604, lng: 103.8324 }}
-					mapId="57cb306711be27bb"
-					defaultZoom={4}
-					gestureHandling={"greedy"}
-					disableDefaultUI={true}>
-					{showMarkers === "all" && <PoiMarkers pois={locations} onPoiClick={handleOpenInfo} />}
-					{showMarkers === "popular" && <PoiMarkers pois={popularCities} onPoiClick={handleOpenInfo} />}
-				</Map>
-			</APIProvider>
+    <div className="map-container">
+      <APIProvider apiKey={"AIzaSyAgYOfrSVMN-4qquy9cI_ZSM6SjhvF_cW0"}>
+        <Map
+          style={{ width: "100vw", height: "100vh" }}
+          defaultCenter={{ lat: 35.7604, lng: 103.8324 }}
+          mapId="57cb306711be27bb"
+          defaultZoom={4}
+          gestureHandling={"greedy"}
+          disableDefaultUI={true}
+        >
+          {showMarkers === "all" && (
+            <PoiMarkers pois={locations} onPoiClick={handleOpenInfo} />
+          )}
+          {showMarkers === "popular" && (
+            <PoiMarkers pois={popularCities} onPoiClick={handleOpenInfo} />
+          )}
+        </Map>
+      </APIProvider>
 
-			<Button
-				variant="primary"
-				onClick={() => toggleMarkers("all")}
-				style={{
-					position: "absolute",
-					bottom: "20px",
-					right: "20px",
-					zIndex: 1000,
-					width: "180px",
-					backgroundColor: "#2a5cb6",
-					border: "none",
-				}}>
-				{showMarkers === "all" ? "Hide Markers" : "Show All Markers"}
-			</Button>
+      <Button
+        variant="primary"
+        onClick={() => toggleMarkers("all")}
+        style={{
+          position: "absolute",
+          bottom: "20px",
+          right: "20px",
+          zIndex: 1000,
+          width: "180px",
+          backgroundColor: "#2a5cb6",
+          border: "none",
+        }}
+      >
+        {showMarkers === "all" ? "Hide Markers" : "Show All Markers"}
+      </Button>
 
-			<Button
-				variant="primary"
-				onClick={() => toggleMarkers("popular")}
-				style={{
-					position: "absolute",
-					bottom: "60px",
-					right: "20px",
-					zIndex: 1000,
-					width: "180px",
-					backgroundColor: "#2a5cb6",
-					border: "none",
-				}}>
-				{showMarkers === "popular" ? "Hide Popular Cities" : "Show Popular Cities"}
-			</Button>
+      <Button
+        variant="primary"
+        onClick={() => toggleMarkers("popular")}
+        style={{
+          position: "absolute",
+          bottom: "60px",
+          right: "20px",
+          zIndex: 1000,
+          width: "180px",
+          backgroundColor: "#2a5cb6",
+          border: "none",
+        }}
+      >
+        {showMarkers === "popular"
+          ? "Hide Popular Cities"
+          : "Show Popular Cities"}
+      </Button>
 
-			{modalOpen && (
-				<Modal show={modalOpen} onHide={handleCloseModal} className="custom-modal" size="lg">
-					<Modal.Header closeButton>
-						<Modal.Title>City Information: {selectedCity}</Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						<p>Here are some details about {selectedCity}.</p>
-						<Button
-							variant="primary"
-							onClick={() => navigate("/videos", { state: { selectedCity } })}
-							style={{ width: "100%", marginBottom: "10px" }}>
-							Find Travel Video for {selectedCity}
-						</Button>
-						<Button
-							variant="primary"
-							onClick={() => navigate("/tour-plan", { state: { selectedCity } })}
-							style={{ width: "100%" }}>
-							Generate AI Travel Guide for {selectedCity}
-						</Button>
-					</Modal.Body>
-				</Modal>
-			)}
+      {modalOpen && (
+        <Modal
+          show={modalOpen}
+          onHide={handleCloseModal}
+          className="custom-modal"
+          size="lg"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>City Information: {selectedCity}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Here are some details about {selectedCity}.</p>
+            <Button
+              variant="primary"
+              onClick={() => navigate("/videos", { state: { selectedCity } })}
+              style={{ width: "100%", marginBottom: "10px" }}
+            >
+              Find Travel Video for {selectedCity}
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() =>
+                navigate("/tour-plan", { state: { selectedCity } })
+              }
+              style={{ width: "100%" }}
+            >
+              Generate AI Travel Guide for {selectedCity}
+            </Button>
+          </Modal.Body>
+        </Modal>
+      )}
+      {showMarkers === "popular" && selectedCity === "chongqing" && (
+        <div className="info-sidebar">
+          <Button
+            className="delete-btn"
+            variant="link"
+            onClick={() => setSelectedCity("")}
+            style={{ color: "black", textDecoration: "none" }}
+          >
+            X
+          </Button>
+          <div className="pic-loc">
+            <img src={chongqingImage} className="sidebar-image" />
+          </div>
+          <h5>Chongqing (重庆市)</h5>
+          <p>
+            <strong>Chongqing</strong>, a major city in southwest China, is
+            known for its mountainous landscape, spicy cuisine, and vibrant
+            culture. With its modern skyline, historical landmarks, and the
+            famous Yangtze River, Chongqing offers a unique experience blending
+            tradition and innovation.
+          </p>
 
-			{showMarkers === "popular" && selectedCity === "beijing" && (
-				<div className="info-sidebar">
-					<Button
-						className="delete-btn"
-						variant="link"
-						onClick={() => setSelectedCity("")}
-						style={{ color: "black", textDecoration: "none" }}>
-						X
-					</Button>
-					<div className="pic-loc">
-						<img src={greatWall} className="sidebar-image" />
-					</div>
-					<h5>Beijing (北京市)</h5>
-					<p>
-						<strong>Beijing</strong>, the capital city of China, is a cultural and historical hub known for its rich
-						heritage, traditional architecture, and vibrant modern life. From ancient temples to the bustling cityscape,
-						Beijing offers a unique blend of the past and present.
-					</p>
+          <h5>Basic Information</h5>
+          <ul>
+            <li>
+              <strong>Chinese Name:</strong> 重庆市
+            </li>
+            <li>
+              <strong>Foreign Name:</strong> Chongqing
+            </li>
+            <li>
+              <strong>Other Names:</strong> 渝州, 巴渝, 山城
+            </li>
+            <li>
+              <strong>Location:</strong> Southwest China, surrounded by
+              mountains and intersected by rivers
+            </li>
+            <li>
+              <strong>Area Code:</strong> 023
+            </li>
+            <li>
+              <strong>Population:</strong> 32.12 million
+            </li>
+            <li>
+              <strong>Airports:</strong> Chongqing Jiangbei International
+              Airport
+            </li>
+            <li>
+              <strong>License Plate Codes:</strong> 渝A—渝Z
+            </li>
+          </ul>
 
-					<h5>Basic Information</h5>
-					<ul>
-						<li>
-							<strong>Chinese Name:</strong> 北京市
-						</li>
-						<li>
-							<strong>Foreign Name:</strong> Beijing
-						</li>
-						<li>
-							<strong>Other Names:</strong> 北平, 燕京, 蓟, 幽州
-						</li>
-						<li>
-							<strong>Location:</strong> North China, Northern part of the North China Plain
-						</li>
-						<li>
-							<strong>Area Code:</strong> 010
-						</li>
-						<li>
-							<strong>Population:</strong> 21.85 million
-						</li>
-						<li>
-							<strong>Airports:</strong> Beijing Capital International Airport, Beijing Daxing International Airport
-						</li>
-						<li>
-							<strong>License Plate Codes:</strong> 京A—京Q, 京Y
-						</li>
-					</ul>
+          <h5>Popular Attractions</h5>
+          <ul>
+            <li>
+              <strong>Hongya Cave:</strong> A unique cliffside complex
+              showcasing traditional architecture and vibrant nightlife.
+            </li>
+            <li>
+              <strong>Ciqikou Ancient Town:</strong> A historical town known for
+              its preserved streets and local snacks.
+            </li>
+            <li>
+              <strong>Wulong Karst:</strong> A UNESCO World Heritage site
+              featuring stunning natural limestone formations.
+            </li>
+            <li>
+              <strong>Three Gorges:</strong> A breathtaking area along the
+              Yangtze River with incredible scenery.
+            </li>
+          </ul>
+        </div>
+      )}
+      {showMarkers === "popular" && selectedCity === "heilongjiang" && (
+        <div className="info-sidebar">
+          <Button
+            className="delete-btn"
+            variant="link"
+            onClick={() => setSelectedCity("")}
+            style={{ color: "black", textDecoration: "none" }}
+          >
+            X
+          </Button>
+          <div className="pic-loc" >
+            <img src={harbinImage} className="sidebar-image" />
+          </div>
+          <h5>Harbin (哈尔滨)</h5>
+          <p>
+            <strong>Harbin</strong> is the capital city of Heilongjiang Province
+            in northeastern China, known for its winter charm and unique blend
+            of Russian and Chinese culture. Famous for its Ice and Snow
+            Festival, stunning architecture, and vibrant winter activities,
+            Harbin is a must-visit destination for anyone seeking a magical
+            winter experience.
+          </p>
 
-					<h5>Popular Attractions</h5>
-					<ul>
-						<li>
-							<strong>The Great Wall:</strong> One of the Seven Wonders of the World, this iconic landmark is a
-							must-see.
-						</li>
-						<li>
-							<strong>Forbidden City:</strong> A grand palace complex that served as the imperial palace for centuries.
-						</li>
-						<li>
-							<strong>Temple of Heaven:</strong> A spiritual complex famous for its architecture and religious history.
-						</li>
-						<li>
-							<strong>Summer Palace:</strong> A stunning garden and palace on the outskirts of Beijing.
-						</li>
-					</ul>
-					{/* <Button
+          <h5>Basic Information</h5>
+          <ul>
+            <li>
+              <strong>Chinese Name:</strong> 哈尔滨
+            </li>
+            <li>
+              <strong>Foreign Name:</strong> Harbin
+            </li>
+            <li>
+              <strong>Location:</strong> Northeast China, Heilongjiang Province,
+              near the Russian border
+            </li>
+            <li>
+              <strong>Area Code:</strong> 0451
+            </li>
+            <li>
+              <strong>Population:</strong> Approximately 10 million
+            </li>
+            <li>
+              <strong>Airports:</strong> Harbin Taiping International Airport
+            </li>
+            <li>
+              <strong>License Plate Codes:</strong> 黑A—黑Z
+            </li>
+          </ul>
+
+          <h5>Popular Attractions</h5>
+          <ul>
+            <li>
+              <strong>Harbin Ice and Snow Festival:</strong> The world-renowned
+              winter festival featuring spectacular ice and snow sculptures,
+              held annually from January to February.
+            </li>
+            <li>
+              <strong>Saint Sophia Cathedral:</strong> A Russian Orthodox
+              cathedral with stunning architecture, located in the heart of the
+              city.
+            </li>
+            <li>
+              <strong>Zhaolin Park:</strong> A famous park known for its
+              elaborate ice lanterns, especially during the winter festival.
+            </li>
+            <li>
+              <strong>Siberian Tiger Park:</strong> A large wildlife park
+              dedicated to the conservation of Siberian tigers and other
+              endangered species.
+            </li>
+          </ul>
+        </div>
+      )}
+
+      {showMarkers === "popular" && selectedCity === "beijing" && (
+        <div className="info-sidebar">
+          <Button
+            className="delete-btn"
+            variant="link"
+            onClick={() => setSelectedCity("")}
+            style={{ color: "black", textDecoration: "none" }}
+          >
+            X
+          </Button>
+          <div className="pic-loc">
+            <img src={greatWall} className="sidebar-image" />
+          </div>
+          <h5>Beijing (北京市)</h5>
+          <p>
+            <strong>Beijing</strong>, the capital city of China, is a cultural
+            and historical hub known for its rich heritage, traditional
+            architecture, and vibrant modern life. From ancient temples to the
+            bustling cityscape, Beijing offers a unique blend of the past and
+            present.
+          </p>
+
+          <h5>Basic Information</h5>
+          <ul>
+            <li>
+              <strong>Chinese Name:</strong> 北京市
+            </li>
+            <li>
+              <strong>Foreign Name:</strong> Beijing
+            </li>
+            <li>
+              <strong>Other Names:</strong> 北平, 燕京, 蓟, 幽州
+            </li>
+            <li>
+              <strong>Location:</strong> North China, Northern part of the North
+              China Plain
+            </li>
+            <li>
+              <strong>Area Code:</strong> 010
+            </li>
+            <li>
+              <strong>Population:</strong> 21.85 million
+            </li>
+            <li>
+              <strong>Airports:</strong> Beijing Capital International Airport,
+              Beijing Daxing International Airport
+            </li>
+            <li>
+              <strong>License Plate Codes:</strong> 京A—京Q, 京Y
+            </li>
+          </ul>
+
+          <h5>Popular Attractions</h5>
+          <ul>
+            <li>
+              <strong>The Great Wall:</strong> One of the Seven Wonders of the
+              World, this iconic landmark is a must-see.
+            </li>
+            <li>
+              <strong>Forbidden City:</strong> A grand palace complex that
+              served as the imperial palace for centuries.
+            </li>
+            <li>
+              <strong>Temple of Heaven:</strong> A spiritual complex famous for
+              its architecture and religious history.
+            </li>
+            <li>
+              <strong>Summer Palace:</strong> A stunning garden and palace on
+              the outskirts of Beijing.
+            </li>
+          </ul>
+        </div>
+      )}
+      {showMarkers === "popular" && selectedCity === "shanghai" && (
+        <div className="info-sidebar">
+          <Button
+            className="delete-btn"
+            variant="link"
+            onClick={() => setSelectedCity("")}
+            style={{ color: "black", textDecoration: "none" }}
+          >
+            X
+          </Button>
+          <div className="pic-loc">
+            <img src={shanghaiPic} className="sidebar-image" />
+          </div>
+          <h5>Shanghai (上海市)</h5>
+          <p>
+            <strong>Shanghai</strong>, one of China’s most dynamic cities, is a
+            global financial center known for its modern skyline, rich culture,
+            and cosmopolitan lifestyle. From colonial-era architecture to
+            cutting-edge skyscrapers, Shanghai embodies both history and
+            modernity.
+          </p>
+
+          <h5>Basic Information</h5>
+          <ul>
+            <li>
+              <strong>Chinese Name:</strong> 上海市
+            </li>
+            <li>
+              <strong>Foreign Name:</strong> Shanghai
+            </li>
+            <li>
+              <strong>Other Names:</strong> 魔都 (Magic City)
+            </li>
+            <li>
+              <strong>Location:</strong> East China, on the Yangtze River Delta
+            </li>
+            <li>
+              <strong>Area Code:</strong> 021
+            </li>
+            <li>
+              <strong>Population:</strong> 24.28 million
+            </li>
+            <li>
+              <strong>Airports:</strong> Shanghai Pudong International Airport,
+              Shanghai Hongqiao International Airport
+            </li>
+            <li>
+              <strong>License Plate Codes:</strong> 沪A—沪Z
+            </li>
+          </ul>
+
+          <h5>Popular Attractions</h5>
+          <ul>
+            <li>
+              <strong>The Bund:</strong> A waterfront area offering stunning
+              views of Shanghai’s skyline, blending historic buildings with
+              modern skyscrapers.
+            </li>
+            <li>
+              <strong>Oriental Pearl Tower:</strong> An iconic landmark with
+              panoramic views of the city from its observation decks.
+            </li>
+            <li>
+              <strong>Yu Garden:</strong> A beautiful classical Chinese garden
+              located in the heart of the Old City.
+            </li>
+            <li>
+              <strong>Shanghai Museum:</strong> A top museum showcasing ancient
+              Chinese art, calligraphy, and artifacts.
+            </li>
+          </ul>
+        </div>
+      )}
+      {showMarkers === "popular" && selectedCity === "guangdong" && (
+        <div className="info-sidebar">
+          <Button
+            className="delete-btn"
+            variant="link"
+            onClick={() => setSelectedCity("")}
+            style={{ color: "black", textDecoration: "none" }}
+          >
+            X
+          </Button>
+          <div className="pic-loc">
+            <img src={guangzhouPic} className="sidebar-image" />
+          </div>
+
+          <h5>Guangzhou (广州市)</h5>
+          <p>
+            <strong>Guangzhou</strong>, also known as Canton, is a major port
+            city and the capital of Guangdong Province. It is famous for its
+            thriving economy, rich history, and delicious Cantonese cuisine. The
+            city‘s modern infrastructure is complemented by historic landmarks
+            and lush parks.
+          </p>
+
+          <h5>Basic Information</h5>
+          <ul>
+            <li>
+              <strong>Chinese Name:</strong> 广州市
+            </li>
+            <li>
+              <strong>Foreign Name:</strong> Guangzhou
+            </li>
+            <li>
+              <strong>Other Names:</strong> Canton
+            </li>
+            <li>
+              <strong>Location:</strong> South China, on the Pearl River
+            </li>
+            <li>
+              <strong>Area Code:</strong> 020
+            </li>
+            <li>
+              <strong>Population:</strong> 15.31 million
+            </li>
+            <li>
+              <strong>Airports:</strong> Guangzhou Baiyun International Airport
+            </li>
+            <li>
+              <strong>License Plate Codes:</strong> 粤A—粤Z
+            </li>
+          </ul>
+
+          <h5>Popular Attractions</h5>
+          <ul>
+            <li>
+              <strong>Canton Tower:</strong> One of the tallest towers in the
+              world, offering stunning views of the city.
+            </li>
+            <li>
+              <strong>Chimelong Safari Park:</strong> A large zoo and safari
+              park with a wide variety of animals.
+            </li>
+            <li>
+              <strong>Shamian Island:</strong> A historic area with colonial-era
+              architecture and peaceful surroundings.
+            </li>
+            <li>
+              <strong>Yuexiu Park:</strong> A scenic park featuring beautiful
+              gardens, lakes, and the famous Five Rams Sculpture.
+            </li>
+          </ul>
+          {/* <Button
             variant="primary"
             onClick={() => window.open(`https://www.youtube.com/results?search_query=${selectedCity} travel introduction`, '_blank')}
             style={{ width: '100%', marginBottom: '10px' }}
@@ -216,171 +537,10 @@ const MapContainer = () => {
           >
             Generate AI Travel Guide for {selectedCity}
           </Button> */}
-				</div>
-			)}
-			{showMarkers === "popular" && selectedCity === "shanghai" && (
-				<div className="info-sidebar">
-					<Button
-						className="delete-btn"
-						variant="link"
-						onClick={() => setSelectedCity("")}
-						style={{ color: "black", textDecoration: "none" }}>
-						X
-					</Button>
-					<div className="pic-loc">
-						<img src={shanghaiPic} className="sidebar-image" />
-					</div>
-					<h5>Shanghai (上海市)</h5>
-					<p>
-						<strong>Shanghai</strong>, one of China’s most dynamic cities, is a global financial center known for its
-						modern skyline, rich culture, and cosmopolitan lifestyle. From colonial-era architecture to cutting-edge
-						skyscrapers, Shanghai embodies both history and modernity.
-					</p>
-
-					<h5>Basic Information</h5>
-					<ul>
-						<li>
-							<strong>Chinese Name:</strong> 上海市
-						</li>
-						<li>
-							<strong>Foreign Name:</strong> Shanghai
-						</li>
-						<li>
-							<strong>Other Names:</strong> 魔都 (Magic City)
-						</li>
-						<li>
-							<strong>Location:</strong> East China, on the Yangtze River Delta
-						</li>
-						<li>
-							<strong>Area Code:</strong> 021
-						</li>
-						<li>
-							<strong>Population:</strong> 24.28 million
-						</li>
-						<li>
-							<strong>Airports:</strong> Shanghai Pudong International Airport, Shanghai Hongqiao International Airport
-						</li>
-						<li>
-							<strong>License Plate Codes:</strong> 沪A—沪Z
-						</li>
-					</ul>
-
-					<h5>Popular Attractions</h5>
-					<ul>
-						<li>
-							<strong>The Bund:</strong> A waterfront area offering stunning views of Shanghai’s skyline, blending
-							historic buildings with modern skyscrapers.
-						</li>
-						<li>
-							<strong>Oriental Pearl Tower:</strong> An iconic landmark with panoramic views of the city from its
-							observation decks.
-						</li>
-						<li>
-							<strong>Yu Garden:</strong> A beautiful classical Chinese garden located in the heart of the Old City.
-						</li>
-						<li>
-							<strong>Shanghai Museum:</strong> A top museum showcasing ancient Chinese art, calligraphy, and artifacts.
-						</li>
-					</ul>
-					{/* <Button
-            variant="primary"
-            onClick={() => window.open(`https://www.youtube.com/results?search_query=${selectedCity} travel introduction`, '_blank')}
-            style={{ width: '100%', marginBottom: '10px' }}
-          >
-            Find Travel Video for {selectedCity}
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => window.open(`https://www.ai-generated-travel-guide.com/${selectedCity}`, '_blank')}
-            style={{ width: '100%' }}
-          >
-            Generate AI Travel Guide for {selectedCity}
-          </Button> */}
-				</div>
-			)}
-			{showMarkers === "popular" && selectedCity === "guangdong" && (
-				<div className="info-sidebar">
-					<Button
-						className="delete-btn"
-						variant="link"
-						onClick={() => setSelectedCity("")}
-						style={{ color: "black", textDecoration: "none" }}>
-						X
-					</Button>
-					<div className="pic-loc">
-						<img src={guangzhouPic} className="sidebar-image" />
-					</div>
-
-					<h5>Guangzhou (广州市)</h5>
-					<p>
-						<strong>Guangzhou</strong>, also known as Canton, is a major port city and the capital of Guangdong
-						Province. It is famous for its thriving economy, rich history, and delicious Cantonese cuisine. The city‘s
-						modern infrastructure is complemented by historic landmarks and lush parks.
-					</p>
-
-					<h5>Basic Information</h5>
-					<ul>
-						<li>
-							<strong>Chinese Name:</strong> 广州市
-						</li>
-						<li>
-							<strong>Foreign Name:</strong> Guangzhou
-						</li>
-						<li>
-							<strong>Other Names:</strong> Canton
-						</li>
-						<li>
-							<strong>Location:</strong> South China, on the Pearl River
-						</li>
-						<li>
-							<strong>Area Code:</strong> 020
-						</li>
-						<li>
-							<strong>Population:</strong> 15.31 million
-						</li>
-						<li>
-							<strong>Airports:</strong> Guangzhou Baiyun International Airport
-						</li>
-						<li>
-							<strong>License Plate Codes:</strong> 粤A—粤Z
-						</li>
-					</ul>
-
-					<h5>Popular Attractions</h5>
-					<ul>
-						<li>
-							<strong>Canton Tower:</strong> One of the tallest towers in the world, offering stunning views of the
-							city.
-						</li>
-						<li>
-							<strong>Chimelong Safari Park:</strong> A large zoo and safari park with a wide variety of animals.
-						</li>
-						<li>
-							<strong>Shamian Island:</strong> A historic area with colonial-era architecture and peaceful surroundings.
-						</li>
-						<li>
-							<strong>Yuexiu Park:</strong> A scenic park featuring beautiful gardens, lakes, and the famous Five Rams
-							Sculpture.
-						</li>
-					</ul>
-					{/* <Button
-            variant="primary"
-            onClick={() => window.open(`https://www.youtube.com/results?search_query=${selectedCity} travel introduction`, '_blank')}
-            style={{ width: '100%', marginBottom: '10px' }}
-          >
-            Find Travel Video for {selectedCity}
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => window.open(`https://www.ai-generated-travel-guide.com/${selectedCity}`, '_blank')}
-            style={{ width: '100%' }}
-          >
-            Generate AI Travel Guide for {selectedCity}
-          </Button> */}
-				</div>
-			)}
-		</div>
-	);
+        </div>
+      )}
+    </div>
+  );
 };
 
 const PoiMarkers = ({ pois, onPoiClick }) => {
