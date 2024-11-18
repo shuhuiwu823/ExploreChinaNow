@@ -1,21 +1,70 @@
-#chat-container {
-  max-width: 600px;
-  margin: auto;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
+
+.saved-plan-list {
+  width: 33.33%;
+  margin-top: 4.2%;
+  padding: 20px;
+  height: 83.3%;
+  background-color: #f0f0f0; 
+  overflow-y: auto; 
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-right: 1px solid #ddd;
 }
 
-#chat-history {
-  max-height: 400px;
-  overflow-y: auto;
+.saved-plan-list h3 {
   margin-bottom: 10px;
 }
 
+.saved-plan-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.saved-plan-list li {
+  margin-bottom: 15px;
+}
+
+.more-button {
+  margin-left: 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 5px;
+}
+
+.full-content {
+  margin-top: 10px;
+}
+
+#chat-container {
+  width: 66.67%; 
+  margin-left: 33.33%; 
+  margin-top: 4.2%;
+  padding: 20px;
+  height: 83.3%; 
+  overflow-y: auto; 
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f9f9;
+  border-left: 1px solid #ddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#chat-history {
+  flex: 1;
+  overflow-y: auto; 
+}
+
 .message {
-  padding: 8px;
-  margin: 5px 0;
+  margin-bottom: 10px;
+  padding: 10px;
   border-radius: 5px;
 }
 
@@ -26,21 +75,25 @@
 
 .message.bot {
   background-color: #e5e5e5;
+  align-self: flex-start;
 }
 
 #input-section {
   display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 #user-input {
   flex: 1;
-  padding: 8px;
-  border: 1px solid #ddd;
+  height: 50px;
+  padding: 10px;
   border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: none;
 }
 
 button {
-  margin-left: 5px;
   padding: 8px;
   background-color: #007bff;
   color: #fff;
@@ -53,10 +106,10 @@ button {
   background-color: #28a745;
   color: white;
   border: none;
-  border-radius: 3px;
   margin-left: 10px;
   cursor: pointer;
   padding: 3px 6px;
+  border-radius: 5px;
 }
 
 .popup {
@@ -72,6 +125,10 @@ button {
 }
 
 .popup-content {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  gap: 10px;
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
@@ -83,7 +140,12 @@ button {
   padding: 10px;
 }
 
-.popup-content button {
+.popup-buttons {
+  display: flex;
+  gap: 10px; 
+}
+
+.popup-buttons button {
   margin-top: 10px;
   padding: 5px 10px;
   background-color: #007bff;
