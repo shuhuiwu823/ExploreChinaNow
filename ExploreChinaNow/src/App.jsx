@@ -23,7 +23,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase.js";
-import { AppContext } from "./context.jsx";
+import { AppContext } from "./Context.jsx";
 // import { doc, getDoc } from "firebase/firestore";
 import { getUserData } from "./dbOperation.js";
 
