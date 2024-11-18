@@ -2,7 +2,7 @@ import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { useContext } from "react";
 import { Button } from "react-bootstrap";
-import { AppContext } from "../context";
+import { AppContext } from "../Context";
 import { getUserData } from "../dbOperation";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";

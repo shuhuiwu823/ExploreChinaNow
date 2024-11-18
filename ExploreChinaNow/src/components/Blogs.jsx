@@ -35,6 +35,12 @@ export default function Blogs() {
     setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
+  useEffect(() => {
+    fetchPosts().then(() => {
+      setExpanded(blogPosts.reduce((acc, post) => ({ ...acc, [post.id]: false }), {}));
+    });
+  }, [blogPosts]);
+
   const handleSearch = () => {
     const filtered = blogPosts.filter(
       (post) =>
