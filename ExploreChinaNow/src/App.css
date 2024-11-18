@@ -1,137 +1,154 @@
-.navigation-buttons {
-	display: flex;
-	justify-content: space-around;
-}
-
-.navigation-button {
-	border: 0;
-
-	padding: 0.5rem;
-
-	background: none;
-
-	text-decoration: underline;
-}
-
-.navigation-button-icon {
-	height: 3rem;
-}
-
-.header-left {
-	display: flex;
-}
+/* Ensure the HTML and body occupy the full viewport height */
 html,
 body {
-	height: 100%;
-	margin: 0;
+    height: 100%;
+    margin: 0;
 }
 
+/* Main application content */
 .app-content {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the content spans the full viewport height */
 }
 
 .app-content > * {
-	flex-shrink: 0;
+    flex-shrink: 0; /* Prevent elements from shrinking */
 }
 
 .app-content > .main-content {
-	flex: 1;
+    flex: 1; /* Allow the main content to fill the remaining vertical space */
+    margin-top: 70px; /* Ensure content starts below the Header */
 }
 
-
-/**
-map
-**/
-.modal-content{
-	margin-top: 100px;
+/* Ensure the Header stays fixed at the top */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Keep the Header on the topmost layer */
 }
-/* 设置 Modal 的最大宽度 */
+
+/* Navigation buttons */
+.navigation-buttons {
+    display: flex;
+    justify-content: space-around; /* Distribute buttons evenly */
+}
+
+.navigation-button {
+    border: 0; /* Remove border */
+    padding: 0.5rem;
+    background: none; /* Remove background color */
+    text-decoration: underline; /* Underlined for emphasis */
+}
+
+.navigation-button-icon {
+    height: 3rem; /* Icon height */
+}
+
+/* Align items in the header */
+.header-left {
+    display: flex;
+}
+
+/* Modal styles */
+.modal-content {
+    margin-top: 100px; /* Space between the modal and the top of the page */
+}
+
 .custom-modal .modal-dialog {
-	max-width: 40%;
-	/* 可以根据需要调整 */
+    max-width: 40%; /* Restrict modal width */
 }
 
-/* 设置 Modal 标题的字体 */
 .custom-modal .modal-title {
-	font-size: 24px;
-	font-weight: bold;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-/* 设置 Modal Body */
 .custom-modal .modal-body {
-	padding: 30px;
-	background-color: #f8f9fa;
-	/* 可以自定义背景颜色 */
+    padding: 30px;
+    background-color: #f8f9fa; /* Light gray background */
 }
 
-/* 设置 Modal Footer */
 .custom-modal .modal-footer {
-	padding: 20px;
-	background-color: #f1f1f1;
+    padding: 20px;
+    background-color: #f1f1f1; /* Slightly darker footer background */
 }
 
-/* 自定义按钮的大小 */
 .custom-modal .modal-footer button {
-	width: 100%;
-}
-.info-sidebar {
-	position: absolute;
-	top: 20%;
-	left: 5%;
-	width: 35%;
-	bottom: 0;
-	background-color: rgba(255, 255, 255, 1);
-	padding: 20px;
-	z-index: 0;
-	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
-	border-radius: 10px;
-	overflow: auto;
+    width: 100%; /* Full-width buttons for better usability */
 }
 
-.delete-btn {
-	position: absolute;
-	top: 2px;
-	right: 5px;
-	text-decoration: none;
-	font-size: 20px;
-	color: black;
+/* Sidebar styles */
+.info-sidebar {
+    position: absolute;
+    top: 20%; /* Position sidebar 20% from the top */
+    left: 5%; /* Position sidebar 5% from the left */
+    width: 35%; /* Set sidebar width */
+    bottom: 0; /* Extend to the bottom of the viewport */
+    background-color: rgba(255, 255, 255, 1); /* White background */
+    padding: 20px;
+    z-index: 0; /* Keep sidebar below header */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* Add subtle shadow */
+    border-radius: 10px; /* Rounded corners */
+    overflow: auto; /* Enable scrolling if content overflows */
 }
+
+/* Delete button */
+.delete-btn {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    text-decoration: none; /* Remove underline */
+    font-size: 20px;
+    color: black;
+}
+
+/* Padding for image location container */
 .pic-loc {
 	padding: 10px;
 	
 }
+
+/* Sidebar images */
 .sidebar-image {
-	width: 100%;
-	height: auto;
-	border-radius: 8px;
-	margin-bottom: 15px;
+    width: 100%; /* Full width */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 15px; /* Space below the image */
 }
 
+/* Sidebar headings */
 .info-sidebar h5 {
-	font-size: 18px;
-	font-weight: bold;
-	margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px; /* Space below headings */
 }
 
+/* Sidebar text */
 .info-sidebar p {
-	font-size: 14px;
-	line-height: 1.6;
-	margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.6; /* Comfortable line height */
+    margin-bottom: 15px;
 }
 
+/* Sidebar lists */
 .info-sidebar ul {
-	padding-left: 20px;
+    padding-left: 20px; /* Indentation for list items */
 }
 
 .info-sidebar ul li {
-	font-size: 14px;
-	line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.6; /* Consistent spacing between list items */
 }
 
 .info-sidebar ul li strong {
-	font-weight: bold;
+    font-weight: bold; /* Highlight key points */
+}
+
+/* Button to show more content */
+.show-button {
+    width: 170px; /* Fixed button width */
 }
 .show-button{
 	width: 170px;
