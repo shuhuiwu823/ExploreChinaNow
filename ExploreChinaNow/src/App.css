@@ -99,7 +99,8 @@ map
 	color: black;
 }
 .pic-loc {
-	padding: 10px
+	padding: 10px;
+	
 }
 .sidebar-image {
 	width: 100%;
@@ -134,4 +135,12 @@ map
 }
 .show-button{
 	width: 170px;
+}
+
+/*visaPager*/
+.visa-h2{
+	color: "#333";
+	font-size: '25px';
+	margin-top:"20px"
+	
 }
