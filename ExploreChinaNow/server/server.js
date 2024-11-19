@@ -8,8 +8,7 @@ const PORT = 3000;
 const dotenv = require('dotenv');
 dotenv.config();
 
-const apiKey = process.env.OPENAI_API_KEY;
-// console.log("api key:",apiKey);
+const apiKey = process.env.ChatGPT_API_KEY;
 app.use(cookieParser());
 
 app.use(express.static('./dist'));
