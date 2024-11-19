@@ -38,6 +38,12 @@ function Login() {
         // });
         
         try {
+            // Check the status of the server
+            const response = await fetch("/auth/check-connect");
+            if (!response.ok) {
+                throw new Error("Service is not available now. Please try again later.");
+            }
+
             signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
@@ -52,16 +58,24 @@ function Login() {
               });
         } catch (error) {
             console.log(error);
-            setErrorMsg(error);
+            setErrorMsg(error.message);
         }finally{
             setLoading(false);
         }
     }
 
-    const handleGoogleLogin = (e) => {
+    const handleGoogleLogin = async (e) => {
         e.preventDefault();
         setErrorMsg("");
         setLoading(true);
+
+        try {
+            // Check the status of the server
+            const response = await fetch("/auth/check-connect");
+            if (!response.ok) {
+                throw new Error("Service is not available now. Please try again later.");
+            }
+        
 
         signInWithPopup(auth, googleProvider)
         .then(async (result) => {
@@ -111,28 +125,41 @@ function Login() {
             }
             setLoading(false);
         })
+        } catch (error) {
+            console.log(error);
+            setErrorMsg(error.message);
+        }finally{
+            setLoading(false);
+        }
     }
     
     return(
-        <dialog className="login-dialog" open>
-            <h2>Sign In</h2>
-            <form className="login-form" onSubmit={handleLogin}>
-                <label className="login-email">
-                    <span>Email</span>
-                    <input type="text" className="enter-email" name="email"></input>
-                </label>
-                <label className="login-password">
-                    <span>Password</span>
-                    <input type="password" className="enter-password" name="password"></input>
-                </label>
-                <div className="error-message">{errorMsg}</div>
-                <button className="submit-login" disabled={loading}>{loading ? "Loading..." : "Login"}</button>
-            </form>
-            <div className="signup-prompt">Don't have an account? <Link to={"/sign-up"}>Create one</Link></div>
-            <button className="google-login-btn" onClick={handleGoogleLogin} disabled={loading}>
-                {loading ? <span>Loading...</span> : <><img className="google-icon" src="/google.png" alt="google icon"/><span>Login with Google</span></>}
-            </button>
-        </dialog>
+        <div className="login-container">
+            <div className="login-image">
+                <img src="/4.Shanghai/dongfangmingzhu.jpeg" alt="login" />
+            </div>
+            <div className="login-dialog">
+                <h2>Sign In</h2>
+                <form className="login-form" onSubmit={handleLogin}>
+                    <label className="login-email">
+                        <span>Email</span>
+                        <input type="text" className="enter-email" name="email"></input>
+                    </label>
+                    <label className="login-password">
+                        <span>Password</span>
+                        <input type="password" className="enter-password" name="password"></input>
+                    </label>
+                    <div className="error-message">{errorMsg}</div>
+                    <button className="submit-login" disabled={loading}>{loading ? "Loading..." : "Login"}</button>
+                </form>
+                <div className="prop-and-googlelogin">
+                <div className="signup-prompt">Don't have an account? <Link to={"/sign-up"}>Create one</Link></div>
+                <button className="google-login-btn" onClick={handleGoogleLogin} disabled={loading}>
+                    {loading ? <span>Loading...</span> : <><img className="google-icon" src="/google.png" alt="google icon"/><span>Login with Google</span></>}
+                </button>
+                </div>
+            </div>
+        </div>
     );
 }
 
