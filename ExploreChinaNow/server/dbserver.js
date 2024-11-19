@@ -15,6 +15,10 @@ app.use(cookieParser());
 app.use(express.static("./dist"));
 app.use(express.json());
 
+app.get("/auth/check-connect", (req, res) => {
+  res.status(200).send("Database Server is running")
+});
+
 /**
  * Get user data by UID using Firestore REST API
  */
