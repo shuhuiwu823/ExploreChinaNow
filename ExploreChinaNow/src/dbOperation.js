@@ -2,6 +2,17 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage, db } from "./firebase";
 import { doc, getDoc } from "firebase/firestore";
 
+/**
+ * This function is used to upload a file to the Firebase Storage service. 
+ * In the application, this function is used to upload the avatar image provided by users.
+ * If the avatar is uploaded successfully, this function will return a URL for this avatar.
+ * If upload failed due to some reasons, an error will be returned.
+ * @async
+ * @function uploadFile
+ * @param {File} file - The file to be uploaded to the Storage service.
+ * @returns {Promise}
+ * @throws Will throw out an error if the upload is failed.
+ */
 const uploadFile = async (file) => {
     console.log(file.name);
     const date = new Date();
@@ -45,6 +56,15 @@ const uploadFile = async (file) => {
     });
 }
 
+/**
+ * This is function is used call the REST service to fetch user data from Firestore database.
+ * If the data extraction is successful
+ * @async
+ * @function getUserData
+ * @param {string} uid 
+ * @returns {Promise}
+ * @throws Will throw out an error if extracting data is failed.
+ */
 export const getUserData = async (uid) => {
 	// const docRef = doc(db, "users", uid);
 	// const docSnap = await getDoc(docRef);

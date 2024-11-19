@@ -9,13 +9,15 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json"
   },
   "dependencies": {
     "@vis.gl/react-google-maps": "^1.4.0",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "cookie-parser": "^1.4.6",
+    "docdash": "^2.0.2",
     "dotenv": "^16.4.5",
     "explorechinanow": "file:",
     "express": "^4.21.1",
