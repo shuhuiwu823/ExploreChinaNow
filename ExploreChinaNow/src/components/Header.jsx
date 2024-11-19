@@ -88,9 +88,6 @@ function Header() {
 								<Nav.Link onClick={() => handleNavigation("/sign-in")}>
 									Sign In
 								</Nav.Link>
-								<Nav.Link onClick={() => handleNavigation("/sign-up")}>
-									Sign Up
-								</Nav.Link>
 							</>
 						)}
 					</Nav>
