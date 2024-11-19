@@ -15,21 +15,24 @@ export default function AddPost({ onPostAdded }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const author = userData?.username || "Anonymous"; // 定义作者
-
+  
+    const author = userData?.username || "Anonymous";
+  
     const newPost = {
       title,
       author,
       content,
       createdAt: new Date(),
     };
-
+  
+  
+    console.log("Post object before Firestore:", newPost);
+  
     try {
       await addBlogPostToFirestore(newPost, images);
       alert("Post successfully added!");
       setTitle("");
-      setContent("");
+      setContent(""); 
       setImages([]);
       if (onPostAdded) onPostAdded();
       navigate("/blogs", { replace: true });

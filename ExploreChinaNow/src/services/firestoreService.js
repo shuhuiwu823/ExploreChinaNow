@@ -98,8 +98,8 @@ export async function addBlogPostToFirestore(post, imageFiles = []) {
     );
     post.images = imageUrls;
 
-    // Preserve spaces and line breaks
-    post.content = post.content.replace(/ /g, '\u00A0'); // Non-breaking space
+    // Ensure line breaks (\n) are preserved; no special handling for '-'
+    post.content = post.content.replace(/\r\n|\r/g, '\n'); // Normalize line breaks to '\n'
 
     // Add timestamp
     post.createdAt = serverTimestamp();
@@ -111,3 +111,4 @@ export async function addBlogPostToFirestore(post, imageFiles = []) {
     logFirestoreError("Adding blog post", error);
   }
 }
+
