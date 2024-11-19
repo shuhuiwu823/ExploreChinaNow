@@ -14,11 +14,14 @@
 	padding: 10px;
 }
 
+#logo {
+	vertical-align: middle !important; /* Align with brand text */
+}
+
 .navbar-brand img {
 	width: 30px;
 	height: 30px;
 	margin-right: 8px; /* Space between icon and text */
-	vertical-align: middle; /* Align with brand text */
 }
 
 .navbar-nav .nav-link {
