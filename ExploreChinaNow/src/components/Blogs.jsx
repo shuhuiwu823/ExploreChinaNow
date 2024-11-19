@@ -125,7 +125,7 @@ export default function Blogs() {
                 </button>
               </div>
               {post.images?.length > 0 && (
-                <div className="image-grid">
+                <div className="image-container">
                   {post.images.map((url, index) => (
                     <img
                       key={index}
