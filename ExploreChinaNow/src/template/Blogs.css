@@ -98,19 +98,25 @@ button:hover {
   margin-top: 10px;
 }
 
-/* Image grid */
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns */
-  gap: 10px; /* Space between images */
+/* Image container */
+.image-container {
+  display: flex;  /* Use flexbox to align images horizontally */
+  overflow-x: auto; /* Allow horizontal scrolling if there are too many images */
+  gap: 15px;  /* Space between images */
   margin-top: 15px;
+  padding: 10px 0; /* Add top and bottom padding to improve spacing */
 }
 
+/* Image thumbnail */
 .image-thumbnail {
-  width: 100%;
-  border-radius: 5px; /* Rounded corners for images */
-  overflow: hidden; /* Prevent image overflow */
+  height: auto; /* Allow vertical expansion */
+  max-width: 300px; /* Set maximum width to ensure horizontal alignment */
+  flex-shrink: 0; /* Prevent images from shrinking */
+  border-radius: 5px; /* Rounded corners */
+  object-fit: cover; /* Ensure the image maintains aspect ratio and covers the container */
 }
+
+
 
 .image-thumbnail img {
   width: 100%;
