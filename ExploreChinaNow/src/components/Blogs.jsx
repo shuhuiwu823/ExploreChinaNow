@@ -17,25 +17,25 @@ export default function Blogs() {
   const { userData } = useContext(AppContext);
   const navigate = useNavigate();
 
+  const fetchPosts = async () => {
+    try {
+      const posts = await getBlogPostsFromFirestore();
+      setBlogPosts(posts);
+      setFilteredPosts(posts);
+      const initialExpanded = posts.reduce((acc, post) => {
+        acc[post.id] = false;
+        return acc;
+      }, {});
+      setExpanded(initialExpanded);
+    } catch (error) {
+      console.error("Failed to load blog posts:", error);
+    }
+  };
+  
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const posts = await getBlogPostsFromFirestore();
-        setBlogPosts(posts);
-        setFilteredPosts(posts);
-        const initialExpanded = posts.reduce((acc, post) => {
-          acc[post.id] = false;
-          return acc;
-        }, {});
-        setExpanded(initialExpanded);
-      } catch (error) {
-        console.error("Failed to load blog posts:", error);
-      }
-    };
-
     fetchPosts();
   }, []);
-
+  
   const toggleExpand = (id) => {
     setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
   };
