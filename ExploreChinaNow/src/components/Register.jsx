@@ -62,7 +62,7 @@ function Register() {
             });
 
             setUserData(userInfo);
-            navigate("/profile");
+            navigate("/");
         }catch(err){
             console.log(err);
             setErrorMsg(err.message);
