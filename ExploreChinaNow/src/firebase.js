@@ -11,7 +11,7 @@ import "firebase/database";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDdMVGhgLrkSm1CeOPhmVXaGGsX-53pBSo",
+  apiKey: "",
   authDomain: "explore-china-now.firebaseapp.com",
   databaseURL: "https://explore-china-now-default-rtdb.firebaseio.com",
   projectId: "explore-china-now",
