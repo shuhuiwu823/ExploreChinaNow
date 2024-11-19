@@ -1,8 +1,28 @@
+.register-container {
+    display: flex;
+    background-color: #f9f9f9;
+}
+
+.register-img {
+    flex: 1;
+    height: 100%;
+    background-color: #f0f0f0;
+    object-fit: cover;
+}
+
+.register-img img{
+    width: -webkit-fill-available;
+    max-height: 100vh;
+}
+
 .register-dialog {
-    position: relative;
-    top: 40%;
-    transform: translate(0, -50%);
-    width: 20rem;
+    max-height: 100vh;
+
+    flex: 1;
+
+    display: grid;
+    grid-template-rows: repeat(12, 1fr);
+
     padding: 1rem;
     background-color: #fff;
     border: 1px;
@@ -12,10 +32,17 @@
     z-index: 1000;
 }
 
+.register-dialog h2 {
+    grid-row: 3;
+}
+
 .register-form {
+    grid-row: 4;
+
     display: flex;
     flex-direction: column;
-    gap: 1rem; 
+    gap: 1rem;
+    align-items: center;
 }
 
 .register-form label {
@@ -23,14 +50,13 @@
     flex-direction: column;
     align-items: flex-start; 
     font-size: 1em;
+    width: 40%;
 }
 
 .register-form input {
     width: 100%; 
-    max-width: 18.5rem; 
     padding: 0.5rem;
     box-sizing: border-box;
-    margin-top: 5px; /* Space between label and input */
 }
 
 .register-avatar img {
@@ -48,11 +74,15 @@
 
 .submit-register {
     padding: 0.6rem;
+    margin: 0;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+
+    line-height: 1rem;
+    width: 40%;
 }
 
 .submit-register:disabled {
