@@ -1,12 +1,12 @@
 /* Blog container */
 .blogs-container {
   padding: 20px;
-  background-color: #f4f4f9; /* Light background for contrast */
-  min-height: 100vh; /* Ensure full viewport height */
-  font-family: Arial, sans-serif; /* Clean, modern font */
-  overflow-x: hidden; /* Prevent horizontal overflow */
-  max-width: 1200px; /* Limit maximum width for better readability */
-  margin: 0 auto; /* Center-align the container */
+  background-color: #f4f4f9;
+  min-height: 100vh; 
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  max-width: 1200px; 
+  margin: 0 auto; 
 }
 
 /* Search and add post section */
@@ -19,7 +19,7 @@
 
 .search-container {
   display: flex;
-  gap: 10px; /* Space between input and buttons */
+  gap: 10px; 
 }
 
 .search-container input {
@@ -41,53 +41,47 @@
 }
 
 .add-post-button {
-  background-color: #28a745; /* Green background for add post button */
+  background-color: #28a745; 
 }
 
 button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #0056b3; 
 }
 
 /* Blog posts */
 .blog-posts {
   display: grid;
-  grid-template-columns: 1fr; /* Single-column layout, constrained by the container width */
-  gap: 20px; /* Space between posts */
+  grid-template-columns: 1fr; 
+  gap: 20px; 
 }
 
 .blog-post {
   padding: 15px;
-  background-color: #fff; /* White background */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
-  overflow: visible; /* Allow content to overflow vertically */
-  max-width: 100%; /* Constrain width within container */
+  background-color: #fff;
+  border-radius: 8px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  overflow-wrap: anywhere;
+  max-width: 100%; 
 }
 
-/* Title and author */
 .blog-post-header h3 {
   font-size: 22px;
   margin: 0;
-  word-wrap: break-word; /* Enable word wrapping */
+  word-wrap: break-word; 
 }
 
 .post-author {
   font-size: 14px;
-  color: #666; /* Medium gray for less emphasis */
+  color: #666; 
 }
 
-/* Content styles */
-.blog-post-content { 
-  /* word-wrap: break-word;  */
-  overflow-x: hidden; /* Prevent horizontal overflow */
-  overflow-wrap: break-word; /* Break lines logically at word boundaries */
-  white-space: pre-wrap; /* Allow text to wrap naturally */
-  line-height: 1.6; /* Improve readability with adequate line spacing */
+.blog-post-content {
+  overflow-wrap: break-word; /* Ensure text breaks naturally */
+  word-break: break-word; /* Break long words when necessary */
+  white-space: normal; /* Allow normal wrapping */
+  line-height: 1.6; /* Improve readability with adequate spacing */
   padding-right: 8px; /* Add spacing for scrollbar if present */
-  word-break: normal; /* Avoid breaking words unless necessary */
 }
-
-
 
 
 .blog-post-content p {
@@ -104,19 +98,25 @@ button:hover {
   margin-top: 10px;
 }
 
-/* Image grid */
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns */
-  gap: 10px; /* Space between images */
+/* Image container */
+.image-container {
+  display: flex;  /* Use flexbox to align images horizontally */
+  overflow-x: auto; /* Allow horizontal scrolling if there are too many images */
+  gap: 15px;  /* Space between images */
   margin-top: 15px;
+  padding: 10px 0; /* Add top and bottom padding to improve spacing */
 }
 
+/* Image thumbnail */
 .image-thumbnail {
-  width: 100%;
-  border-radius: 5px; /* Rounded corners for images */
-  overflow: hidden; /* Prevent image overflow */
+  height: auto; /* Allow vertical expansion */
+  max-width: 300px; /* Set maximum width to ensure horizontal alignment */
+  flex-shrink: 0; /* Prevent images from shrinking */
+  border-radius: 5px; /* Rounded corners */
+  object-fit: cover; /* Ensure the image maintains aspect ratio and covers the container */
 }
+
+
 
 .image-thumbnail img {
   width: 100%;

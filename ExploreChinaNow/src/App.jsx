@@ -40,6 +40,7 @@ function App() {
       } else {
         setUserData(null); // Set userData to null if user is not logged in
       }
+      console.log(user);
       setLoading(false); // Mark loading as complete
     });
 
@@ -54,7 +55,7 @@ function App() {
 
 	return (
     <Router>
-      <div className="app-content">
+      <>
         <Header />
         <main className="main-content">
           <Routes>
@@ -93,7 +94,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
-      </div>
+      </>
     </Router>
   );
 }

@@ -17,17 +17,22 @@ export default function Blogs() {
   const { userData } = useContext(AppContext);
   const navigate = useNavigate();
 
-  const fetchPosts = async () => {
-    try {
-      const posts = await getBlogPostsFromFirestore();
-      setBlogPosts(posts);
-      setFilteredPosts(posts);
-    } catch (error) {
-      console.error("Failed to load blog posts:", error);
-    }
-  };
-
   useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const posts = await getBlogPostsFromFirestore();
+        setBlogPosts(posts);
+        setFilteredPosts(posts);
+        const initialExpanded = posts.reduce((acc, post) => {
+          acc[post.id] = false;
+          return acc;
+        }, {});
+        setExpanded(initialExpanded);
+      } catch (error) {
+        console.error("Failed to load blog posts:", error);
+      }
+    };
+
     fetchPosts();
   }, []);
 
@@ -86,9 +91,9 @@ export default function Blogs() {
           <button
             onClick={() => {
               if (userData) {
-                setPage("addPost"); // Proceed to the Add Post page if logged in
+                setPage("addPost");
               } else {
-                navigate("/sign-in"); // Redirect to the login page if not logged in
+                navigate("/sign-in");
               }
             }}
             className="add-post-button"
@@ -96,7 +101,6 @@ export default function Blogs() {
             Add Post
           </button>
         </div>
-
 
         <div className="blog-posts">
           {paginatePosts().map((post) => (
@@ -121,7 +125,7 @@ export default function Blogs() {
                 </button>
               </div>
               {post.images?.length > 0 && (
-                <div className="image-grid">
+                <div className="image-container">
                   {post.images.map((url, index) => (
                     <img
                       key={index}
