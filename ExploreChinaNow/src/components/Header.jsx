@@ -50,6 +50,7 @@ function Header() {
 							height="30"
 							className="d-inline-block align-top"
 							alt="icon"
+							id="logo"
 						/>{" "}
 						ExploreChinaNow
 					</Navbar.Brand>
