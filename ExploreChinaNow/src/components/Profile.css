@@ -1,20 +1,22 @@
-
 .profile-container {
-    display: flex;
-    gap: 2rem;
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
-  }
+  display: flex;
+  flex: 1; 
+  min-height: 83vh;
+  overflow: hidden;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
   
-  .blogs-section {
+.profile-blogs-section {
     flex: 2;
     display: flex;
     flex-direction: column;
-  }
+}
   
-  .blog-post {
+.profile-blog-post {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 1rem;
@@ -25,53 +27,54 @@
     position: relative; 
     max-width: 100%;
     overflow-wrap: anywhere;
-  }
+}
   
-  .blog-post.expanded {
+.profile-blog-post.expanded {
     max-height: 50px;
     max-width: 50px;
-  }
-  .blog-image {
-      max-width: 100%; 
-      max-height: 150px; 
-    }
+}
+
+.profile-blog-image {
+    max-width: 100%; 
+    max-height: 150px; 
+}
   
-  .no-image {
-    width: 100%;
-    height: 150px;
-    background-color: #e0e0e0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-    color: #777;
-    font-size: 14px;
-  }
+.profile-no-image {
+  width: 100%;
+  height: 150px;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  color: #777;
+  font-size: 14px;
+}
   
-  .blog-post h4 {
-    margin: 1rem 0 0.5rem;
-    font-size: 18px;
-    font-weight: bold;
-  }
+.profile-blog-post h4 {
+  margin: 1rem 0 0.5rem;
+  font-size: 18px;
+  font-weight: bold;
+}
   
-  .blog-post p {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #555;
-  }
+.blog-post p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #555;
+}
   
-  .toggle-link {
-    color: #007bff;
-    cursor: pointer;
-    margin-left: 8px;
-    font-size: 14px;
-  }
+.profile-toggle-link {
+  color: #007bff;
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 14px;
+}
   
-  .toggle-link:hover {
-    text-decoration: underline;
-  }
+.profile-toggle-link:hover {
+  text-decoration: underline;
+}
   
-  .blog-delete-btn {
+.profile-blog-delete-btn {
     background-color: #ff4d4d;
     border: none;
     color: #fff;
@@ -80,23 +83,23 @@
     cursor: pointer;
     font-size: 14px;
     margin-top: 1rem;
-  }
+}
   
-  .blog-delete-btn:hover {
-    background-color: #e60000;
-  }
+.profile-blog-delete-btn:hover {
+  background-color: #e60000;
+}
   
-  .context-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  }
+.context-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
   
   .context-avatar {
     width: 100px;
