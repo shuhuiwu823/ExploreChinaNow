@@ -49,7 +49,7 @@ function Login() {
                 // Signed in 
                 const user = userCredential.user;
                 setUserData(getUserData(user.uid));
-                navigate("/videos");
+                navigate("/");
               })
               .catch((error) => {
                 const errorCode = error.code;
@@ -89,7 +89,7 @@ function Login() {
                 const userData = await getUserData(user.uid);
                 if(userData) {
                     setUserData(userData);
-                    navigate("/profile");
+                    navigate("/");
                     return;
                 }
 
@@ -107,7 +107,7 @@ function Login() {
                 });
     
                 setUserData(userInfo);
-                navigate("/profile");
+                navigate("/");
             }catch(err){
                 console.log(err);
                 setErrorMsg(err);
