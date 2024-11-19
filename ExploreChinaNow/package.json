@@ -1,15 +1,16 @@
 {
-	"name": "explorechinanow",
-	"private": true,
-	"version": "0.0.0",
-	"scripts": {
-		"dev": "vite",
-		"dev-server": "nodemon server/server.js",
-		"build": "vite build",
-		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-		"preview": "vite preview",
-		"start": "node server/server.js"
-	},
+  "name": "explorechinanow",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "dev-server": "nodemon server/server.js",
+    "db-server": "nodemon server/dbserver.js",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "start": "node server/server.js"
+  },
 	"dependencies": {
 		"@vis.gl/react-google-maps": "^1.4.0",
 		"axios": "^1.7.7",

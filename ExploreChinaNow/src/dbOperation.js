@@ -46,17 +46,45 @@ const uploadFile = async (file) => {
 }
 
 export const getUserData = async (uid) => {
-	const docRef = doc(db, "users", uid);
-	const docSnap = await getDoc(docRef);
+	// const docRef = doc(db, "users", uid);
+	// const docSnap = await getDoc(docRef);
 
-	if (docSnap.exists()) {
-		console.log("User data:", docSnap.data());
-		return docSnap.data();
-	} else {
-	// docSnap.data() will be undefined in this case
-		console.log("No such User!");
+	// if (docSnap.exists()) {
+	// 	console.log("User data:", docSnap.data());
+	// 	return docSnap.data();
+	// } else {
+	// // docSnap.data() will be undefined in this case
+	// 	console.log("No such User!");
+    //     return null;
+	// }
+
+    return fetch(`/auth/getUserData/${uid}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to fetch user data");
+        }
+        return response.json();
+    })
+    .catch(error => {
+        console.error("Error fetching user data from server:", error);
         return null;
-	}
+    });
+}
+
+export const loginService = (email, password) => {
+    return fetch('/auth/login', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+    })
+    .then((response) => {
+        if (!response.ok) {
+            return response.json().then((data) => {
+                throw new Error(data.message || "Login failed");
+            });
+        }
+        return response.json();
+    })
 }
 
 export default uploadFile;

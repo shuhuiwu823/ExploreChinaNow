@@ -3,7 +3,7 @@ import { db } from '../firebase';
 import { collection, addDoc, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Plan.css';
-import { AppContext } from '../context';
+import { AppContext } from '../Context';
 
 function Plan() {
   const [userInput, setUserInput] = useState('');
@@ -142,7 +142,7 @@ function Plan() {
   };
 
   return (
-    <div className="main-content">
+    <div className="tour-content">
       <div className="saved-plan-list">
         <h3>Saved Plans</h3>
         <div className="plan-cards">

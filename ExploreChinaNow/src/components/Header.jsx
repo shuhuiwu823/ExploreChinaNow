@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { signOut } from "firebase/auth";
-import { AppContext } from "../context";
+import { AppContext } from "../Context";
 import { auth } from "../firebase";
 import "./Header.css";
 
@@ -39,6 +39,7 @@ function Header() {
 	};
 
 	return (
+		<header>
 		<Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
 			<Container>
 				<LinkContainer to="/">
@@ -87,15 +88,13 @@ function Header() {
 								<Nav.Link onClick={() => handleNavigation("/sign-in")}>
 									Sign In
 								</Nav.Link>
-								<Nav.Link onClick={() => handleNavigation("/sign-up")}>
-									Sign Up
-								</Nav.Link>
 							</>
 						)}
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>
+		</header>
 	);
 }
 
