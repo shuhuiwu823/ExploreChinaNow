@@ -9,6 +9,28 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginService } from "../dbOperation";
 import "./Login.css";
 
+/**
+ * The Login component handles user authentication through email/password or Google Account sign-in.
+ * 
+ * @component
+ * @example
+ * <Login />
+ * 
+ * @description
+ * - Users can log in with their email and password or use Google OAuth.
+ * - If the server is unavailable, an error message is displayed and user cannot login.
+ * - Successful login redirects users to different routes (e.g., `/videos`, `/profile`).
+ * - Displays error messages for invalid credentials or service issues.
+ * 
+ * @requires firebase/auth
+ * @requires firebase/firestore
+ * @requires react
+ * @requires react-router-dom
+ * @requires react-bootstrap
+ * @requires ./Context
+ * @requires ./dbOperation
+ * @requires ./Login.css
+ */
 function Login() {
 
     const {userData, setUserData, loading, setLoading} = useContext(AppContext);
