@@ -1,4 +1,32 @@
-import { db } from '../firebase';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/firestoreService.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/firestoreService.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { db } from '../firebase';
 import {
   collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, where, orderBy, limit, startAfter, serverTimestamp
 } from 'firebase/firestore';
@@ -28,7 +56,7 @@ function logFirestoreError(action, error) {
  *
  * @async
  * @function getBlogPostsFromFirestore
- * @returns {Promise<Array<Object>>} A promise that resolves to an array of blog post objects.
+ * @returns {Promise&lt;Array&lt;Object>>} A promise that resolves to an array of blog post objects.
  */
 export async function getBlogPostsFromFirestore() {
   try {
@@ -45,7 +73,7 @@ export async function getBlogPostsFromFirestore() {
  * @async
  * @function getUserBlogPostsFromFirestore
  * @param {string} authorName - The name of the author.
- * @returns {Promise<Array<Object>>} A promise that resolves to an array of blog post objects.
+ * @returns {Promise&lt;Array&lt;Object>>} A promise that resolves to an array of blog post objects.
  */
 export async function getUserBlogPostsFromFirestore(authorName) {
   try {
@@ -83,7 +111,7 @@ export async function updateBlogPostInFirestore(postId, updatedData) {
  * @async
  * @function deleteBlogPostFromFirestore
  * @param {string} blogId - The ID of the blog post to delete.
- * @returns {Promise<void>} A promise that resolves when the blog post is deleted.
+ * @returns {Promise&lt;void>} A promise that resolves when the blog post is deleted.
  */
 export const deleteBlogPostFromFirestore = async (blogId) => {
   try {
@@ -102,7 +130,7 @@ export const deleteBlogPostFromFirestore = async (blogId) => {
  * @function getPaginatedBlogPosts
  * @param {Object|null} lastVisibleDoc - The last document from the previous page (optional).
  * @param {number} pageSize - The number of blog posts per page (default: 10).
- * @returns {Promise<Object>} A promise that resolves to an object containing posts and the last visible document.
+ * @returns {Promise&lt;Object>} A promise that resolves to an object containing posts and the last visible document.
  */
 export async function getPaginatedBlogPosts(lastVisibleDoc = null, pageSize = 10) {
   try {
@@ -125,7 +153,7 @@ export async function getPaginatedBlogPosts(lastVisibleDoc = null, pageSize = 10
  * @async
  * @function uploadImageToStorage
  * @param {File} file - The image file to upload.
- * @returns {Promise<string>} A promise that resolves to the image's download URL.
+ * @returns {Promise&lt;string>} A promise that resolves to the image's download URL.
  */
 export async function uploadImageToStorage(file) {
   try {
@@ -145,8 +173,8 @@ export async function uploadImageToStorage(file) {
  * @async
  * @function addBlogPostToFirestore
  * @param {Object} post - The blog post object containing title, author, and content.
- * @param {Array<File>} [imageFiles=[]] - An array of image files to upload.
- * @returns {Promise<void>} A promise that resolves when the blog post is successfully added.
+ * @param {Array&lt;File>} [imageFiles=[]] - An array of image files to upload.
+ * @returns {Promise&lt;void>} A promise that resolves when the blog post is successfully added.
  */
 export async function addBlogPostToFirestore(post, imageFiles = []) {
   try {
@@ -169,3 +197,26 @@ export async function addBlogPostToFirestore(post, imageFiles = []) {
     logFirestoreError("Adding blog post", error);
   }
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Profile">Profile</a></li><li><a href="global.html#addBlogPostToFirestore">addBlogPostToFirestore</a></li><li><a href="global.html#deleteBlogPostFromFirestore">deleteBlogPostFromFirestore</a></li><li><a href="global.html#fetchPosts">fetchPosts</a></li><li><a href="global.html#fetchUserBlogs">fetchUserBlogs</a></li><li><a href="global.html#getBlogPostsFromFirestore">getBlogPostsFromFirestore</a></li><li><a href="global.html#getPaginatedBlogPosts">getPaginatedBlogPosts</a></li><li><a href="global.html#getUserBlogPostsFromFirestore">getUserBlogPostsFromFirestore</a></li><li><a href="global.html#handleClear">handleClear</a></li><li><a href="global.html#handleDelete">handleDelete</a></li><li><a href="global.html#handleSearch">handleSearch</a></li><li><a href="global.html#handleToggleExpanded">handleToggleExpanded</a></li><li><a href="global.html#isValidFirebaseUrl">isValidFirebaseUrl</a></li><li><a href="global.html#logFirestoreError">logFirestoreError</a></li><li><a href="global.html#paginatePosts">paginatePosts</a></li><li><a href="global.html#renderPage">renderPage</a></li><li><a href="global.html#toggleExpand">toggleExpand</a></li><li><a href="global.html#updateBlogPostInFirestore">updateBlogPostInFirestore</a></li><li><a href="global.html#uploadImageToStorage">uploadImageToStorage</a></li><li><a href="global.html#useEffect">useEffect</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Nov 19 2024 18:26:01 GMT-0500 (北美东部标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
