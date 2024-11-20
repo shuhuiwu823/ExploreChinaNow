@@ -151,8 +151,9 @@ function Register() {
 
             const {username, email, password, name} = Object.fromEntries(formData);
     
-            const res = await createUserWithEmailAndPassword(auth, email, password);
             const imgURL = avatar.file ? await uploadFile(avatar.file) : avatar.url;
+            const res = await createUserWithEmailAndPassword(auth, email, password);
+            
             console.log(imgURL);
 
             const userInfo = {

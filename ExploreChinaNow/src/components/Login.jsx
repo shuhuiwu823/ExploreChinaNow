@@ -176,28 +176,26 @@ function Login() {
             // The signed-in user info.
             const user = result.user;
 
+            const userInfo = {
+                id: user.uid,
+                username: user.displayName,
+                email: user.email,
+                avatar: user.photoURL,
+                name: user.displayName,
+            }
+
             try {
                 const userData = await getUserData(user.uid);
-                if(userData) {
-                    setUserData(userData);
-                    navigate("/");
-                    return;
-                }
-
-                const userInfo = {
-                    id: user.uid,
-                    username: user.displayName,
-                    email: user.email,
-                    avatar: user.photoURL,
-                    name: user.displayName,
-                }
-                await setDoc(doc(db, "users", user.uid), userInfo);
+                if(!userData) {
+                    await setDoc(doc(db, "users", user.uid), userInfo);
     
-                await setDoc(doc(db, "blogs", user.uid), {
-                    blogs: []
-                });
+                    await setDoc(doc(db, "blogs", user.uid), {
+                        blogs: []
+                    });
+                    userData = userInfo;
+                }
     
-                setUserData(userInfo);
+                setUserData(userData);
                 navigate("/");
             }catch(err){
                 console.log(err);
@@ -220,7 +218,7 @@ function Login() {
             console.log(error);
             setErrorMsg(error.message);
         }finally{
-            setLoading(false);
+            // setLoading(false);
         }
     }
     
