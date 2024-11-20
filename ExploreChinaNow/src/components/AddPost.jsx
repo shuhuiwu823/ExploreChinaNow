@@ -1,57 +1,71 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../Context"; // Import Context
+import { AppContext } from "../Context";
 import { addBlogPostToFirestore } from "../services/firestoreService";
 import "../template/AddPost.css";
 
+/**
+ * A React component for adding a new blog post.
+ * Includes fields for title, content, images, and automatic author assignment.
+ * 
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {Function} [props.onPostAdded] - Callback triggered when a new post is successfully added.
+ * @returns {JSX.Element} The rendered AddPost component.
+ */
 export default function AddPost({ onPostAdded }) {
-  const { userData } = useContext(AppContext); // Get user data from Context
+  const { userData } = useContext(AppContext);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const [images, setImages] = useState([]); // Store user-selected image files
-  const maxContentLength = 1000; // Set a maximum content length
+  const [images, setImages] = useState([]);
+  const maxContentLength = 1000;
   const navigate = useNavigate();
 
-  // Submit and add the post to Firestore
+  /**
+   * Handles form submission to add a new blog post.
+   * Validates inputs and uploads the blog post and images to Firestore.
+   *
+   * @async
+   * @param {React.FormEvent<HTMLFormElement>} e - The form submission event.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (content.length > maxContentLength) {
-      alert(`Content length cannot exceed ${maxContentLength} characters`);
-      return;
-    }
-
-    setLoading(true); // Set loading state to prevent duplicate submissions
-
+  
+    const author = userData?.username || "Anonymous";
+  
     const newPost = {
       title,
-      author: userData?.username || "Anonymous", // Get username from Context
+      author,
       content,
-      createdAt: new Date(), // Include creation time
+      createdAt: new Date(),
     };
-
+  
+    console.log("Post object before Firestore:", newPost);
+  
     try {
-      await addBlogPostToFirestore(newPost, images); // Call Firestore method to save data
+      setLoading(true);
+      await addBlogPostToFirestore(newPost, images);
       alert("Post successfully added!");
-      // Clear the form
       setTitle("");
-      setContent("");
+      setContent(""); 
       setImages([]);
-      if (onPostAdded) {
-        onPostAdded(); // If a callback is provided, call it to refresh the parent component
-      } else {
-        navigate("/blogs"); // Navigate to /blogs if no callback is provided
-      }
+      if (onPostAdded) onPostAdded();
+      navigate("/blogs", { replace: true });
     } catch (error) {
-      alert("Failed to add the post, please try again later");
       console.error("Error occurred while adding the post:", error);
+      alert("Failed to add the post, please try again later");
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
-  // Handle image selection
+  /**
+   * Handles file input change for uploading images.
+   * Validates the number of images (max 9).
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The change event for the file input.
+   */
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     if (images.length + files.length > 9) {
@@ -61,7 +75,11 @@ export default function AddPost({ onPostAdded }) {
     setImages((prev) => [...prev, ...files]);
   };
 
-  // Remove a selected image
+  /**
+   * Removes a selected image from the preview list.
+   *
+   * @param {number} index - The index of the image to remove.
+   */
   const handleRemoveImage = (index) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
@@ -81,18 +99,15 @@ export default function AddPost({ onPostAdded }) {
         </div>
         <div className="form-group">
           <label>Author:</label>
-          <input
-            type="text"
-            value={userData?.username || "Anonymous"} // Get username from Context
-            readOnly // Set to read-only
-          />
+          <input type="text" value={userData?.username || "Anonymous"} readOnly />
         </div>
         <div className="form-group">
-          <label>Content:</label>
+          <label htmlFor="content">Content:</label>
           <textarea
+            id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            maxLength={maxContentLength} // Limit maximum characters
+            maxLength={maxContentLength}
             required
           />
           <div className="char-counter">
@@ -100,11 +115,12 @@ export default function AddPost({ onPostAdded }) {
           </div>
         </div>
         <div className="form-group">
-          <label>Upload Images (up to 9):</label>
+          <label htmlFor="upload-images">Upload Images (up to 9):</label>
           <input
+            id="upload-images"
             type="file"
             accept="image/*"
-            multiplehandleSubmit
+            multiple
             onChange={handleImageChange}
           />
           <div className="image-preview">
