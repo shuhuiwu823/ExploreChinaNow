@@ -11,7 +11,7 @@ function HomePage() {
 				<Col
 					md={12}
 					style={{
-						backgroundImage: `url('https://gd-hbimg.huaban.com/d8cd499d1969c02d07e1c7c91a95094cad0c713d102d3c-Jg3Tg3_fw1200webp')`,
+						backgroundImage: `url('https://gd-hbimg.huaban.com/e235cb2a5d3a8a266484ab0ecc68c18553d4f180a722-NrafMh_fw1200webp')`,
 						backgroundSize: "cover",
 						backgroundPosition: "center",
 						display: "flex",
@@ -23,7 +23,7 @@ function HomePage() {
 					}}>
 					<div
 						style={{
-							backgroundColor: "rgba(0, 0, 0, 0.4)", // Lighter gray overlay for a subtle effect
+							backgroundColor: "rgba(0, 0, 0, 0.3)", // Lighter gray overlay for a subtle effect
 							width: "100%",
 							height: "100%",
 							color: "white",
@@ -32,12 +32,33 @@ function HomePage() {
 							justifyContent: "center",
 							padding: "20px",
 						}}>
-						<h1>Welcome to ExploreChinaNow!</h1>
-						<p className="lead">Discover the Beauty and Diversity of China</p>
-						<p>
-							Welcome to your ultimate resource for traveling and exploring China! Whether you are planning your first
-							trip or you are a seasoned traveler returning for more adventures, ExploreChinaNow is your gateway to
-							uncovering the most stunning destinations, vibrant cultures, and hidden treasures of China.
+						<h1
+							style={{
+								fontSize: "3rem", // Larger font size for the heading
+								fontWeight: "bold", // Make the heading bold
+								textShadow: "2px 2px 5px rgba(0, 0, 0, 0.7)", // Add shadow for better visibility
+							}}>
+							Welcome to ExploreChinaNow!
+						</h1>
+						<p
+							className="lead"
+							style={{
+								fontSize: "1.5rem", // Larger font size for the subheading
+								fontWeight: "600", // Semi-bold for emphasis
+								textShadow: "1px 1px 3px rgba(0, 0, 0, 0.7)", // Subtle shadow
+							}}>
+							Discover the Beauty and Diversity of China
+						</p>
+						<p
+							style={{
+								maxWidth: "800px", // Adjust width for shorter text lines
+								margin: "0 auto", // Center the text
+								fontSize: "1.1rem", // Slightly larger body text
+								fontWeight: "500", // Medium weight for emphasis
+								textShadow: "1px 1px 3px rgba(0, 0, 0, 0.7)", // Subtle shadow
+							}}>
+							Welcome to ExploreChinaNow, your go-to guide for discovering China’s stunning destinations, vibrant
+							cultures, and hidden treasures—perfect for first-time visitors and seasoned travelers alike!
 						</p>
 					</div>
 				</Col>
@@ -111,7 +132,17 @@ function HomePage() {
 					<div>
 						{" "}
 						{/* Encapsulate Button in a div to avoid flex-grow */}
-						<Button variant="primary">Read Our Blogs</Button>
+						<Button
+							style={{
+								backgroundColor: "#803F1F",
+								borderColor: "#803F1F", // Matches the background color
+								width: "150px", // Set a fixed width
+								height: "50px", // Set a fixed height for consistency
+								fontSize: "16px", // Adjust font size for text consistency
+							}}
+							onClick={() => navigate("/blogs")}>
+							Read Our Blogs
+						</Button>
 					</div>
 				</Col>
 				<Col md={6} className="pl-4">
@@ -141,7 +172,15 @@ function HomePage() {
 					<div>
 						{" "}
 						{/* Wrap the buttons to protect their sizing */}
-						<Button variant="success" onClick={() => navigate("/sign-in")}>
+						<Button
+							style={{
+								backgroundColor: "#371E1C",
+								borderColor: "#371E1C", // Matches the background color
+								width: "150px", // Set a fixed width
+								height: "50px", // Set a fixed height for consistency
+								fontSize: "16px", // Adjust font size for text consistency
+							}}
+							onClick={() => navigate("/sign-in")}>
 							Sign In
 						</Button>
 						{/* <Button variant="secondary" className="ml-2">
@@ -162,8 +201,16 @@ function HomePage() {
 					<div>
 						{" "}
 						{/* Wrap the button to protect its sizing */}
-						<Button variant="info" onClick={() => navigate("/tour-plan")}>
-							Start Planning Your Adventure
+						<Button
+							style={{
+								backgroundColor: "#908254",
+								borderColor: "#908254", // Matches the background color
+								width: "150px", // Set a fixed width
+								height: "50px", // Set a fixed height for consistency
+								fontSize: "16px", // Adjust font size for text consistency
+							}}
+							onClick={() => navigate("/tour-plan")}>
+							Plan Your Trip
 						</Button>
 					</div>
 				</Col>
