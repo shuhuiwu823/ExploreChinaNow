@@ -58,7 +58,8 @@ const uploadFile = async (file) => {
 
 /**
  * This is function is used call the REST service to fetch user data from Firestore database.
- * If the data extraction is successful
+ * If the data extraction is successful, the user data will be returned.
+ * If there is some issues(e.g. server issue, invalid uid), return null and an error is thrown out.
  * @async
  * @function getUserData
  * @param {string} uid 
@@ -91,6 +92,17 @@ export const getUserData = async (uid) => {
     });
 }
 
+/**
+ * This function is used to call login service, with email and password as request body.
+ * If login failed due to some issues(e.g. server issue, invalid email or password), an error thrown.
+ * If login seuccessfully, user data will be returned as response.
+ * @async
+ * @functio loginService
+ * @param {string} email 
+ * @param {string} password 
+ * @returns {Promise}
+ * @throws Will throw out an error if login is failed.
+ */
 export const loginService = (email, password) => {
     return fetch('/auth/login', {
         method: "POST",

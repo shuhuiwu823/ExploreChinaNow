@@ -15,12 +15,31 @@ app.use(cookieParser());
 app.use(express.static("./dist"));
 app.use(express.json());
 
+/**
+ * @api {get} /auth/check-connect Check server connection
+ * @apiName CheckServerConnection
+ * @apiGroup Auth
+ * @apiSuccess {String} message Success message indicating the server is running.
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     "Database Server is running"
+ */
 app.get("/auth/check-connect", (req, res) => {
   res.status(200).send("Database Server is running")
 });
 
 /**
- * Get user data by UID using Firestore REST API
+ * @api {get} /auth/getUserData/:uid Get user data
+ * @apiName GetUserData
+ * @apiGroup Auth
+ * @apiParam {String} uid User's unique identifier.
+ * @apiSuccess {Object} userData User data retrieved from Firestore.
+ * @apiError (500) {String} message Error message in case of failure.
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "message": "Failed to fetch user data"
+ *     }
  */
 app.get("/auth/getUserData/:uid", (req, res) => {
   const { uid } = req.params;
@@ -52,7 +71,20 @@ app.get("/auth/getUserData/:uid", (req, res) => {
 });
 
 /**
- * User login service using Firebase Authentication REST API
+ * @api {post} /auth/login User login
+ * @apiName UserLogin
+ * @apiGroup Auth
+ * @apiParam {String} email User's email address.
+ * @apiParam {String} password User's password.
+ * @apiSuccess {String} uid The unique identifier of the user.
+ * @apiSuccess {String} message Success message indicating login success.
+ * @apiError (400) {String} message Error message if email or password is missing.
+ * @apiError (401) {String} message Error message if email or password is invalid.
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 401 Unauthorized
+ *     {
+ *       "message": "Invalid email or password"
+ *     }
  */
 app.post("/auth/login", (req, res) => {
   const { email, password } = req.body;
@@ -84,7 +116,16 @@ app.post("/auth/login", (req, res) => {
 });
 
 /**
- * User logout service
+ * @api {post} /auth/logout User logout
+ * @apiName UserLogout
+ * @apiGroup Auth
+ * @apiSuccess {String} message Success message indicating logout success.
+ * @apiError (400) {String} message Error message if user is not logged in.
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 400 Bad Request
+ *     {
+ *       "message": "User is not logged in."
+ *     }
  */
 app.post("/auth/logout", (req, res) => {
   const token = req.cookies.token;
@@ -100,6 +141,10 @@ app.post("/auth/logout", (req, res) => {
 
 /**
  * Global error handling middleware
+ * @param {Error} err The error object.
+ * @param {Object} req The HTTP request object.
+ * @param {Object} res The HTTP response object.
+ * @param {Function} next The next middleware function.
  */
 app.use((err, req, res, next) => {
   console.error(err.stack);
