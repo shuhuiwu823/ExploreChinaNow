@@ -1,4 +1,32 @@
-import { useContext, useState, useEffect } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Profile.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Profile.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../Context";
 import {
   getBlogPostsFromFirestore,
@@ -25,7 +53,7 @@ function Profile() {
    *
    * @function fetchUserBlogs
    * @async
-   * @returns {Promise<void>}
+   * @returns {Promise&lt;void>}
    */
   useEffect(() => {
     const fetchUserBlogs = async () => {
@@ -57,7 +85,7 @@ function Profile() {
    * @function handleDelete
    * @async
    * @param {string} blogId - The ID of the blog to delete.
-   * @returns {Promise<void>}
+   * @returns {Promise&lt;void>}
    */
   const handleDelete = async (blogId) => {
     const confirmation = window.confirm(
@@ -83,7 +111,7 @@ function Profile() {
    * @returns {boolean} True if the URL is a valid Firebase Storage URL, otherwise false.
    */
   const isValidFirebaseUrl = (url) => {
-    return url && url.includes("firebasestorage.googleapis.com");
+    return url &amp;&amp; url.includes("firebasestorage.googleapis.com");
   };
 
   /**
@@ -101,76 +129,99 @@ function Profile() {
 
   // Renders user information and their blog posts
   if (userLoading) {
-    return <p>Loading user information...</p>;
+    return &lt;p>Loading user information...&lt;/p>;
   }
 
   if (!userData) {
-    return <p>You are not logged in.</p>;
+    return &lt;p>You are not logged in.&lt;/p>;
   }
 
   return (
-    <div className="profile-container">
-      <div className="profile-blogs-section">
-        <h3>My Blog Posts</h3>
+    &lt;div className="profile-container">
+      &lt;div className="profile-blogs-section">
+        &lt;h3>My Blog Posts&lt;/h3>
         {loadingBlogs ? (
-          <p>Loading blog posts...</p>
+          &lt;p>Loading blog posts...&lt;/p>
         ) : userBlogs.length > 0 ? (
           userBlogs.map((blog) => (
-            <div key={blog.id} className="profile-blog-post">
-              {blog.images &&
-              blog.images.length > 0 &&
+            &lt;div key={blog.id} className="profile-blog-post">
+              {blog.images &amp;&amp;
+              blog.images.length > 0 &amp;&amp;
               isValidFirebaseUrl(blog.images[0]) ? (
-                <img
+                &lt;img
                   src={blog.images[0]}
                   alt="Blog cover"
                   className="profile-blog-image"
                 />
               ) : (
-                <div className="profile-no-image">No image</div>
+                &lt;div className="profile-no-image">No image&lt;/div>
               )}
-              <h4>{blog.title}</h4>
-              <p>
+              &lt;h4>{blog.title}&lt;/h4>
+              &lt;p>
                 {expandedBlogs[blog.id]
                   ? blog.content
                   : `${blog.content.slice(0, 100)}...`}
-                <span
+                &lt;span
                   className="profile-toggle-link"
                   onClick={() => handleToggleExpanded(blog.id)}
                 >
                   {expandedBlogs[blog.id] ? "Collapse" : "Expand"}
-                </span>
-              </p>
-              <button
+                &lt;/span>
+              &lt;/p>
+              &lt;button
                 className="profile-blog-delete-btn"
                 onClick={() => handleDelete(blog.id)}
               >
                 Delete
-              </button>
-            </div>
+              &lt;/button>
+            &lt;/div>
           ))
         ) : (
-          <p>You have not published any blog posts yet.</p>
+          &lt;p>You have not published any blog posts yet.&lt;/p>
         )}
-      </div>
+      &lt;/div>
 
-      <div className="context-container">
-        <img
+      &lt;div className="context-container">
+        &lt;img
           className="context-avatar"
           src={userData.avatar}
           alt={userData.username}
         />
-        <div className="context-info" data-label="Username:">
+        &lt;div className="context-info" data-label="Username:">
           {userData.username}
-        </div>
-        <div className="context-info" data-label="E-mail:">
+        &lt;/div>
+        &lt;div className="context-info" data-label="E-mail:">
           {userData.email}
-        </div>
-        <div className="context-info" data-label="Name:">
+        &lt;/div>
+        &lt;div className="context-info" data-label="Name:">
           {userData.name}
-        </div>
-      </div>
-    </div>
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
   );
 }
 
 export default Profile;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Profile">Profile</a></li><li><a href="global.html#addBlogPostToFirestore">addBlogPostToFirestore</a></li><li><a href="global.html#deleteBlogPostFromFirestore">deleteBlogPostFromFirestore</a></li><li><a href="global.html#fetchPosts">fetchPosts</a></li><li><a href="global.html#fetchUserBlogs">fetchUserBlogs</a></li><li><a href="global.html#getBlogPostsFromFirestore">getBlogPostsFromFirestore</a></li><li><a href="global.html#getPaginatedBlogPosts">getPaginatedBlogPosts</a></li><li><a href="global.html#getUserBlogPostsFromFirestore">getUserBlogPostsFromFirestore</a></li><li><a href="global.html#handleClear">handleClear</a></li><li><a href="global.html#handleDelete">handleDelete</a></li><li><a href="global.html#handleSearch">handleSearch</a></li><li><a href="global.html#handleToggleExpanded">handleToggleExpanded</a></li><li><a href="global.html#isValidFirebaseUrl">isValidFirebaseUrl</a></li><li><a href="global.html#logFirestoreError">logFirestoreError</a></li><li><a href="global.html#paginatePosts">paginatePosts</a></li><li><a href="global.html#renderPage">renderPage</a></li><li><a href="global.html#toggleExpand">toggleExpand</a></li><li><a href="global.html#updateBlogPostInFirestore">updateBlogPostInFirestore</a></li><li><a href="global.html#uploadImageToStorage">uploadImageToStorage</a></li><li><a href="global.html#useEffect">useEffect</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Nov 19 2024 18:26:01 GMT-0500 (北美东部标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
