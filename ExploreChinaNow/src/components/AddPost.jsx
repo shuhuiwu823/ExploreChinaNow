@@ -1,57 +1,46 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../Context"; // Import Context
+import { AppContext } from "../Context";
 import { addBlogPostToFirestore } from "../services/firestoreService";
 import "../template/AddPost.css";
 
 export default function AddPost({ onPostAdded }) {
-  const { userData } = useContext(AppContext); // Get user data from Context
+  const { userData } = useContext(AppContext);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const [images, setImages] = useState([]); // Store user-selected image files
-  const maxContentLength = 1000; // Set a maximum content length
+  const [images, setImages] = useState([]);
+  const maxContentLength = 1000;
   const navigate = useNavigate();
 
-  // Submit and add the post to Firestore
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (content.length > maxContentLength) {
-      alert(`Content length cannot exceed ${maxContentLength} characters`);
-      return;
-    }
-
-    setLoading(true); // Set loading state to prevent duplicate submissions
+    const author = userData?.username || "Anonymous"; // 定义作者
 
     const newPost = {
       title,
-      author: userData?.username || "Anonymous", // Get username from Context
+      author,
       content,
-      createdAt: new Date(), // Include creation time
+      createdAt: new Date(),
     };
 
     try {
-      await addBlogPostToFirestore(newPost, images); // Call Firestore method to save data
+      await addBlogPostToFirestore(newPost, images);
       alert("Post successfully added!");
-      // Clear the form
       setTitle("");
       setContent("");
       setImages([]);
-      if (onPostAdded) {
-        onPostAdded(); // If a callback is provided, call it to refresh the parent component
-      } else {
-        navigate("/blogs"); // Navigate to /blogs if no callback is provided
-      }
+      if (onPostAdded) onPostAdded();
+      navigate("/blogs", { replace: true });
     } catch (error) {
-      alert("Failed to add the post, please try again later");
       console.error("Error occurred while adding the post:", error);
+      alert("Failed to add the post, please try again later");
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
-  // Handle image selection
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     if (images.length + files.length > 9) {
@@ -61,7 +50,6 @@ export default function AddPost({ onPostAdded }) {
     setImages((prev) => [...prev, ...files]);
   };
 
-  // Remove a selected image
   const handleRemoveImage = (index) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
@@ -81,18 +69,14 @@ export default function AddPost({ onPostAdded }) {
         </div>
         <div className="form-group">
           <label>Author:</label>
-          <input
-            type="text"
-            value={userData?.username || "Anonymous"} // Get username from Context
-            readOnly // Set to read-only
-          />
+          <input type="text" value={userData?.username || "Anonymous"} readOnly />
         </div>
         <div className="form-group">
           <label>Content:</label>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            maxLength={maxContentLength} // Limit maximum characters
+            maxLength={maxContentLength}
             required
           />
           <div className="char-counter">
@@ -101,12 +85,7 @@ export default function AddPost({ onPostAdded }) {
         </div>
         <div className="form-group">
           <label>Upload Images (up to 9):</label>
-          <input
-            type="file"
-            accept="image/*"
-            multiplehandleSubmit
-            onChange={handleImageChange}
-          />
+          <input type="file" accept="image/*" multiple onChange={handleImageChange} />
           <div className="image-preview">
             {images.map((image, index) => (
               <div key={index} className="image-preview-item">
