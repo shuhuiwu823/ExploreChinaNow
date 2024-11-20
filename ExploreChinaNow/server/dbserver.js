@@ -15,6 +15,7 @@ app.use(cookieParser());
 app.use(express.static("./dist"));
 app.use(express.json());
 
+
 /**
  * @api {get} /auth/check-connect Check server connection
  * @apiName CheckServerConnection
@@ -116,6 +117,7 @@ app.post("/auth/login", (req, res) => {
 });
 
 /**
+<<<<<<< HEAD
  * @api {post} /auth/logout User logout
  * @apiName UserLogout
  * @apiGroup Auth
@@ -126,6 +128,9 @@ app.post("/auth/login", (req, res) => {
  *     {
  *       "message": "User is not logged in."
  *     }
+=======
+ * User logout service
+>>>>>>> 0c7308f5f6fdb5b0f7bca55f6f9ec68865cdea04
  */
 app.post("/auth/logout", (req, res) => {
   const token = req.cookies.token;
@@ -141,10 +146,13 @@ app.post("/auth/logout", (req, res) => {
 
 /**
  * Global error handling middleware
+<<<<<<< HEAD
  * @param {Error} err The error object.
  * @param {Object} req The HTTP request object.
  * @param {Object} res The HTTP response object.
  * @param {Function} next The next middleware function.
+=======
+>>>>>>> 0c7308f5f6fdb5b0f7bca55f6f9ec68865cdea04
  */
 app.use((err, req, res, next) => {
   console.error(err.stack);

@@ -9,6 +9,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const apiKey = process.env.ChatGPT_API_KEY;
+
+// console.log("api key:",apiKey);
+
 app.use(cookieParser());
 
 app.use(express.static('./dist'));
@@ -43,3 +46,4 @@ app.get('/api/homepage', (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
+
