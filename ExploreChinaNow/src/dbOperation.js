@@ -79,7 +79,7 @@ export const getUserData = async (uid) => {
     //     return null;
 	// }
 
-    return fetch(`/auth/getUserData/${uid}`)
+    return fetch(`${https://explorechinanow-backend.onrender.com}/auth/getUserData/${uid}`)
     .then(response => {
         if (!response.ok) {
             throw new Error("Failed to fetch user data");
@@ -104,7 +104,7 @@ export const getUserData = async (uid) => {
  * @throws Will throw out an error if login is failed.
  */
 export const loginService = (email, password) => {
-    return fetch('/auth/login', {
+    return fetch('${https://explorechinanow-backend.onrender.com}/auth/login', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
