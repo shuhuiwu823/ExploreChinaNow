@@ -6,6 +6,7 @@ import './Plan.css';
 import { AppContext } from '../Context';
 
 function Plan() {
+  // State to hold user input for chat.
   const [userInput, setUserInput] = useState('');
   const [chatOutput, setChatOutput] = useState([]);
   const [savedPlans, setSavedPlans] = useState([]);
@@ -39,6 +40,11 @@ function Plan() {
     }
   }, [location.state]);
 
+  /**
+   * Fetches saved travel plans for the logged-in user.
+   * @async
+   * @function fetchSavedPlans
+   */
   const fetchSavedPlans = async () => {
     if (!userData) return;
 
@@ -56,6 +62,11 @@ function Plan() {
     }
   };
 
+  /**
+   * Sends a message to the API and updates chat output.
+   * @async
+   * @function sendMessage
+   */
   const sendMessage = async () => {
     if (!userInput.trim()) return;
     const newMessage = { role: 'user', content: userInput };
@@ -83,6 +94,11 @@ function Plan() {
     }
   };
 
+  /**
+   * Format ChatGPT Output for better layout
+   * @async
+   * @function formatText
+   */
   const formatText = (text) => {
     return text
       .split(/\n+/)
