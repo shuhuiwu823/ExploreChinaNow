@@ -9,6 +9,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const apiKey = process.env.ChatGPT_API_KEY;
+
 app.use(cookieParser());
 
 app.use(express.static('./dist'));
@@ -26,7 +27,7 @@ app.post('/api/chat', async (req, res) => {
         },
         {
           headers: {
-            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+            Authorization: `Bearer ${process.env.ChatGPT_API_KEY}`,
             'Content-Type': 'application/json',
           },
         }
@@ -43,3 +44,4 @@ app.get('/api/homepage', (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
+

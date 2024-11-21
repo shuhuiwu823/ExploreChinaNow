@@ -126,7 +126,7 @@ function Profile() {
                   className="profile-blog-image"
                 />
               ) : (
-                <div className="profile-no-image">No image</div>
+                ''
               )}
               <h4>{blog.title}</h4>
               <p>

@@ -90,7 +90,8 @@ const VideosPage = () => {
 	return (
 		<div style={{ textAlign: "center" }}>
 			<br />
-			<h1>Explore China: The Best Travel Videos</h1>
+			<br />
+			<h1>Explore The Best Travel Videos</h1>
 			<p>Your next adventure starts here</p>
 
 			<div>
@@ -113,8 +114,7 @@ const VideosPage = () => {
 					style={{
 						padding: "10px 20px",
 						borderRadius: "4px",
-						backgroundColor: "gray",
-						// backgroundColor: "#4CAF50",
+						backgroundColor: "#212529",
 						color: "white",
 						border: "none",
 						cursor: "pointer",
@@ -136,7 +136,7 @@ const VideosPage = () => {
 							padding: "10px 10px",
 							// marginLeft: "2px",
 							color: "#007bff", // Bootstrap default link color
-							textDecoration: "underline",
+							textDecoration: "none",
 							cursor: "pointer",
 						}}>
 						{city}
@@ -151,9 +151,9 @@ const VideosPage = () => {
 			<div
 				style={{
 					display: "grid",
-					gridTemplateColumns: "repeat(3, 1fr)",
-					gap: "20px",
-					maxWidth: "960px",
+					gridTemplateColumns: "repeat(3, 1fr)", // Keep 3 columns for the grid
+					gap: "30px", // Increase the gap between the videos
+					maxWidth: "1200px", // Increase max width of the grid
 					margin: "0 auto",
 				}}>
 				{videos.length === 0 &&
@@ -164,31 +164,31 @@ const VideosPage = () => {
 							onClick={() => openModal(video.id)}
 							style={{
 								cursor: "pointer",
-								maxWidth: "300px",
+								width: "350px", // Increased width
 								borderRadius: "8px",
 								overflow: "hidden",
-								boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+								boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)", // Slightly stronger shadow
 								textAlign: "left",
 							}}>
 							<div
 								style={{
 									position: "relative",
-									width: "100%",
-									height: "200px",
+									width: "350px", // Increased width
+									height: "196px", // Adjusted height to match aspect ratio
 								}}>
 								<img
-									src={`https://img.youtube.com/vi/${video.id}/0.jpg`}
+									src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`} // Use mqdefault for 320x180 size
 									alt="YouTube Video Thumbnail"
 									style={{
 										width: "100%",
 										height: "100%",
-										objectFit: "cover",
+										objectFit: "cover", // Ensures consistent appearance
 										borderRadius: "8px",
 										transition: "transform 0.3s",
 									}}
 								/>
 							</div>
-							<div style={{ padding: "10px", fontSize: "14px" }}>
+							<div style={{ padding: "12px", fontSize: "16px" }}>
 								<strong>{video.title}</strong>
 							</div>
 						</div>
@@ -202,17 +202,17 @@ const VideosPage = () => {
 							onClick={() => openModal(video.id.videoId)}
 							style={{
 								cursor: "pointer",
-								maxWidth: "300px",
+								width: "350px", // Increased width
 								borderRadius: "8px",
 								overflow: "hidden",
-								boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+								boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)", // Slightly stronger shadow
 								textAlign: "left",
 							}}>
 							<div
 								style={{
 									position: "relative",
-									width: "100%",
-									height: "200px",
+									width: "350px", // Increased width
+									height: "196px", // Adjusted height to match aspect ratio
 								}}>
 								<img
 									src={video.snippet.thumbnails.medium.url}
@@ -220,18 +220,19 @@ const VideosPage = () => {
 									style={{
 										width: "100%",
 										height: "100%",
-										objectFit: "cover",
+										objectFit: "cover", // Ensures consistent appearance
 										borderRadius: "8px",
 										transition: "transform 0.3s",
 									}}
 								/>
 							</div>
-							<div style={{ padding: "10px", fontSize: "14px" }}>
+							<div style={{ padding: "12px", fontSize: "16px" }}>
 								<strong>{video.snippet.title}</strong>
 							</div>
 						</div>
 					))}
 			</div>
+
 			<br />
 
 			{isModalOpen && (
