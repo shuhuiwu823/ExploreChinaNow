@@ -1,5 +1,5 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage, db } from "./firebase";
+import { storage, db } from "./firebase.js";
 import { doc, getDoc } from "firebase/firestore";
 
 /**
