@@ -117,7 +117,7 @@ function Login() {
         
         try {
             // Check the status of the server
-            const response = await fetch("/auth/check-connect");
+            const response = await fetch(`${https://explorechinanow-backend.onrender.com}/auth/check-connect`);
             if (!response.ok) {
                 throw new Error("Service is not available now. Please try again later.");
             }
@@ -162,7 +162,7 @@ function Login() {
 
         try {
             // Check the status of the server
-            const response = await fetch("/auth/check-connect");
+            const response = await fetch(`${https://explorechinanow-backend.onrender.com}/auth/check-connect`);
             if (!response.ok) {
                 throw new Error("Service is not available now. Please try again later.");
             }
