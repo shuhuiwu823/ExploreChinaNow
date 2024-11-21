@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { vi } from "vitest";
+import { describe, expect, vi, afterEach, test } from "vitest";
 import MapContainer from "../../components/MapContainer";
 import { MemoryRouter } from "react-router-dom";
 
