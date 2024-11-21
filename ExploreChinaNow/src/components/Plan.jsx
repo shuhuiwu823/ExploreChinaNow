@@ -5,8 +5,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './Plan.css';
 import { AppContext } from '../Context';
 
+/**
+ * Plan Component
+ * 
+ * This component allows users to generate travel plans and manage them. 
+ * It interacts with Firestore and provides a chat interface for generating plans.
+ * 
+ * @component
+ */
 function Plan() {
-  // State to hold user input for chat.
   const [userInput, setUserInput] = useState('');
   const [chatOutput, setChatOutput] = useState([]);
   const [savedPlans, setSavedPlans] = useState([]);
@@ -95,8 +102,10 @@ function Plan() {
   };
 
   /**
-   * Format ChatGPT Output for better layout
-   * @async
+   * Formats chat output for better layout by wrapping paragraphs in HTML tags.
+   * 
+   * @param {string} text - The text to format.
+   * @returns {string} Formatted text with HTML tags.
    * @function formatText
    */
   const formatText = (text) => {
@@ -106,6 +115,13 @@ function Plan() {
       .join('');
   };
 
+  /**
+   * Saves a chat response to database under the current user's plans.
+   * 
+   * @param {string} message - The chat message to save.
+   * @async
+   * @function saveResponse
+   */
   const saveResponse = async (message) => {
     if (!userData) {
       setShowSignInPopup(true);
@@ -128,6 +144,13 @@ function Plan() {
     }
   };
 
+  /**
+   * Deletes a saved travel plan from database and updates the UI.
+   * 
+   * @param {string} planId - The ID of the plan to delete.
+   * @async
+   * @function deletePlan
+   */
   const deletePlan = async (planId) => {
     try {
       await deleteDoc(doc(db, 'TravelPlan', planId));
@@ -137,6 +160,12 @@ function Plan() {
     }
   };
 
+  /**
+   * Toggles the expanded state of a saved plan.
+   * 
+   * @param {number} index - The index of the plan to toggle.
+   * @function toggleExpanded
+   */
   const toggleExpanded = (index) => {
     setSavedPlans(
       savedPlans.map((plan, i) =>
@@ -153,6 +182,10 @@ function Plan() {
     setShowSignInPopup(false);
   };
 
+  /**
+   * Redirects the user to the sign-in page.
+   * @function handleSignIn
+   */
   const handleSignIn = () => {
     navigate('/sign-in');
   };
