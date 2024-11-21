@@ -5,6 +5,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './Plan.css';
 import { AppContext } from '../Context';
 
+/**
+ * Plan Component
+ * 
+ * This component allows users to generate travel plans and manage them. 
+ * It interacts with Firestore and provides a chat interface for generating plans.
+ * 
+ * @component
+ */
 function Plan() {
   const [userInput, setUserInput] = useState('');
   const [chatOutput, setChatOutput] = useState([]);
@@ -39,6 +47,11 @@ function Plan() {
     }
   }, [location.state]);
 
+  /**
+   * Fetches saved travel plans for the logged-in user.
+   * @async
+   * @function fetchSavedPlans
+   */
   const fetchSavedPlans = async () => {
     if (!userData) return;
 
@@ -56,6 +69,11 @@ function Plan() {
     }
   };
 
+  /**
+   * Sends a message to the API and updates chat output.
+   * @async
+   * @function sendMessage
+   */
   const sendMessage = async () => {
     if (!userInput.trim()) return;
     const newMessage = { role: 'user', content: userInput };
@@ -83,6 +101,13 @@ function Plan() {
     }
   };
 
+  /**
+   * Formats chat output for better layout by wrapping paragraphs in HTML tags.
+   * 
+   * @param {string} text - The text to format.
+   * @returns {string} Formatted text with HTML tags.
+   * @function formatText
+   */
   const formatText = (text) => {
     return text
       .split(/\n+/)
@@ -90,6 +115,13 @@ function Plan() {
       .join('');
   };
 
+  /**
+   * Saves a chat response to database under the current user's plans.
+   * 
+   * @param {string} message - The chat message to save.
+   * @async
+   * @function saveResponse
+   */
   const saveResponse = async (message) => {
     if (!userData) {
       setShowSignInPopup(true);
@@ -112,6 +144,13 @@ function Plan() {
     }
   };
 
+  /**
+   * Deletes a saved travel plan from database and updates the UI.
+   * 
+   * @param {string} planId - The ID of the plan to delete.
+   * @async
+   * @function deletePlan
+   */
   const deletePlan = async (planId) => {
     try {
       await deleteDoc(doc(db, 'TravelPlan', planId));
@@ -121,6 +160,12 @@ function Plan() {
     }
   };
 
+  /**
+   * Toggles the expanded state of a saved plan.
+   * 
+   * @param {number} index - The index of the plan to toggle.
+   * @function toggleExpanded
+   */
   const toggleExpanded = (index) => {
     setSavedPlans(
       savedPlans.map((plan, i) =>
@@ -137,6 +182,10 @@ function Plan() {
     setShowSignInPopup(false);
   };
 
+  /**
+   * Redirects the user to the sign-in page.
+   * @function handleSignIn
+   */
   const handleSignIn = () => {
     navigate('/sign-in');
   };
