@@ -170,9 +170,6 @@ function Login() {
 
         signInWithPopup(auth, googleProvider)
         .then(async (result) => {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
 
@@ -185,7 +182,7 @@ function Login() {
             }
 
             try {
-                const userData = await getUserData(user.uid);
+                let userData = await getUserData(user.uid);
                 if(!userData) {
                     await setDoc(doc(db, "users", user.uid), userInfo);
     
