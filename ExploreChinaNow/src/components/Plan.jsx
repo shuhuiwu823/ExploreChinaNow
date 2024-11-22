@@ -79,7 +79,7 @@ function Plan() {
     const newMessage = { role: 'user', content: userInput };
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch('https://explorechinanow-planserver.onrender.com/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
