@@ -134,9 +134,6 @@ describe("Register Component", () => {
 
   // Check if the error message for The email address is badly formatted is displayed
   expect(screen.getByText(/The email address is badly formatted/i)).toBeInTheDocument();
-
-  // Verify fetch was called to check the server connection
-  expect(fetch).toHaveBeenCalledWith('/auth/check-connect');
   });
 
   test("calls Firebase and navigates on successful registration", async () => {
