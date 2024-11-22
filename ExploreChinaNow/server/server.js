@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const app = express();
@@ -14,6 +15,14 @@ app.use(cookieParser());
 
 app.use(express.static('./dist'));
 app.use(express.json());
+
+// Allow requests from your Vite static site
+const allowedOrigins = ['https://explorechinanow-1de2.onrender.com'];
+app.use(cors({
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true, // if using cookies/authentication
+}));
 
 app.post('/api/chat', async (req, res) => {
     try {
