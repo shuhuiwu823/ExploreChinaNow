@@ -77,7 +77,7 @@ const MapContainer = () => {
 
 	return (
     <div className="map-container">
-      <APIProvider apiKey={"AIzaSyAgYOfrSVMN-4qquy9cI_ZSM6SjhvF_cW0"}>
+      <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
         <Map
           style={{ width: "100vw", height: "100vh" }}
           defaultCenter={{ lat: 35.7604, lng: 103.8324 }}
@@ -243,7 +243,7 @@ const MapContainer = () => {
           >
             X
           </Button>
-          <div className="pic-loc" >
+          <div className="pic-loc">
             <img src={harbinImage} className="sidebar-image" />
           </div>
           <h5>Harbin (哈尔滨)</h5>
