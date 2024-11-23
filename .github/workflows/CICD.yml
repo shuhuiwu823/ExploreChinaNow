@@ -1,0 +1,71 @@
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ExploreChinaNow
+
+      - name: Run tests
+        run: npm run test
+        working-directory: ExploreChinaNow
+
+  deploy:
+    needs: test # Ensures deploy runs only if test passes
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ExploreChinaNow
+
+      - name: Build Project (for Vite)
+        run: npm run build
+        working-directory: ExploreChinaNow
+
+      - name: Deploy Plan Server to Render
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Accept: application/json" \
+            -d '{}' \
+            "https://api.render.com/v1/services/srv-ct0dmnl2ng1s73b9id10/deploys"
+
+      - name: Deploy DB Server to Render
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Accept: application/json" \
+            -d '{}' \
+            "https://api.render.com/v1/services/srv-ct02fb1opnds73a6mho0/deploys"
+
+      - name: Deploy Static Site to Render
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Accept: application/json" \
+            -d '{}' \
+            "https://api.render.com/v1/services/srv-ct0dpn5svqrc73eqdstg/deploys"
