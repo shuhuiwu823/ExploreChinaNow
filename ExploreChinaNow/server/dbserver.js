@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios");
+const cors = require('cors');
 const cookieParser = require("cookie-parser");
 
 const app = express();
@@ -7,6 +8,14 @@ const PORT = process.env.PORT || 4000;
 
 const dotenv = require('dotenv');
 dotenv.config();
+
+// Allow requests from your Vite static site
+const allowedOrigins = ['https://explorechinanow-1de2.onrender.com'];
+app.use(cors({
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true, // if using cookies/authentication
+}));
 
 // Firebase Web API Key from your Firebase project
 const FIREBASE_WEB_API_KEY = process.env.VITE_FIREBASE_API_KEY;
