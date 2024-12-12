@@ -52,7 +52,7 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Accept: application/json" \
             -d '{}' \
-            "https://api.render.com/v1/services/srv-ct0dmnl2ng1s73b9id10/deploys"
+            "https://api.render.com/v1/services/srv-ct0dmnl2ng1s73b9id10/deploys" -v
 
       - name: Deploy DB Server to Render
         run: |
@@ -60,7 +60,7 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Accept: application/json" \
             -d '{}' \
-            "https://api.render.com/v1/services/srv-ct02fb1opnds73a6mho0/deploys"
+            "https://api.render.com/v1/services/srv-ct02fb1opnds73a6mho0/deploys" -v
 
       - name: Deploy Static Site to Render
         run: |
@@ -68,4 +68,4 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Accept: application/json" \
             -d '{}' \
-            "https://api.render.com/v1/services/srv-ct0dpn5svqrc73eqdstg/deploys"
+            "https://api.render.com/v1/services/srv-ct0dpn5svqrc73eqdstg/deploys" -v
