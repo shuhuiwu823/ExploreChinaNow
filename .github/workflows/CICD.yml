@@ -46,6 +46,9 @@ jobs:
         run: npm run build
         working-directory: ExploreChinaNow
 
+      - name: Debug Secrets
+        run: echo "RENDER_API_KEY=${{ secrets.RENDER_API_KEY }}"
+
       - name: Deploy Plan Server to Render
         run: |
           curl -X POST \
