@@ -18,7 +18,8 @@ app.use(express.static('./dist'));
 app.use(express.json());
 
 // Allow requests from your Vite static site
-const allowedOrigins = ['https://explorechinanow-1de2.onrender.com','http://localhost:5173','http://localhost:3000','http://localhost:4000'];
+const allowedOrigins = ['https://explorechinanow-1de2.onrender.com','https://explorechinanow.onrender.com','https://explorechinanow-planserver.onrender.com','http://localhost:5173','http://localhost:3000','http://localhost:4000'];
+
 app.use(cors({
     origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -29,9 +30,9 @@ app.use(cors({
 app.use(express.static(path.join(__dirname, '../dist')));
 
 // Catch-all route for React Router
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+// });
 
 app.post('/api/chat', async (req, res) => {
     try {

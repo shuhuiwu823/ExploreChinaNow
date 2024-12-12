@@ -11,7 +11,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 // Allow requests from your Vite static site
-const allowedOrigins = ['https://explorechinanow-1de2.onrender.com','http://localhost:5173','http://localhost:3000','http://localhost:4000'];
+const allowedOrigins = ['https://explorechinanow-1de2.onrender.com','https://explorechinanow.onrender.com','https://explorechinanow-planserver.onrender.com','http://localhost:5173','http://localhost:3000','http://localhost:4000'];
+
 app.use(cors({
     origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
