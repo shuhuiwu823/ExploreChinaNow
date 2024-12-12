@@ -30,9 +30,9 @@ app.use(cors({
 app.use(express.static(path.join(__dirname, '../dist')));
 
 // Catch-all route for React Router
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../dist', 'index.html'));
-// });
+app.get('*', (req, res) => {
+   res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+});
 
 app.post('/api/chat', async (req, res) => {
     try {
