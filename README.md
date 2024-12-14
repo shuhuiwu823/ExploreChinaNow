@@ -62,8 +62,7 @@ npm
 
 1. Install dependencies: npm install
 2. Start the frontend and backend servers:
- npm run dev
- npm run dev-server
+ npm run dev;  npm run dev-server
 
 3. Start the database server: npm run db-server
 
